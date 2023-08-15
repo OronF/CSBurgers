@@ -130,6 +130,8 @@
 }
 
 #container {
+    display: flex;
+    flex-direction: column;
 }
 
 .social-links-nav {
@@ -153,7 +155,8 @@
 }
 
 .cs-logo{
-    
+    display: flex;
+    justify-content: center;
 }
 /* #container {
     display: flex;
