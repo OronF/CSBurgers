@@ -18,13 +18,21 @@ $(document).ready(async function() {
     const appendDishesLi = (dish) => {
         const newElement = $(`<li id="${dish._id} class="nohide" data-dish-categoryId="${dish.categoryId}">
             <div class="card">
-                <img src="${dish.picture}" class="card-img-top" alt="${dish.name}" id="picture">
-                <div class="card-body">
-                    <h5 class="card-title">${dish.name}</h5>
-                    <p class="card-text">מחיר: ${dish.price}₪</p>
-                    <a href="#" type="button" class="order-btn">הוסף להזמנה</a>
+            <div class="row">
+            <div class="col-md-4">
+                    <img src="${dish.picture}" class="card-img-top" alt="${dish.name}" id="picture">
                 </div>
-            <div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">${dish.name}</h5>
+                        <p class="card-text"> ${dish.price}₪</p>
+                    </div>
+                </div>
+            </div>
+            <a href="#" type="button" class="order-btn">הוספה להזמנה</a>
+
+        </div>
+    
         </li>`);
 
         dishesList.append(newElement);
@@ -32,14 +40,23 @@ $(document).ready(async function() {
 
     const appendMealsLi = (dish) => {
         const newElement = $(`<li id="${dish._id} class="nohide">
-            <div class="card">
-                <img src="${dish.picture}" class="card-img-top" alt="${dish.name}" id="picture">
-                <div class="card-body">
+
+                <div class="card">
+            <div class="row">
+            
+            <div class="col-md-4">
+            <img src="${dish.picture}" class="card-img-top" alt="${dish.name}" id="picture">
+        </div>
+                <div class="col-md-8">
                     <h5 class="card-title title-color">${dish.name}</h5>
-                    <p class="card-text">מחיר: ${dish.price}₪</p>
-                    <a href="#" type="button" class="order-btn">הוסף להזמנה</a>
+                    <p class="card-text"> ${dish.price}₪</p>
                 </div>
-            <div>
+            </div>
+            <a href="#" type="button" class="order-btn">הוספה להזמנה</a>
+
+        </div>
+
+    
         </li>`);
 
         mealsList.append(newElement);
