@@ -24,6 +24,11 @@ const MealSchema = new mongoose.Schema({
     picture:{
         type: String,
         required: true
+    }, 
+
+    description: {
+        type: String,
+        required: true
     }
 });
 

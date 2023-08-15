@@ -4,12 +4,13 @@ const getAll = async() => {
     return await Dish.find({});
 }
 
-const createDish = async (name, price, categoryId, picture) => {
+const createDish = async (name, price, categoryId, picture, description) => {
     const dish = new Dish({
         name: name,
         price: price,
         categoryId: categoryId,
-        picture: picture
+        picture: picture,
+        description: description
     });
     
     return await dish.save();
@@ -42,6 +43,7 @@ const updateDish = async (newDish) => {
     dish.price = newDish.price;
     dish.categoryId = newDish.categoryId;
     dish.picture = newDish.picture;
+    dish.description = newDish.description;
 
     await dish.save();
     return dish;

@@ -18,7 +18,12 @@ const DishSchema = new mongoose.Schema({
     
     picture: {
         type: String,
-        required:true
+        required: true
+    }, 
+
+    description: {
+        type: String,
+        required: true
     }
 });
 
