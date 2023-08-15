@@ -35,4 +35,8 @@ router.get('/aboutUs', function(req, res, next) {
   res.render("aboutUs");
 });
 
+router.get('/termsPage', function(req, res, next) {  
+  res.render("termsPage");
+});
+
 module.exports = router;
