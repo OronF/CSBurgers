@@ -1,30 +1,81 @@
-.wahtDelivery {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.title {
-    font-size: 4vw;
-    margin-top: 1.5vw;
-}
-
-.btns {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-#deliveryTo {
-    display: flex;
-    flex-direction: row-reverse;
-    align-items: center;
+.btn-back {
+    font-size: 1.5vw;
+    position: fixed;
+    right: 3vw;
+    top: 1vw;
+    color:rgb(154, 13, 13);
     text-decoration: none;
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;
+    transition: all 0.4s;
+
 }
 
-#deliveryFrom {
-    display: flex;
-    flex-direction: row-reverse;
+.deliveryPageTitle
+{
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;
+    text-align: center;
+    color:rgb(154, 13, 13);
+    font-size: 4.5vw;
     align-items: center;
-    text-decoration: none;
+    margin-top: 20vh;
+
+}
+
+.modal-title
+{
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;
+    text-align: center;
+    color:rgb(154, 13, 13);
+    font-size: 3vw;
+
+}
+
+.delivery-btn, .pick-up-btn
+{
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;
+    text-align: right;
+    color:white;
+    background-color: rgb(154, 13, 13);
+    padding: 0.5vw;
+    border:none;
+    font-size: 3vw;
+    transition: all 0.4s;
+    margin-top:0.5vw;
+}
+
+.delivery-btn:hover, .pick-up-btn:hover
+{
+    background-color: rgb(120, 16, 16);
+    transform: scale(1.05);
+}
+
+.btn-back:hover
+{
+    transform: scale(1.05);
+}
+
+.btn-close {
+    font-size: 1.1vw;
+}
+
+.continue-btn
+{
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;
+    text-align: center;
+    color:rgb(154, 13, 13);
+    transition: all 0.4s;
+    font-size:2vw;
+    border:none;
+    background-color: transparent;
+}
+
+.continue-btn:hover
+{
+    transform: scale(1.05);
+
 }
