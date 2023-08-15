@@ -1,9 +1,6 @@
 body {
-    font-family: Arial, sans-serif;
-    direction: rtl;
-    text-align: right;
-    margin: 0;
-    padding: 0;
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;    direction: rtl;
 }
 
 .hide {
@@ -12,13 +9,18 @@ body {
 
 .page-title {
     text-align: center;
+     font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;
+    color: rgb(154, 13, 13);
+    margin-top: 3vh;
+    font-size: 4.5vw;
 }
 
 .categories-aside {
-    background-color: #f1f1f1;
-    width: 250px;
-    padding: 10px;
+    background-color: transparent;
     float: right;
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;
 }
 
 .nameOfCategory {
@@ -40,7 +42,21 @@ body {
 
 .li-category {
     background-color: rgb(154, 13, 13);
-    border: solid 1px black;
-    height: 40px;
+    border: none;
+    margin-top:0.6vw;
+    font-size: 1.5vw;
+    padding: 0.5vw;
+    transition: all 0.4s;
+    padding-left: 2vw;
+    padding-right: 2vw;
 }
 
+.li-category:hover{
+    transform: scale(1.15);
+}
+
+.card
+{
+    width: 20vw;
+    height: 6vh;
+}

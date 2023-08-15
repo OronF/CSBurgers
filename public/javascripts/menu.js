@@ -22,7 +22,7 @@ $(document).ready(async function() {
                 <div class="card-body">
                     <h5 class="card-title">${dish.name}</h5>
                     <p class="card-text">מחיר: ${dish.price}</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <a href="#" class="btn btn-primary">הוספה ל</a>
                 </div>
             <div>
         </li>`);
