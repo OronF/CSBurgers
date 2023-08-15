@@ -39,4 +39,8 @@ router.get('/termsPage', function(req, res, next) {
   res.render("termsPage");
 });
 
+router.get('/AccessibilityStatement', function(req, res, next) {  
+  res.render("AccessibilityStatement");
+});
+
 module.exports = router;
