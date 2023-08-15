@@ -130,10 +130,35 @@
 }
 
 #container {
+}
+
+.social-links-nav {
+    display: flex;
+    justify-content: center;
+}
+
+ .links-nav {
+    display: flex;
+    justify-content: center;
+} 
+
+.link {
+    margin-right: 2vw;
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;
+}
+
+.footer-links{
+    color:black;
+}
+
+.cs-logo{
+    
+}
+/* #container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    color:black;
 }
 
 .social-links-nav {
@@ -150,11 +175,10 @@
 
 .link {
     margin-right: 2vw;
-    color:black;
     font-family: 'Lato', sans-serif;
     font-family: 'Noto Sans Hebrew', sans-serif;
 }
 
 .footer-links{
     color:black;
-}
+} */
