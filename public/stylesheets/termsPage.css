@@ -2,6 +2,7 @@ body {
     font-family: 'Lato', sans-serif;
     font-family: 'Noto Sans Hebrew', sans-serif;
     margin: 0;
+    direction:rtl;
   }
   
   html {
