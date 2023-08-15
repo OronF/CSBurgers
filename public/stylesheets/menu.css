@@ -2,10 +2,16 @@ body {
     font-family: 'Lato', sans-serif;
     font-family: 'Noto Sans Hebrew', sans-serif;   
     direction: rtl;
+    /* background-image: url("https://st2.depositphotos.com/3740491/8238/v/950/depositphotos_82386728-stock-illustration-seamless-pattern-with-sketched-burger.jpg"); */
 }
 
 .hide {
     display: none;
+}
+
+.card-text
+{
+    font-size: 1.2vw;
 }
 
 .page-title {
@@ -13,8 +19,9 @@ body {
      font-family: 'Lato', sans-serif;
     font-family: 'Noto Sans Hebrew', sans-serif;
     color: rgb(154, 13, 13);
-    margin-top: 3vh;
+    padding:0.vw;
     font-size: 4.5vw;
+    background-color: white;
 }
 
 .card-body
@@ -71,8 +78,12 @@ body {
 
 .card
 {
-    width: 20vw;
-    height: 6vh;
+    height: 8vh;
+    width: 40vw;
+    margin-top: 2vh;
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;    direction: rtl;
+    
 }
 
 .order-btn
@@ -85,10 +96,20 @@ body {
     padding-left: 1vw;
     padding-right: 1vw;
     font-size: 1.3vw;
-    align-self: left;
+    text-align: left;;
 }
 
-.order-btn:hover{
+.order-btn:hover
+{
     background-color: rgb(129, 19, 19);
+}
 
+.order-btn
+{
+    outline: color;
+}
+
+.container
+{
+    align-items: center;
 }
