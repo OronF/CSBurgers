@@ -4,6 +4,56 @@ $(document).ready(async function() {
     const mealsList = $('.meals-list');
     const categories = $('.categories');
 
+    const putHideOnElement = (element) => {
+        element.reomveClass('nohide').addClass('hide');
+    }
+
+    const removeHideOnElement = (element) => {
+        element.reomveClass('hide').addClass('nohide');
+    }
+
+    const appendDishesLi = (dish) => {
+        const newElement = $(`<li id="${dish._id} class="nohide" data-dish-categoryId="${dish.categoryId}">
+            <div class="card">
+                <img src="${dish.picture}" class="card-img-top" alt="${dish.name}" id="picture">
+                <div class="card-body">
+                    <h5 class="card-title">${dish.name}</h5>
+                    <p class="card-text">מחיר: ${dish.price}</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            <div>
+        </li>`);
+
+        dishesList.append(newElement);
+    }
+
+    const appendMealsLi = (dish) => {
+        const newElement = $(`<li id="${dish._id} class="nohide">
+            <div class="card">
+                <img src="${dish.picture}" class="card-img-top" alt="${dish.name}" id="picture">
+                <div class="card-body">
+                    <h5 class="card-title">${dish.name}</h5>
+                    <p class="card-text">מחיר: ${dish.price}</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            <div>
+        </li>`);
+
+        mealsList.append(newElement);
+    }
+
+    const renderDishes = (data) => {
+        data.forEach(dish => {
+            appendDishesLi(dish);
+        });
+    }
+
+    const renderMeals = (data) => {
+        data.forEach(dish => {
+            appendMealsLi(dish);
+        });
+    }
+
     const appendCategoryLi = (category) => {
         const newElement = $(`<li id="${category._id}">
             <a class="nameOfCategory" data-category-id="${category._id}" href="/menu#${category.name}">${category.name}</a>
@@ -11,9 +61,31 @@ $(document).ready(async function() {
 
         newElement.find('.nameOfCategory').on('click', async function() {
             const btn = $(this);
-            const id = btn.attr('data-branch-id');
+            const id = btn.attr('data-category-id');
 
+            mealsList.empty();
 
+            let meals;
+
+            await $.ajax({
+                url:"/api/meal",
+                method: "GET",
+                dataType: "json",
+                contentType: 'application/json',
+                data: {
+                    CategoryId: id
+                },
+                success: function(data) {
+                    meals = data;
+                },
+                error: function(error) {
+                    console.error("Error finding data:", error);
+                }
+            });
+
+            meals.forEach(meal => {
+                appendMealsLi(meal);
+            });
         });
 
         categories.append(newElement);
@@ -30,6 +102,28 @@ $(document).ready(async function() {
         method: "GET",
         success: (data) => {
             renderCategories(data);
+        },
+        error: (error) => {
+            console.log(error);
+        }
+    });
+
+    $.ajax({
+        url:"/api/dish",
+        method: "GET",
+        success: (data) => {
+            renderDishes(data);
+        },
+        error: (error) => {
+            console.log(error);
+        }
+    });
+
+    $.ajax({
+        url:"/api/meal",
+        method: "GET",
+        success: (data) => {
+            renderMeals(data);
         },
         error: (error) => {
             console.log(error);

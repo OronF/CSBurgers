@@ -4,8 +4,8 @@ const getAllDishes = async (req,res) => {
     try {
         let dishes;
 
-        if (req.query.CategoryId) {
-            dishes = await DishService.getByCategory();
+        if (req.query.categoryId) {
+            dishes = await DishService.getByCategory(req.query.categoryId);
         } else {
             dishes = await DishService.getAll();
         }
@@ -27,7 +27,7 @@ const getAllDishes = async (req,res) => {
 
 const createDish = async (req,res) => {
     try {
-        const newDish = await DishService.create(req.body.name, req.body.price, req.body.CategoryId, req.body.picture);
+        const newDish = await DishService.create(req.body.name, req.body.price, req.body.categoryId, req.body.picture);
         res.json(newDish);
     }
     
@@ -48,7 +48,7 @@ const updateDish = async (req,res) => {
         res.status(400).json({message:'The new price to the dish is required'});
     }
 
-    if (!req.body.CategoryId) {
+    if (!req.body.categoryId) {
         res.status(400).json({message:'The new CategoryId to the dish is required'});
     }
     if (!req.body.picture) {
@@ -59,7 +59,7 @@ const updateDish = async (req,res) => {
         id: req.body.id,
         name: req.body.name,
         price: req.body.price,
-        CategoryId: req.body.CategoryId,
+        categoryId: req.body.categoryId,
         picture: req.body.picture
     }
 

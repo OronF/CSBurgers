@@ -4,8 +4,8 @@ const getAllMeals = async (req,res) => {
     try {
         let meals;
 
-        if (req.query.CategoryId) {
-            meals = await MealService.getByCategory();
+        if (req.query.categoryId) {
+            meals = await MealService.getByCategory(req.query.categoryId);
         } else {
             meals = await MealService.getAll();
         }
@@ -23,7 +23,7 @@ const getAllMeals = async (req,res) => {
 
 const createMeal = async (req,res) => {
     try {
-        const newMeal = await MealService.create(req.body.name, req.body.price, req.body.dishes, req.body.CategoryId, req.body.picture);
+        const newMeal = await MealService.create(req.body.name, req.body.price, req.body.dishes, req.body.categoryId, req.body.picture);
         res.json(newMeal);
     }
     
@@ -48,7 +48,7 @@ const updateMeal = async (req,res) => {
         res.status(400).json({message:'The new dishes to the meal is required'});
     }
 
-    if(!req.body.CategoryId) {
+    if(!req.body.categoryId) {
         res.status(400).json({message:'The new CategoryId to the meal is required'});
     }
 
@@ -61,7 +61,7 @@ const updateMeal = async (req,res) => {
         name: req.body.name,
         price: req.body.price,
         dishes: req.body.dishes,
-        CategoryId: req.body.CategoryId,
+        categoryId: req.body.categoryId,
         picture: req.body.picture
     }
 

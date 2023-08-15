@@ -11,7 +11,7 @@ const DishSchema = new mongoose.Schema({
         required: true
     },
 
-    CategoryId: {
+    categoryId: {
         type: mongoose.Schema.Types.ObjectId,
         required: true
     },
