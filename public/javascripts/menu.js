@@ -4,12 +4,15 @@ $(document).ready(async function() {
     const mealsList = $('.meals-list');
     const categories = $('.categories');
 
+    const dishesSection = $('#dishesSection');
+    const mealsSection = $('#mealsSection');
+
     const putHideOnElement = (element) => {
-        element.reomveClass('nohide').addClass('hide');
+        element.removeClass('nohide').addClass('hide');
     }
 
     const removeHideOnElement = (element) => {
-        element.reomveClass('hide').addClass('nohide');
+        element.removeClass('hide').addClass('nohide');
     }
 
     const appendDishesLi = (dish) => {
@@ -56,36 +59,74 @@ $(document).ready(async function() {
 
     const appendCategoryLi = (category) => {
         const newElement = $(`<li id="${category._id}">
-            <a class="nameOfCategory" data-category-id="${category._id}" href="/menu#${category.name}">${category.name}</a>
+            <a class="nameOfCategory" data-category-id="${category._id}" data-category-categorytype="${category.categorytype}" href="/menu#${category.name}">${category.name}</a>
         </li>`);
 
         newElement.find('.nameOfCategory').on('click', async function() {
             const btn = $(this);
             const id = btn.attr('data-category-id');
+            const categorytype = btn.attr('data-category-categorytype');
 
-            mealsList.empty();
-
-            let meals;
-
-            await $.ajax({
-                url:"/api/meal",
-                method: "GET",
-                dataType: "json",
-                contentType: 'application/json',
-                data: {
-                    CategoryId: id
-                },
-                success: function(data) {
-                    meals = data;
-                },
-                error: function(error) {
-                    console.error("Error finding data:", error);
+            if (categorytype === "meal") {
+                if (mealsSection.hasClass('hide')) {
+                    removeHideOnElement(mealsSection);
+                    putHideOnElement(dishesSection);
                 }
-            });
 
-            meals.forEach(meal => {
-                appendMealsLi(meal);
-            });
+                mealsList.empty();
+
+                let meals;
+    
+                await $.ajax({
+                    url:"/api/meal",
+                    method: "GET",
+                    dataType: "json",
+                    contentType: 'application/json',
+                    data: {
+                        categoryId: id
+                    },
+                    success: function(data) {
+                        meals = data;
+                    },
+                    error: function(error) {
+                        console.error("Error finding data:", error);
+                    }
+                });
+    
+                meals.forEach(meal => {
+                    appendMealsLi(meal);
+                });
+            } else if (categorytype === "dish") {
+
+                if (dishesSection.hasClass('hide')) {
+                    removeHideOnElement(dishesSection);
+                    putHideOnElement(mealsSection);
+                }
+
+                dishesList.empty();
+
+                let dishes;
+    
+                await $.ajax({
+                    url:"/api/dish",
+                    method: "GET",
+                    dataType: "json",
+                    contentType: 'application/json',
+                    data: {
+                        categoryId: id
+                    },
+                    success: function(data) {
+                        dishes = data;
+                    },
+                    error: function(error) {
+                        console.error("Error finding data:", error);
+                    }
+                });
+    
+                dishes.forEach(dish => {
+                    appendDishesLi(dish);
+                });
+            }
         });
 
         categories.append(newElement);
