@@ -1,6 +1,7 @@
 body {
     font-family: 'Lato', sans-serif;
-    font-family: 'Noto Sans Hebrew', sans-serif;    direction: rtl;
+    font-family: 'Noto Sans Hebrew', sans-serif;   
+    direction: rtl;
 }
 
 .hide {
@@ -14,6 +15,12 @@ body {
     color: rgb(154, 13, 13);
     margin-top: 3vh;
     font-size: 4.5vw;
+}
+
+.card-body
+{
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;    direction: rtl;
 }
 
 .categories-aside {
@@ -53,10 +60,35 @@ body {
 
 .li-category:hover{
     transform: scale(1.15);
+    background-color: rgb(129, 19, 19);
+}
+
+.card-title
+{
+    font-size: 2vw;
+    color: rgb(154, 13, 13);
 }
 
 .card
 {
     width: 20vw;
     height: 6vh;
+}
+
+.order-btn
+{
+    text-decoration: none;
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;    direction: rtl;
+    background-color: rgb(154, 13, 13);
+    color:white;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    font-size: 1.3vw;
+    align-self: left;
+}
+
+.order-btn:hover{
+    background-color: rgb(129, 19, 19);
+
 }

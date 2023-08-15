@@ -21,8 +21,8 @@ $(document).ready(async function() {
                 <img src="${dish.picture}" class="card-img-top" alt="${dish.name}" id="picture">
                 <div class="card-body">
                     <h5 class="card-title">${dish.name}</h5>
-                    <p class="card-text">מחיר: ${dish.price}</p>
-                    <a href="#" class="btn btn-primary">הוספה ל</a>
+                    <p class="card-text">מחיר: ${dish.price}₪</p>
+                    <a href="#" type="button" class="order-btn">הוסף להזמנה</a>
                 </div>
             <div>
         </li>`);
@@ -35,9 +35,9 @@ $(document).ready(async function() {
             <div class="card">
                 <img src="${dish.picture}" class="card-img-top" alt="${dish.name}" id="picture">
                 <div class="card-body">
-                    <h5 class="card-title">${dish.name}</h5>
-                    <p class="card-text">מחיר: ${dish.price}</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <h5 class="card-title title-color">${dish.name}</h5>
+                    <p class="card-text">מחיר: ${dish.price}₪</p>
+                    <a href="#" type="button" class="order-btn">הוסף להזמנה</a>
                 </div>
             <div>
         </li>`);
