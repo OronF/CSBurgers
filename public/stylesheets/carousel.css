@@ -2,7 +2,7 @@
 
 /* Slideshow container */
 .slideshow-container {
-  max-width: 100%;
+  max-width: 80%;
   position: relative;
   margin: auto;
 }
@@ -12,8 +12,9 @@
 .picture
 {
   padding-top: 30;
-  width: 100%;
-  height: 50%;
+  width: 50%;
+  height: 100vh;
+  max-height: 100vh;
 }
 /* Hide the images by default */
 #two{
