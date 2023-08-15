@@ -45,11 +45,11 @@ $(document).ready(async function() {
         mealsList.append(newElement);
     }
 
-    const renderDishes = (data) => {
+    /*const renderDishes = (data) => {
         data.forEach(dish => {
             appendDishesLi(dish);
         });
-    }
+    }*/
 
     const renderMeals = (data) => {
         data.forEach(dish => {
@@ -58,7 +58,7 @@ $(document).ready(async function() {
     }
 
     const appendCategoryLi = (category) => {
-        const newElement = $(`<li id="${category._id}">
+        const newElement = $(`<li id="${category._id}" class="li-category" type="button">
             <a class="nameOfCategory" data-category-id="${category._id}" data-category-categorytype="${category.categorytype}" href="/menu#${category.name}">${category.name}</a>
         </li>`);
 
@@ -149,7 +149,7 @@ $(document).ready(async function() {
         }
     });
 
-    $.ajax({
+    /*$.ajax({
         url:"/api/dish",
         method: "GET",
         success: (data) => {
@@ -158,11 +158,16 @@ $(document).ready(async function() {
         error: (error) => {
             console.log(error);
         }
-    });
+    });*/
 
     $.ajax({
         url:"/api/meal",
         method: "GET",
+        dataType: "json",
+        contentType: 'application/json',
+        data: {
+            categoryId: "64d0f4bcfdf8c926feae7c11"
+        },
         success: (data) => {
             renderMeals(data);
         },
