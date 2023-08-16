@@ -59,6 +59,34 @@ const updateUser = async (newUser) => {
     return user;
 }
 
+const searchForLogIn = async (fname, lname, password) => {
+    if (!fname) {
+        return null;
+    }
+
+    if (!lname) {
+        return null;
+    }
+
+    if (!password) {
+        return null;
+    }
+
+    return await User.find({fname, lname, password});
+}
+
+const searchForPassward = async (fname, lname) => {
+    if (!fname) {
+        return null;
+    }
+
+    if (!lname) {
+        return null;
+    }
+
+    return await User.find({fname, lname});
+}
+
 const getAllManagers = async (is_Manager) => {
     return await User.find({is_Manager});
 }
@@ -69,5 +97,7 @@ module.exports = {
     delete: deleteUser,
     update: updateUser,
     search: searchUser,
+    searchForPassward,
+    searchForLogIn,
     getAllManagers
 }

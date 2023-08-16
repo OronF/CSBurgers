@@ -15,6 +15,10 @@ router.get('/menu', function(req, res, next) {
   res.render("menuPage");
 });
 
+router.get('/forgotPassword', function(req, res, next) {
+  res.render("forgotPassword");
+});
+
 router.get('/branchesManger', function(req, res, next) {
   res.render("branchesMangers"); 
 });
