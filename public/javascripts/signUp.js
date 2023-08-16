@@ -3,8 +3,8 @@ $(document).ready(function() {
     const approve = $('#approveBtn');
 
     approve.on('click', function() {
-        const fnameTxt = $('#form3Example1n');
-        const lnameTxt = $('#form3Example1m');
+        const fnameTxt = $('#fname');
+        const lnameTxt = $('#lname');
         const phoneNumberTxt = $('#phone-number');
         const passwordTxt = $('#form3Example4cg');
         const passwordApproveTxt = $('#form3Example4cdg');
