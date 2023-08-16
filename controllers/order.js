@@ -111,6 +111,21 @@ const searchOrder = async (req, res) => {
       return res.status(404).json({errors:['Order not found']});
     }
 
+    if (req.query.group) {
+        const meals = await order.aggregate([
+            { $unwind: '$meals' },
+            {
+                $group: {
+                    _id: '$meals.name',
+                    count: {$sum: 1}
+                }
+            }
+        ]).toArray();
+
+
+        res.json(meals);
+    }
+
     res.json(order);
 }
 
