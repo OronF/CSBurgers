@@ -112,18 +112,15 @@ const searchOrder = async (req, res) => {
     }
 
     if (req.query.group) {
-        const meals = await order.aggregate([
-            { $unwind: '$meals' },
-            {
-                $group: {
-                    _id: '$meals.name',
-                    count: {$sum: 1}
-                }
-            }
-        ]).toArray();
-
-
-        res.json(meals);
+        if(req.query.meals) {
+            const meals = await OrderService.groupByMeals(order);
+            res.json(meals);
+            return;
+        } else {
+            const dishes = await OrderService.groupByDishes(order);
+            res.json(dishes);
+            return;
+        }
     }
 
     res.json(order);
