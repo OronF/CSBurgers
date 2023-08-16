@@ -59,10 +59,15 @@ const updateUser = async (newUser) => {
     return user;
 }
 
+const getAllManagers = async (is_Manager) => {
+    return await User.find({is_Manager});
+}
+
 module.exports = {
     getAll,
     create: createUser,
     delete: deleteUser,
     update: updateUser,
-    search: searchUser
+    search: searchUser,
+    getAllManagers
 }

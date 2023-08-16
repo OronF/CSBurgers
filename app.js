@@ -2,7 +2,7 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
-const cors = require('cors');
+//const cors = require('cors');
 const bodyParser = require('body-parser');
 var logger = require('morgan');
 const mongoose = require('mongoose');
@@ -40,7 +40,7 @@ connectMongoDB();
 
 var app = express();
 
-app.use(cors());
+//app.use(cors());
 app.use(bodyParser.urlencoded({extended:true}));
 
 // view engine setup

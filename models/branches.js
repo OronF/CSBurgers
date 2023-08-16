@@ -1,3 +1,4 @@
+const { Double } = require('bson');
 const mongoose = require('mongoose');
 
 const BranchesSchema = new mongoose.Schema({
@@ -21,20 +22,20 @@ const BranchesSchema = new mongoose.Schema({
         required: true
     }, 
 
-    manger: {
+    manager: {
         type: mongoose.Schema.Types.ObjectId,
         required: true
     },
 
     coordinateX:
     {
-        type:Number,
+        type: Number,
         required: true
     },
     
     coordinateY:
     {
-        type:Number,
+        type: Number,
         required: true
     }
 });

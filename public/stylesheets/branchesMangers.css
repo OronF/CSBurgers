@@ -12,30 +12,25 @@
     font-size: 2.8vw;
     color: rgb(154, 13, 13);
     margin: 1.5vw;
-    font-family: 'Lato', sans-serif;
-    font-family: 'Noto Sans Hebrew', sans-serif;
 }
 
 .search-wrapper {
     display: flex;
     justify-content: center;
-
-    direction: rtl; 
     margin: 1.5vw;
 }
 
 #searchTxt {
     width: 55vw;
     border-radius: 0.5vw;
-    font-family: 'Lato', sans-serif;
-    font-family: 'Noto Sans Hebrew', sans-serif;
+    border: solid 2px black;
+    
 }
 
 .branches {
     display: flex;
-    justify-content: center;
-    font-family: 'Lato', sans-serif;
-    font-family: 'Noto Sans Hebrew', sans-serif;
+    flex-direction: column;
+    align-items: center;
 }
 
 .branches-list {
@@ -48,15 +43,10 @@ li {
     flex-direction: column;
 }
 
-.hide {
-    display: none;
-}
-
 .location-Section {
     color: white;
     background-color: rgb(154, 13, 13);
     margin: 0.7vw;
-    text-align: right; 
     height: 4vw;
     display: flex;
     flex-direction: row-reverse;
@@ -67,10 +57,9 @@ li {
 .location-data {
     display: flex;
     flex-direction: row;
-    text-align: right;
     height: 12vw;
     justify-content: space-evenly;
-    border: none;
+    border: solid 2px black;
 }
 
 .location {
@@ -99,13 +88,33 @@ li {
     margin-right: 0.5vw;
 }
 
-.branch-data {
+#addNewBranch {
+    border: 2px dotted black;
+    width: 55vw;
+    height: 4vw;
     display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    width: 50%;
+    justify-content: center;
+    align-items: center;
+    align-items: center;
+    margin-bottom: 1vw;
 }
 
-.map {
-    width: 50%
-}   
+#addIcon {
+    color: green;
+    font-size: 2vw;
+}
+
+#info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.inputs {
+    display: flex;
+    flex-direction: column;
+}
+
+.hide {
+    display: none;
+}

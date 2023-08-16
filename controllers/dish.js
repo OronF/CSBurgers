@@ -1,6 +1,6 @@
 const DishService = require('../services/dish');
 
-const getAllDishes = async (req,res) => {
+const getAllDishes = async (req, res) => {
     try {
         let dishes;
 
@@ -25,7 +25,7 @@ const getAllDishes = async (req,res) => {
     }
 }
 
-const createDish = async (req,res) => {
+const createDish = async (req, res) => {
     try {
         const newDish = await DishService.create(req.body.name, req.body.price, req.body.categoryId, req.body.picture, req.body.description);
         res.json(newDish);
@@ -39,7 +39,7 @@ const createDish = async (req,res) => {
     }
 }
 
-const updateDish = async (req,res) => {
+const updateDish = async (req, res) => {
     if (!req.body.name) {
         res.status(400).json({message:'The new name to the dish is required'});
     }
@@ -61,7 +61,7 @@ const updateDish = async (req,res) => {
     }
 
     const newDish = {
-        id: req.body.id,
+        id: req.params.id,
         name: req.body.name,
         price: req.body.price,
         categoryId: req.body.categoryId,
@@ -78,7 +78,7 @@ const updateDish = async (req,res) => {
 };
 
 
-const deleteDish = async (req,res) => {
+const deleteDish = async (req, res) => {
     const dish = await DishService.delete(req.params.id);
     
     if (!dish) {
@@ -88,7 +88,7 @@ const deleteDish = async (req,res) => {
     res.send();
 }
 
-const searchDish = async (req,res) => {
+const searchDish = async (req, res) => {
     const dish = await DishService.search(req.params.id);
     
     if (!dish) {
