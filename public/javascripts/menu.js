@@ -26,6 +26,8 @@ $(document).ready(async function() {
                     <div class="card-body">
                         <h5 class="card-title">${dish.name}</h5>
                         <p class="card-text"> ${dish.price}₪</p>
+                        <p class="card-info"> ${dish.description}</p>
+
                     </div>
                 </div>
             </div>
@@ -50,6 +52,8 @@ $(document).ready(async function() {
                 <div class="col-md-8">
                     <h5 class="card-title title-color">${dish.name}</h5>
                     <p class="card-text"> ${dish.price}₪</p>
+                    <p class="card-info"> ${dish.description}</p>
+
                 </div>
             </div>
             <a href="#" type="button" class="order-btn">הוספה להזמנה</a>

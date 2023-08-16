@@ -114,3 +114,8 @@ body {
 {
     align-items: center;
 }
+
+.card-info
+{
+    font-size: 1vw;
+}
