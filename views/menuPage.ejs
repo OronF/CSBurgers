@@ -2,6 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+
+    <script
+    src="https://code.jquery.com/jquery-3.7.0.js"
+    integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
+    crossorigin="anonymous"></script>
+
+    <title>תפריט</title>
+
+
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"
+    integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0="
+    crossorigin="anonymous">
+    </script>
+
+    <link rel="stylesheet" href="./stylesheets/menu.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <!-- icon-->
     <link rel="icon" href="/images/pagesImgs/burger.png">
@@ -14,74 +29,32 @@
     <link href="https://fonts.googleapis.com/css2?family=Lato&family=Noto+Sans+Hebrew:wght@500;900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>תפריט</header>
-    <main>
-        <section class="categories">
-            <div>קטגוריות</div>
+    
+    <header class="title">
+        <h1 class="page-title">תפריט המסעדה</h1>
+    </header>
 
-            <ul>
-                <li>
-                    <a href="#" aria-label="ארוחות" aria-selected="false">
-                        <span class="cat-label">ארוחות</span>
-                    </a>
-                </li>
+        <aside class="categories-aside">
 
-                <li>
-                    <a href="#" aria-label="סלטים" aria-selected="false">        
-                        <span class="cat-label">סלטים</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="#" aria-label="ארוחות ילדים" aria-selected="false">        
-                        <span class="cat-label">ארוחות ילדים</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="#" aria-label="תוספות" aria-selected="false">        
-                        <span class="cat-label">תוספות</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="#" aria-label="מוצרים בודדים" aria-selected="false">        
-                        <span class="cat-label">מוצרים בודדים</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="#" aria-label="שתייה" aria-selected="false">        
-                        <span class="cat-label">שתייה</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="#" aria-label="קינוחים" aria-selected="false">        
-                        <span class="cat-label">קינוחים</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="#" aria-label="רטבים" aria-selected="false">        
-                        <span class="cat-label">רטבים</span>
-                    </a>
-                </li>
+            <ul class="categories">
+                    
             </ul>
-        </section>
+        </aside>
+        
+            <section class="hide" id="dishesSection">
+                <ul class="dishes-list row tile-me">
+                    
+                </ul>
+            </section>
 
-        <section class="meals">
-            <span class="choice">ארוחות</span>
-
-            <div class="product">
-                <span class="nameOfProduct"></span>
-                <span class="infoOnProduct"></span>
-                <div class="price"></div>
-                <a class="start_orderBtn" href="" title="">הזמינו</a>
-            </div>
-        </section>
-    </main>
+            <section class="nohide" id="mealsSection">
+                <ul class="meals-list row tile-me">
+    
+                </ul>
+            </section>
+        
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+    <script src="./javascripts/menu.js"></script>
 </body>
 </html>

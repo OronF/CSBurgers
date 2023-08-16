@@ -1,6 +1,6 @@
 const OrderService = require('../services/order');
 
-const getAllOrders = async (req,res) => {
+const getAllOrders = async (req, res) => {
     try {
         const orders = await OrderService.getAll();
         
@@ -19,7 +19,7 @@ const getAllOrders = async (req,res) => {
     }
 }
 
-const creatOrder = async (req,res) => {
+const creatOrder = async (req, res) => {
     try {
         const tmp = {
             orderNumber: req.body.orderNumber,
@@ -46,7 +46,7 @@ const creatOrder = async (req,res) => {
     }
 }
 
-const updateOrder = async (req,res) => {
+const updateOrder = async (req, res) => {
     if (!req.body.orderNumber) {
         res.status(400).json({message:'The new orderNumber to the order is required'});
     }
@@ -72,6 +72,7 @@ const updateOrder = async (req,res) => {
     }
 
     const newOrder = {
+        id: req.params.id,
         orderNumber: req.body.orderNumber,
         orderDate: req.body.orderDate,
         location: req.body.location,
@@ -93,7 +94,7 @@ const updateOrder = async (req,res) => {
 };
 
 
-const deleteOrder = async (req,res) => {
+const deleteOrder = async (req, res) => {
     const order = await OrderService.delete(req.params.id);
 
     if (!order) {
@@ -103,7 +104,7 @@ const deleteOrder = async (req,res) => {
     res.send();
 }
 
-const searchOrder = async (req,res) => {
+const searchOrder = async (req, res) => {
     const order = await OrderService.search(req.params.id);
 
     if (!order) {

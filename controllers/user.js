@@ -2,7 +2,10 @@ const UserService = require('../services/user');
 
 const getAllUsers = async (req, res) => {
     try {
-        let Users; 
+        let Users;
+
+        if (req.query.is_Manager) {
+            Users = await UserService.getAllManagers(req.query.is_Manager);
         
         if (!req.query.phoneNumber){
             if (!req.query.fname || !req.query.lname || !req.query.password) {

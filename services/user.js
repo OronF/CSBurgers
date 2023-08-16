@@ -87,6 +87,10 @@ const searchForPassward = async (fname, lname) => {
     return await User.find({fname, lname});
 }
 
+const getAllManagers = async (is_Manager) => {
+    return await User.find({is_Manager});
+}
+
 module.exports = {
     getAll,
     create: createUser,
@@ -94,5 +98,6 @@ module.exports = {
     update: updateUser,
     search: searchUser,
     searchForPassward,
-    searchForLogIn
+    searchForLogIn,
+    getAllManagers
 }

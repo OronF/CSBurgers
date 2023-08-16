@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script
+        src="https://code.jquery.com/jquery-3.7.0.js"
+        integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
+        crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"
+        integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0="
+        crossorigin="anonymous">
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./stylesheets/branchesMangers.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <!-- icon-->
+    <link rel="icon" href="./images/burger.png">
+    <!-- bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <!-- fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato&family=Noto+Sans+Hebrew:wght@500;900&display=swap" rel="stylesheet">
+    <title>סניפים</title>
+</head>
+<body>
+   <a href="/" class="btn-back"><i class="bi bi-arrow-bar-right"></i></a>
+
+    <header class="pageTitle">סניפים</header>
+
+    <section class="search">
+        <div class="search-wrapper">
+            <input id="searchTxt" class="form-control" type="search" placeholder="מצא סניף" data-search />
+        </div>
+    </section>
+
+    <main class="branches">
+        <ol class="branches-list"></ol>
+
+        <div id="nohide" class="nohide">
+            <div id="addNewBranch">
+                <i class="bi bi-plus-circle" id="addIcon"></i>
+            </div>
+        </div>
+        
+        <div id="hide" class="hide">
+            <div id="info">
+                <div class="inputs">
+                    <input placeholder="שם הסניף" class="info-input" id="branchName">
+                    <input placeholder="כתובת" class="info-input" id="address">
+                    <input placeholder="שעות פעילות" class="info-input" id="Activity">
+                    <input placeholder="קורדינטה אנכית" type="number" class="info-input" id="x">
+                    <input placeholder="קורדינטה אופקית" class="info-input" id="y">
+                </div>
+                <div class="selection">
+                    <select id="managers" class="form-select form-select-lg"></select>
+                </div>
+                <div class="buttons">
+                    <button class="closeBtn">סגור</button>
+                    <button class="saveBtn">שמור</button>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        var apiKey= '<%= process.env.GOOGLE_MAPS_API_KEY %>';
+    (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})
+        ({key: apiKey, v: "beta"});</script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+    <script src="./javascripts/branchesMangers.js"></script>
+</body>
+</html>

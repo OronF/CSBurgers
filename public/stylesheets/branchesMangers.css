@@ -1,0 +1,120 @@
+.btn-back {
+    font-size: 2.5vw;
+    position: fixed;
+    right: 3vw;
+    top: 1vw;
+}
+
+/*------------------------------------------------------- branches css ------------------------------------------------------------*/
+
+.pageTitle {
+    text-align: center;
+    font-size: 2.8vw;
+    color: rgb(154, 13, 13);
+    margin: 1.5vw;
+}
+
+.search-wrapper {
+    display: flex;
+    justify-content: center;
+    margin: 1.5vw;
+}
+
+#searchTxt {
+    width: 55vw;
+    border-radius: 0.5vw;
+    border: solid 2px black;
+    
+}
+
+.branches {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.branches-list {
+    list-style-type: none;
+    width: 55vw;
+}
+
+li {
+    display: flex;
+    flex-direction: column;
+}
+
+.location-Section {
+    color: white;
+    background-color: rgb(154, 13, 13);
+    margin: 0.7vw;
+    height: 4vw;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.location-data {
+    display: flex;
+    flex-direction: row;
+    height: 12vw;
+    justify-content: space-evenly;
+    border: solid 2px black;
+}
+
+.location {
+    margin-right: 1vw;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+}
+
+.nameOfLocation {
+    margin-right: 1vw;
+    margin-right: 3.5vw;
+    font-size: 1.5vw;
+}
+
+.plus-icon {
+    margin-left: 1vw;
+    font-size: 1.8vw;
+}
+
+.location-icon {
+    font-size: 1.8vw;
+}
+
+.data {
+    margin-right: 0.5vw;
+}
+
+#addNewBranch {
+    border: 2px dotted black;
+    width: 55vw;
+    height: 4vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-items: center;
+    margin-bottom: 1vw;
+}
+
+#addIcon {
+    color: green;
+    font-size: 2vw;
+}
+
+#info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.inputs {
+    display: flex;
+    flex-direction: column;
+}
+
+.hide {
+    display: none;
+}
