@@ -21,7 +21,7 @@ const getAllCategories = async (req, res) => {
 
 const createCategory = async (req, res) => {
     try {
-        const newCatrgory = await CatrgoryService.create(req.body.name);
+        const newCatrgory = await CatrgoryService.create(req.body.name, req.body.categorytype);
         res.json(newCatrgory);
     }
 
@@ -38,9 +38,14 @@ const updateCategory = async (req, res) => {
         res.status(400).json({message:'The new name to the category is required'});
     }
 
+    if (!req.body.categorytype) {
+        res.status(400).json({message:'The new categorytype to the category is required'});
+    }
+
     const newCatrgory = {
         id: req.params.id,
-        name: req.body.name
+        name: req.body.name,
+        categorytype: req.body.categorytype
     }
 
     const category = await CatrgoryService.update(newCatrgory);
