@@ -79,3 +79,18 @@
     transform: scale(1.05);
 
 }
+
+.smaller-title
+{
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;
+    text-align: center;
+    font-size: 1.3vw;
+}
+
+.select-branch
+{
+    text-align: right;;
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;
+}
