@@ -138,29 +138,123 @@ $(document).ready(async function() {
         dishesList.append(newElement);
     }
 
-    const appendMealsLi = (dish) => {
-        const newElement = $(`<li id="${dish._id} class="nohide">
+    const appendMealsLi = (meal) => {
+        const newElement = $(`<li id="${meal._id} class="nohide">
 
                 <div class="card">
             <div class="row">
             
             <div class="col-md-4">
-            <img src="${dish.picture}" class="card-img-top" alt="${dish.name}" id="picture">
+            <img src="${meal.picture}" class="card-img-top" alt="${meal.name}" id="picture">
         </div>
                 <div class="col-md-8">
-                    <h5 class="card-title title-color">${dish.name}</h5>
-                    <p class="card-text"> ${dish.price}₪</p>
-                    <p class="card-info"> ${dish.description}</p>
+                    <h5 class="card-title title-color">${meal.name}</h5>
+                    <p class="card-text"> ${meal.price}₪</p>
+                    <p class="card-info"> ${meal.description}</p>
 
                 </div>
             </div>
-            <button type="button" class="order-btn">הוספה להזמנה</button>
+            <button type="button" class="order-btn" id="order-btn-${meal._id}" data-meal-id="${meal._id}">הוספה להזמנה</button>
 
         </div>
 
     
         </li>`);
+        newElement.find(`#order-btn-${meal._id}`).on('click', async function() {
+            if (productsList.length > 0) {
+                productsList.empty();
+            }
 
+            const btn = $(this);
+            const id = btn.attr('data-meal-id');
+
+            let Meal;
+
+            await $.ajax({
+                url:`api/meal/${id}`,
+                method: "GET",
+                success: (data) => {
+                    Meal = data;
+                },
+                error: (error) => {
+                    console.log(error);
+                }
+            });
+
+            let order;
+
+            await $.ajax({
+                url:`api/order/64d2a8c12fd6b3552f5dfcbd`,
+                method: "GET",
+                success: (data) => {
+                    order = data;
+                },
+                error: (error) => {
+                    console.log(error);
+                }
+            });
+
+            order.meals.push(Meal._id);
+
+            let newOrder;
+
+            await $.ajax({
+                url: `api/order/64d2a8c12fd6b3552f5dfcbd`,
+                method: 'PUT',
+                dataType: "json",
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    orderNumber: order.orderNumber,
+                    orderDate: order.orderDate,
+                    location: order.location,
+                    totalprice: order.totalprice,
+                    meals: order.meals,
+                    meals: order.meals
+                }),
+                success: function(data) {
+                    console.log("Data saved successfully:", data);
+                    newOrder = data;
+                },
+                error: function(error) {
+                    console.error("Error saving data:", error);
+                }
+            });
+
+            let name;
+
+            await $.ajax({
+                url:`api/order/64d2a8c12fd6b3552f5dfcbd`,
+                method: "GET",
+                dataType: "json",
+                contentType: 'application/json',
+                data: {
+                    group: true
+                },
+                success: function(data) {
+                    data.forEach(async (meals) => {
+                        
+
+                        await $.ajax({
+                            url: `api/meal/${meals._id}`,
+                            method: 'GET',
+                            success: (dataMeal) => {
+                                name = dataMeal.name;
+                            },
+                            error: (error) => {
+                                console.log(error);
+                            }
+                        });
+
+                        productsList.append(`<li><span>${name}</span><span>${meals.count}</span></li>`);
+                    })
+                },
+                error: function(error) {
+                    console.error("Error saving data:", error);
+                }
+            });
+
+        
+        });
         mealsList.append(newElement);
     }
 
