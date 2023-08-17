@@ -119,3 +119,25 @@ body {
 {
     font-size: 1vw;
 }
+.SumOrder
+{
+    border-radius: 5px;
+}
+.card
+{
+
+}
+#order
+{
+    position: fixed;
+    top: 20px;
+    left: 20px;
+}
+.CardLink
+{
+text-decoration: none;
+text-decoration-color: white;
+background-color: red;
+font-size: 30px;
+font-weight: bold;
+}
