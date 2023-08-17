@@ -75,8 +75,6 @@ $(document).ready(async function() {
 
             order.dishes.push(Dish._id);
 
-            let newOrder;
-
             await $.ajax({
                 url: `api/order/64d2a8c12fd6b3552f5dfcbd`,
                 method: 'PUT',
@@ -160,6 +158,7 @@ $(document).ready(async function() {
 
     
         </li>`);
+
         newElement.find(`#order-btn-${meal._id}`).on('click', async function() {
             if (productsList.length > 0) {
                 productsList.empty();
@@ -196,8 +195,6 @@ $(document).ready(async function() {
 
             order.meals.push(Meal._id);
 
-            let newOrder;
-
             await $.ajax({
                 url: `api/order/64d2a8c12fd6b3552f5dfcbd`,
                 method: 'PUT',
@@ -209,7 +206,7 @@ $(document).ready(async function() {
                     location: order.location,
                     totalprice: order.totalprice,
                     meals: order.meals,
-                    meals: order.meals
+                    dishes: order.dishes
                 }),
                 success: function(data) {
                     console.log("Data saved successfully:", data);
@@ -228,7 +225,8 @@ $(document).ready(async function() {
                 dataType: "json",
                 contentType: 'application/json',
                 data: {
-                    group: true
+                    group: true,
+                    meals: true
                 },
                 success: function(data) {
                     data.forEach(async (meals) => {
