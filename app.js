@@ -39,6 +39,14 @@ const connectMongoDB = async () => {
 connectMongoDB();
 
 var app = express();
+var http = require('http').createServer(app); 
+var io = require('socket.io')(http);
+
+io.on('connection', (socket) => {
+    socket.on('new message', (msg) => {
+     io.emit('new message', msg);
+  });
+});
 
 //app.use(cors());
 app.use(bodyParser.urlencoded({extended:true}));
