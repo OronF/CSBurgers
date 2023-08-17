@@ -20,6 +20,18 @@ $(document).ready(function() {
     }
 
     $.ajax({
+        dataType: "json",
+        url: '/delivery',
+        method: 'GET',
+        success: (data) => {
+            console.log(data.id);
+        },
+        error: (error) => {
+            console.error(error);
+        }
+    });
+
+    $.ajax({
         url: "/api/branches",
         method: "GET",
         success: (data) => {

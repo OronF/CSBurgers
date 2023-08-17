@@ -31,37 +31,74 @@ $(document).ready(async function() {
                     </div>
                 </div>
             </div>
-            <a href="#" type="button" class="order-btn">הוספה להזמנה</a>
+            <a href="/delivery" type="button" class="order-btn" data-dish-id="${dish._id}">הוספה להזמנה</a>
 
         </div>
     
         </li>`);
 
+        newElement.find('.nameOfCategory').on('click', async function() {
+            const btn = $(this);
+            const id = btn.attr('data-dish-id');
+            
+            $.ajax({
+                url: '/delivery',
+                method: 'GET',
+                dataType: "json",
+                contentType: 'application/json',
+                data: JSON.stringify({ id }),
+                success: function(response) {
+                    console.log("Data saved successfully:", response);
+                },
+                error: function(error) {
+                    console.error("Error saving data:", error);
+                }
+            });
+        });
+
         dishesList.append(newElement);
     }
 
-    const appendMealsLi = (dish) => {
-        const newElement = $(`<li id="${dish._id} class="nohide">
+    const appendMealsLi = (meal) => {
+        const newElement = $(`<li id="${meal._id} class="nohide">
 
                 <div class="card">
             <div class="row">
             
             <div class="col-md-4">
-            <img src="${dish.picture}" class="card-img-top" alt="${dish.name}" id="picture">
+            <img src="${meal.picture}" class="card-img-top" alt="${meal.name}" id="picture">
         </div>
                 <div class="col-md-8">
-                    <h5 class="card-title title-color">${dish.name}</h5>
-                    <p class="card-text"> ${dish.price}₪</p>
-                    <p class="card-info"> ${dish.description}</p>
+                    <h5 class="card-title title-color">${meal.name}</h5>
+                    <p class="card-text"> ${meal.price}₪</p>
+                    <p class="card-info"> ${meal.description}</p>
 
                 </div>
             </div>
-            <a href="#" type="button" class="order-btn">הוספה להזמנה</a>
+            <a href="/delivery" type="button" class="order-btn" data-meal-id="${meal._id}">הוספה להזמנה</a>
 
         </div>
 
-    
         </li>`);
+
+        newElement.find('.nameOfCategory').on('click', async function() {
+            const btn = $(this);
+            const id = btn.attr('data-meal-id');
+            
+            $.ajax({
+                url: '/delivery',
+                method: 'GET',
+                dataType: "json",
+                contentType: 'application/json',
+                data: JSON.stringify({ id }),
+                success: function(response) {
+                    console.log("Data saved successfully:", response);
+                },
+                error: function(error) {
+                    console.error("Error saving data:", error);
+                }
+            });
+        });
 
         mealsList.append(newElement);
     }
