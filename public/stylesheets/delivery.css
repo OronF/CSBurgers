@@ -93,4 +93,14 @@
     text-align: right;;
     font-family: 'Lato', sans-serif;
     font-family: 'Noto Sans Hebrew', sans-serif;
+    margin-bottom: 2vw;
+}
+
+.link:hover
+{
+    color:rgb(154, 13, 13);
+}
+
+.link{
+    color:black;
 }
