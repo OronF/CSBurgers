@@ -127,7 +127,7 @@ const searchOrder = async (req, res) => {
             if (!dishes) {
                 return res.status(404).json({errors:["Order's dishes not found"]});
             }
-            
+
             res.json(dishes);
             return;
         }
