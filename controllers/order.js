@@ -112,18 +112,25 @@ const searchOrder = async (req, res) => {
     }
 
     if (req.query.group) {
-        const meals = await order.aggregate([
-            { $unwind: '$meals' },
-            {
-                $group: {
-                    _id: '$meals.name',
-                    count: {$sum: 1}
-                }
+        if(req.query.meals) {
+            const meals = await OrderService.groupByMeals(order);
+
+            if (!meals) {
+                return res.status(404).json({errors:["Order's meals not found"]});
             }
-        ]).toArray();
 
+            res.json(meals);
+            return;
+        } else {
+            const dishes = await OrderService.groupByDishes(order);
 
-        res.json(meals);
+            if (!dishes) {
+                return res.status(404).json({errors:["Order's dishes not found"]});
+            }
+            
+            res.json(dishes);
+            return;
+        }
     }
 
     res.json(order);
