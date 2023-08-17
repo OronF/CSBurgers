@@ -119,3 +119,11 @@ body {
 {
     font-size: 1vw;
 }
+
+.add-btn{
+    font-size: 40px;
+    color: green;
+    position: fixed;
+    top: 11vw;
+    left: 15vw;
+}

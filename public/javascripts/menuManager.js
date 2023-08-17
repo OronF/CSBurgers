@@ -374,4 +374,22 @@ $(document).ready(async function() {
             console.log(error);
         }
     });
+
+    const addingProduct = $('.addingProduct');
+    const addbtn = $('.add-btn');
+
+    addbtn.on('click', async function() {
+        addbtn.remove();
+
+        addingProduct.append(`<div class="inputs">
+            <input placeholder="">
+            <input placeholder="">
+            <input placeholder="">
+            <input placeholder="">
+            <input placeholder="">
+            <input placeholder="">
+            <input placeholder="">
+        </div>`);
+    });
+
 });
