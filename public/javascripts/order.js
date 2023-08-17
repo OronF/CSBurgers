@@ -31,7 +31,7 @@ $(document).ready(async function() {
                     </div>
                 </div>
             </div>
-            <a href="#" type="button" class="order-btn">הוספה להזמנה</a>
+            <button type="button" class="order-btn">הוספה להזמנה</button>
 
         </div>
     
@@ -56,7 +56,7 @@ $(document).ready(async function() {
 
                 </div>
             </div>
-            <a href="#" type="button" class="order-btn">הוספה להזמנה</a>
+            <button type="button" class="order-btn">הוספה להזמנה</button>
 
         </div>
 
