@@ -43,4 +43,8 @@ router.get('/AccessibilityStatement', function(req, res, next) {
   res.render("AccessibilityStatement");
 });
 
+router.get('/menuManager', function(req, res, next) {
+  res.render("menuManager");
+});
+
 module.exports = router;
