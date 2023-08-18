@@ -29,6 +29,10 @@ const MealSchema = new mongoose.Schema({
     description: {
         type: String,
         required: true
+    },
+
+    webServiceId: {
+        type: String
     }
 });
 

@@ -27,7 +27,24 @@ const getAllDishes = async (req, res) => {
 
 const createDish = async (req, res) => {
     try {
-        const newDish = await DishService.create(req.body.name, req.body.price, req.body.categoryId, req.body.picture, req.body.description);
+        const tmp = {
+            name: req.body.name,
+            price: req.body.price,
+            categoryId: req.body.categoryId,
+            picture: req.body.picture,
+            description: req.body.description
+        }
+
+        if (req.body.webServiceId) {
+            tmp.webServiceId = req.body.webServiceId;
+        }
+        
+        const newDish = await DishService.create(tmp);
+
+        if (!newDish) {
+            throw new Error("couldn't create new dish");
+        }
+
         res.json(newDish);
     }
     
@@ -69,7 +86,12 @@ const updateDish = async (req, res) => {
         description: req.body.description
     }
 
+    if (req.body.webServiceId) {
+        newDish.webServiceId = req.body.webServiceId;
+    }
+
     const dish = await DishService.update(newDish);
+    
     if (!dish) {
         return res.status(404).json({errors:['Dish not found']});
     }

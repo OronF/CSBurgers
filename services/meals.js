@@ -1,19 +1,22 @@
 const Meal = require('../models/meals');
-const mongoose = require('mongoose');
 
 const getAll = async() => {
     return await Meal.find({});
 }
 
-const createMeal = async (name, price, dishes, categoryId, picture, description) => {
+const createMeal = async (newMeal) => {
     const meal = new Meal({
-        name: name,
-        price: price,
-        dishes: dishes,
-        categoryId: categoryId,
-        picture: picture,
-        description: description
+        name: newMeal.name,
+        price: newMeal.price,
+        dishes: newMeal.dishes,
+        categoryId: newMeal.categoryId,
+        picture: newMeal.picture,
+        description: newMeal.description
     });
+
+    if (newMeal.webServiceId) {
+        meal.webServiceId = newMeal.webServiceId;
+    }
 
     return await meal.save();
 }
@@ -47,6 +50,10 @@ const updateMeal = async (newMeal) => {
     meal.categoryId = newMeal.categoryId;
     meal.picture = newMeal.picture;
     meal.description = newMeal.description;
+
+    if (newMeal.webServiceId) {
+        meal.webServiceId = newMeal.webServiceId;
+    }
 
     await meal.save()
     return meal;
