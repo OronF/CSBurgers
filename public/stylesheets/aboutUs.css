@@ -9,3 +9,17 @@
     font-family: 'Noto Sans Hebrew', sans-serif;
     transition: all 0.4s;
 }
+
+.card {
+    display: flex;
+}
+.card-body {
+    flex: 1;
+}
+.video-container {
+    flex: 1;
+}
+.video-container video {
+    width: 100%;
+    height: auto;
+}
