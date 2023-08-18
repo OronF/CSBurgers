@@ -26,17 +26,20 @@ $(document).ready(async function() {
                     <img src="${dish.picture}" class="card-img-top" alt="${dish.name}" id="picture">
                 </div>
                 <div class="col-md-8" id="card-${dish._id}">
-                    <div class="card-body">
+                <div class="card-body">
+                    <div class="same-level" id="same-level-${dish._id}"> 
+                        <div class="buttons">
+                            <button class="updateBtn btn btn-success" data-dish-id="${dish._id}"><i id="button-${dish._id}" class="bi bi-pencil-fill"></i></button>
+                            <button class="deleteBtn btn btn-danger" data-dish-id="${dish._id}"><i class="bi bi-x-lg"></i></button>
+                        </div>
+
                         <h5 class="card-title" id="title-${dish._id}">${dish.name}</h5>
+                    </div>
+
                         <p class="card-text" id="text-${dish._id}"> ${dish.price}₪</p>
                         <p class="card-info" id="info-${dish._id}"> ${dish.description}</p>
-
                     </div>
                 </div>
-            </div>
-            <div class="buttons">
-                <button class="updateBtn" data-dish-id="${dish._id}"><i id="button-${dish._id}" class="bi bi-pencil-fill"></i></button>
-                <button class="deleteBtn" data-dish-id="${dish._id}"><i class="bi bi-x-lg"></i></button>
             </div>
             <a href="#" type="button" class="order-btn">הוספה להזמנה</a>
 
@@ -119,8 +122,8 @@ $(document).ready(async function() {
 
                 $(`.inputs-${id}`).remove();
 
+                $(`#same-level-${id}`).append(`<h5 class="card-title" id="title-${newDish._id}">${newDish.name}</h5>`);
                 $(`#card-${id}`).append(`
-                    <h5 class="card-title" id="title-${newDish._id}">${newDish.name}</h5>
                     <p class="card-text" id="text-${newDish._id}"> ${newDish.price}₪</p>
                     <p class="card-info" id="info-${newDish._id}"> ${newDish.description}</p>
                 `);
@@ -141,17 +144,23 @@ $(document).ready(async function() {
             </div>
             <div class="col-md-8" id="card-${meal._id}">
                 <div class="card-body">
-                    <h5 class="card-title" id="title-${meal._id}">${meal.name}</h5>
+
+                    <div class="same-level" id="same-level-${meal._id}"> 
+                        <div class="buttons">
+                            <button class="updateBtn btn btn-success" data-meal-id="${meal._id}"><i id="button-${meal._id}" class="bi bi-pencil-fill"></i></button>
+                            <button class="deleteBtn btn btn-danger" data-meal-id="${meal._id}"><i class="bi bi-x-lg"></i></button>
+                        </div>
+
+                        <h5 class="card-title" id="title-${meal._id}">${meal.name}</h5>
+                    </div>
+                    
                     <p class="card-text" id="text-${meal._id}"> ${meal.price}₪</p>
                     <p class="card-info" id="info-${meal._id}"> ${meal.description}</p>
 
                 </div>
             </div>
         </div>
-        <div class="buttons">
-            <button class="updateBtn" data-meal-id="${meal._id}"><i id="button-${meal._id}" class="bi bi-pencil-fill"></i></button>
-            <button class="deleteBtn" data-meal-id="${meal._id}"><i class="bi bi-x-lg"></i></button>
-        </div>
+        
         <a href="#" type="button" class="order-btn">הוספה להזמנה</a>
 
     </div>
@@ -234,8 +243,8 @@ $(document).ready(async function() {
 
                 $(`.inputs-${id}`).remove();
 
+                $(`#same-level-${id}`).append(`<h5 class="card-title" id="title-${newMeal._id}">${newMeal.name}</h5>`);
                 $(`#card-${id}`).append(`
-                    <h5 class="card-title" id="title-${newMeal._id}">${newMeal.name}</h5>
                     <p class="card-text" id="text-${newMeal._id}"> ${newMeal.price}₪</p>
                     <p class="card-info" id="info-${newMeal._id}"> ${newMeal.description}</p>
                 `);
