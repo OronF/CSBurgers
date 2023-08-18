@@ -7,6 +7,9 @@ $(document).ready(async function() {
     const dishesSection = $('#dishesSection');
     const mealsSection = $('#mealsSection');
 
+    const addingProduct = $('.addingProduct');
+    const addbtn = $('.add-btn');
+
     const putHideOnElement = (element) => {
         element.removeClass('nohide').addClass('hide');
     }
@@ -244,11 +247,303 @@ $(document).ready(async function() {
         mealsList.append(newElement);
     }
 
-    /*const renderDishes = (data) => {
+    const renderDishes = (data) => {
         data.forEach(dish => {
             appendDishesLi(dish);
         });
-    }*/
+
+        addbtn.on('click', async function() {
+            addbtn.hide();
+    
+            const newElement = $(`<div class="creating-category">
+            <div class="categorySel">
+                <select id="category" class="form-select form-select-lg"></select>
+            </div>
+            <div class="buttons">
+                <button class="back">חזור</button>
+                <button class="foward">המשך</button>
+            </div>
+            </div>`);
+    
+            newElement.find('#category').append(`<option disabled selected class="text-blue-600/100">בחר קטגוריה</option>`);
+    
+            let index = 1;
+    
+            const createSelection = (category) => {
+                newElement.find('#category').append(`<option value="${index}" data-category-id="${category._id}">${category.name}</option>`);
+                index++;
+            }
+    
+            await $.ajax({
+                url: "/api/category",
+                method: "GET",
+                success: (data) => {
+                    data.forEach(category => {
+                        createSelection(category);
+                    });
+                },
+                error: (error) => {
+                    console.log(error);
+                }
+            });
+    
+            newElement.find('.back').on('click', function() {
+                $('.creating-category').hide();
+                addbtn.show();
+            });
+    
+            newElement.find('.foward').on('click', async function() {
+                $('.creating-category').hide();
+                
+                const selectCategory = $('#category').find(":selected").attr('data-category-id');
+    
+                let category;
+    
+                await $.ajax({
+                    url: `api/category/${selectCategory}`,
+                    method: 'GET',
+                    success: (data) => {
+                        category = data;
+                    },
+                    error: (error) => {
+                        console.log(error);
+                    }
+                });
+    
+                if (category.categorytype === 'dish') {
+                    const createDish = $(`<div class="inputs">
+                        <input placeholder="שם הארוחה" id="name">
+                        <input placeholder="מחיר" id="price">
+                        <input placeholder="תיאור" id="description">
+                        <input placeholder="קישור לתמונה" id="picture">
+                    </div>
+                    <div class="selections">
+                        <select id="dish-categories" class="form-select form-select-lg"></select>
+                    </div>
+                    <div class="buttons">
+                        <button class="back-create">חזור</button>
+                        <button class="foward-create">המשך</button>
+                    </div>`);
+    
+                    createDish.find('#dish-categories').append(`<option disabled selected class="text-blue-600/100">בחר קטגוריה</option>`);
+    
+                    let index = 1;
+    
+                    const createSelectionForCategory = (category) => {
+                        createDish.find('#dish-categories').append(`<option value="${index}" data-category-id="${category._id}">${category.name}</option>`);
+                        index++;
+                    }
+    
+                    await $.ajax({
+                        url: "/api/category",
+                        method: "GET",
+                        dataType: "json",
+                        contentType: 'application/json',
+                        data: {
+                            categorytype: "dish"
+                        },
+                        success: (data) => {
+                            data.forEach(category => {
+                                createSelectionForCategory(category);
+                            });
+                        },
+                        error: (error) => {
+                            console.log(error);
+                        }
+                    });   
+    
+                    createDish.find('.back-create').on('click', function() {
+                        $('.creating-category').show();
+                        createDish.hide();
+                    });
+    
+                    createDish.find('.foward-create').on('click', async function() {
+                        await $.ajax({
+                            url: 'api/dish',
+                            method: 'POST',
+                            dataType: "json",
+                            contentType: 'application/json',
+                            data: JSON.stringify({
+                                name: createDish.find('#name').val(),
+                                price: createDish.find('#price').val(),
+                                categoryId: createDish.find('#dish-categories').find(":selected").attr('data-category-id'),
+                                picture: createDish.find('#picture').val(),
+                                description: createDish.find('#description').val()
+                            }),
+                            success: function(newData) {
+                                data.push(newData);
+                                appendDishesLi(newData);
+                                createDish.hide();
+                            addbtn.show();
+                            },
+                            error: function(error) {
+                                console.error("Error saving data:", error);
+                            }
+                        });
+                    });
+    
+                    addingProduct.append(createDish);
+                } else {
+                    const createMeal = $(`<div class="inputs">
+                        <input placeholder="שם הארוחה" id="name">
+                        <input placeholder="מחיר" id="price">
+                        <input placeholder="תיאור" id="description">
+                        <input placeholder="קישור לתמונה" id="picture">
+                    </div>
+                    <div class="selections">
+                        <select id="meal-categories" class="form-select form-select-lg"></select>
+                        <select id="meal-dish" class="form-select form-select-lg"></select>
+                        <select id="meal-drink" class="form-select form-select-lg"></select>
+                        <select id="meal-extra" class="form-select form-select-lg"></select>
+                    </div>
+                    <div class="buttons">
+                        <button class="back-create">חזור</button>
+                        <button class="foward-create">המשך</button>
+                    </div>`);
+
+                    createMeal.find('#meal-categories').append(`<option disabled selected class="text-blue-600/100">בחר קטגוריה</option>`);
+                    createMeal.find('#meal-dish').append(`<option disabled selected class="text-blue-600/100">עיקרית</option>`);
+                    createMeal.find('#meal-extra').append(`<option disabled selected class="text-blue-600/100">תוספת</option>`);
+                    createMeal.find('#meal-drink').append(`<option disabled selected class="text-blue-600/100">שתייה</option>`);
+
+                    let index = 1;
+    
+                    const createSelectionForCategory = (category) => {
+                        createMeal.find('#meal-categories').append(`<option value="${index}" data-category-id="${category._id}">${category.name}</option>`);
+                        index++;
+                    }
+    
+                    await $.ajax({
+                        url: "/api/category",
+                        method: "GET",
+                        dataType: "json",
+                        contentType: 'application/json',
+                        data: {
+                            categorytype: "meal"
+                        },
+                        success: (data) => {
+                            data.forEach(category => {
+                                createSelectionForCategory(category);
+                            });
+                        },
+                        error: (error) => {
+                            console.log(error);
+                        }
+                    });  
+
+                    const createSelectionForDish = (dish) => {
+                        createMeal.find('#meal-dish').append(`<option value="${index}" data-dish-id="${dish._id}">${dish.name}</option>`);
+                        index++;
+                    }
+
+                    await $.ajax({
+                        url: "/api/dish",
+                        method: "GET",
+                        dataType: "json",
+                        contentType: 'application/json',
+                        data: {
+                            categoryId: "64d2394bfdf8c926feae7c3f"
+                        },
+                        success: (data) => {
+                            data.forEach(dish => {
+                                createSelectionForDish(dish);
+                            });
+                        },
+                        error: (error) => {
+                            console.log(error);
+                        }
+                    });  
+
+                    const createSelectionForExtra = (extra) => {
+                        createMeal.find('#meal-extra').append(`<option value="${index}" data-extra-id="${extra._id}">${extra.name}</option>`);
+                        index++;
+                    }
+
+                    await $.ajax({
+                        url: "/api/dish",
+                        method: "GET",
+                        dataType: "json",
+                        contentType: 'application/json',
+                        data: {
+                            categoryId: "64d239aefdf8c926feae7c41"
+                        },
+                        success: (data) => {
+                            data.forEach(category => {
+                                createSelectionForExtra(category);
+                            });
+                        },
+                        error: (error) => {
+                            console.log(error);
+                        }
+                    });  
+
+                    const createSelectionForDrink = (drink) => {
+                        createMeal.find('#meal-drink').append(`<option value="${index}" data-drink-id="${drink._id}">${drink.name}</option>`);
+                        index++;
+                    }
+
+                    await $.ajax({
+                        url: "/api/dish",
+                        method: "GET",
+                        dataType: "json",
+                        contentType: 'application/json',
+                        data: {
+                            categoryId: "64d2398dfdf8c926feae7c40"
+                        },
+                        success: (data) => {
+                            data.forEach(drink => {
+                                createSelectionForDrink(drink);
+                            });
+                        },
+                        error: (error) => {
+                            console.log(error);
+                        }
+                    });  
+
+                    let dishesArray = [];
+
+                    dishesArray.push(createMeal.find('#meal-dish').find(":selected").attr('data-dish-id'));
+                    dishesArray.push(createMeal.find('#meal-extra').find(":selected").attr('data-extra-id'));
+                    dishesArray.push(createMeal.find('#meal-drink').find(":selected").attr('data-drink-id'));
+
+                    createMeal.find('.back-create').on('click', function() {
+                        $('.creating-category').show();
+                        createMeal.hide();
+                    });
+
+                    createMeal.find('.foward-create').on('click', async function() {
+                        await $.ajax({
+                            url: 'api/meal',
+                            method: 'POST',
+                            dataType: "json",
+                            contentType: 'application/json',
+                            data: JSON.stringify({
+                                name: createMeal.find('#name').val(),
+                                price: createMeal.find('#price').val(),
+                                dishes: dishesArray,
+                                categoryId: createMeal.find('#meal-categories').find(":selected").attr('data-category-id'),
+                                picture: createMeal.find('#picture').val(),
+                                description: createMeal.find('#description').val()
+                            }),
+                            success: function(newData) {
+                                data.push(newData);
+                                appendMealsLi(newData);
+                                createMeal.hide();
+                                addbtn.show();
+                            },
+                            error: function(error) {
+                                console.error("Error saving data:", error);
+                            }
+                        });
+                    });
+
+                    addingProduct.append(createMeal);
+                }
+            });
+    
+            addingProduct.append(newElement);
+        });
+    }
 
     const renderMeals = (data) => {
         data.forEach(dish => {
@@ -348,7 +643,7 @@ $(document).ready(async function() {
         }
     });
 
-    /*$.ajax({
+    $.ajax({
         url:"/api/dish",
         method: "GET",
         success: (data) => {
@@ -357,7 +652,7 @@ $(document).ready(async function() {
         error: (error) => {
             console.log(error);
         }
-    });*/
+    });
 
     $.ajax({
         url:"/api/meal",
@@ -374,22 +669,4 @@ $(document).ready(async function() {
             console.log(error);
         }
     });
-
-    const addingProduct = $('.addingProduct');
-    const addbtn = $('.add-btn');
-
-    addbtn.on('click', async function() {
-        addbtn.remove();
-
-        addingProduct.append(`<div class="inputs">
-            <input placeholder="">
-            <input placeholder="">
-            <input placeholder="">
-            <input placeholder="">
-            <input placeholder="">
-            <input placeholder="">
-            <input placeholder="">
-        </div>`);
-    });
-
 });

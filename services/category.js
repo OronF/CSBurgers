@@ -43,10 +43,15 @@ const updateCatrgory = async (newCatrgory) => {
     return category;
 }
 
+const searchCatrgoryByType = async (categorytype) => {
+    return await Category.find({categorytype});
+}
+
 module.exports = {
     getAll,
     create: createCatrgory,
     delete: deleteCatrgory,
     update: updateCatrgory,
-    search: searchCatrgory
+    search: searchCatrgory,
+    searchCatrgoryByType
 }
