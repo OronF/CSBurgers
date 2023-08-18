@@ -42,9 +42,10 @@
 
 .branches {
     display: flex;
-    justify-content: center;
     font-family: 'Lato', sans-serif;
     font-family: 'Noto Sans Hebrew', sans-serif;
+    flex-direction: column;
+    align-items: center;
 }
 
 .branches-list {
@@ -60,7 +61,6 @@ li {
 .hide {
     display: none;
 }
-
 
 .location-Section {
     color: white;
@@ -83,12 +83,16 @@ li {
     border: none;
 }
 
-
 .location {
     margin-right: 1vw;
     display: flex;
     flex-direction: row-reverse;
     align-items: center;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row-reverse;
 }
 
 .nameOfLocation {
@@ -98,6 +102,11 @@ li {
 }
 
 .plus-icon {
+    margin-left: 1vw;
+    font-size: 1.8vw;
+}
+
+.remove-icon {
     margin-left: 1vw;
     font-size: 1.8vw;
 }
