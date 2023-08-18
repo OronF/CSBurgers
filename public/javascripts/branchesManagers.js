@@ -13,13 +13,16 @@ $(document).ready(function() {
                 <span class="nameOfLocation">${branch.name}</span>
             </div>
 
-            <div type="button" class="remove-icon" data-branch-id="${branch._id}">
-                <i class="bi bi-x-circle-fill" id="iconToRemove-${branch._id}"></i>
+            <div class="buttons">
+                <div type="button" class="remove-icon" data-branch-id="${branch._id}">
+                    <i class="bi bi-x-circle-fill" id="iconToRemove-${branch._id}"></i>
+                </div>
+            
+                <div type="button" class="plus-icon" data-branch-id="${branch._id}">
+                    <i class="bi bi-plus-circle-fill" id="iconToClick-${branch._id}"></i>
+                </div>
             </div>
-
-            <div type="button" class="plus-icon" data-branch-id="${branch._id}">
-                <i class="bi bi-plus-circle-fill" id="iconToClick-${branch._id}"></i>
-            </div>
+            
             </div>
         </li>`);
 
@@ -102,7 +105,7 @@ $(document).ready(function() {
 
     let Branches = [];
 
-    const render = (data) => {
+    const render = async (data) => {
         Branches = data.map(branch => {
             appendBranchLi(branch);
             return {id: branch._id, name: branch.name, element: $(`#${branch._id}`)};
@@ -115,87 +118,102 @@ $(document).ready(function() {
         addBranch.on('click', async function() {
             hide.removeClass('hide').addClass('nohide');
             nohide.removeClass('nohide').addClass('hide');
-
-            let users;
-
-            await $.ajax({
-                url:"/api/user",
-                method: "GET",
-                dataType: "json",
-                contentType: 'application/json',
-                data: {
-                    is_Manager: true
-                },
-                success: function(data) {
-                    users = data;
-                },
-                error: function(error) {
-                    console.error("Error finding data:", error);
-                }
-            });
-
-            const managers = $('#managers');
-
-            managers.append(`<option  disabled selected class="text-blue-600/100">שם מנהל</option>`);
-
-            let index = 1;
-
-            users.forEach(manager => {
-                managers.append(`<option value="${index}" data-manager-id="${manager._id}" data-phone-number="${manager.phoneNumber}">${manager.fname}</option>`);
-                index++;
-            });
-
-            const closeBtn = $('.closeBtn');
-
-            closeBtn.on('click', function() { 
-                hide.removeClass('nohide').addClass('hide');
-                nohide.removeClass('hide').addClass('nohide');
-            });
-    
-            const branchName = $("#branchName");
-            const address = $("#address");
-            const Activity = $("#Activity");
-            const x = $("#x");
-            const y = $("#y");
-    
-            const saveBtn = $('.saveBtn');
-
-            saveBtn.on('click', async function() {
-                if (branchName.val() && address.val() && Activity.val() && x.val() && y.val()) {
-                    const selectedManager = managers.find(":selected");
-                    if (selectedManager.length) {
-                        const managerId = selectedManager.attr('data-manager-id');
-                        const phoneNumber = selectedManager.attr('data-phone-number');
-                        
-                        await $.ajax({
-                            url: "/api/branches",
-                            method: "POST",
-                            dataType: "json",
-                            contentType: 'application/json',
-                            data: JSON.stringify({
-                                name: branchName.val(),
-                                address: address.val(),
-                                phoneNumber: phoneNumber,
-                                activityTime: Activity.val(),
-                                manager: managerId,
-                                coordinateX: x.val(),
-                                coordinateY: y.val()
-                            }),
-                            success: function(newData) {
-                                hide.removeClass('nohide').addClass('hide');
-                                nohide.removeClass('hide').addClass('nohide');
-
-                                data.push(newData);
-                                appendBranchLi(newData);
-                            },
-                            error: function(error) {
-                                console.error("Error saving data:", error);
-                            }
-                        });
-                    }
-                }
-            });
         });
+
+        let users;
+
+        await $.ajax({
+            url:"/api/user",
+            method: "GET",
+            dataType: "json",
+            contentType: 'application/json',
+            data: {
+                is_Manager: true
+            },
+            success: function(data) {
+                users = data;
+            },
+            error: function(error) {
+                console.error("Error finding data:", error);
+            }
+        });
+
+        const managers = $('#managers');
+
+        managers.append(`<option disabled selected class="text-blue-600/100">שם מנהל</option>`);
+
+        let index = 1;
+
+        users.forEach(manager => {
+            managers.append(`<option value="${index}" data-manager-id="${manager._id}" data-phone-number="${manager.phoneNumber}">${manager.fname}</option>`);
+            index++;
+        });
+
+        const branchName = $("#branchName");
+        const address = $("#address");
+        const Activity = $("#Activity");
+        const x = $("#x");
+        const y = $("#y");
+
+        const closeBtn = $('.closeBtn');
+
+        closeBtn.on('click', function() { 
+            hide.removeClass('nohide').addClass('hide');
+            nohide.removeClass('hide').addClass('nohide');
+
+            branchName.val("");
+            address.val("");
+            Activity.val("");
+            x.val("");
+            y.val("");
+            managers.find(":selected").val("");
+        });
+
+        const saveBtn = $('.saveBtn');
+
+        saveBtn.on('click', async function() {
+            if (branchName.val() && address.val() && Activity.val() && x.val() && y.val()) {
+                const selectedManager = managers.find(":selected");
+                if (selectedManager.length) {
+                    const managerId = selectedManager.attr('data-manager-id');
+                    const phoneNumber = selectedManager.attr('data-phone-number');
+                    
+                    await $.ajax({
+                        url: "/api/branches",
+                        method: "POST",
+                        dataType: "json",
+                        contentType: 'application/json',
+                        data: JSON.stringify({
+                            name: branchName.val(),
+                            address: address.val(),
+                            phoneNumber: phoneNumber,
+                            activityTime: Activity.val(),
+                            manager: managerId,
+                            coordinateX: x.val(),
+                            coordinateY: y.val()
+                        }),
+                        success: function(newData) {
+                            hide.removeClass('nohide').addClass('hide');
+                            nohide.removeClass('hide').addClass('nohide');
+
+                            data.push(newData);
+                            appendBranchLi(newData);
+                        },
+                        error: function(error) {
+                            console.error("Error saving data:", error);
+                        }
+                    });
+
+                    branchName.val("");
+                    address.val("");
+                    Activity.val("");
+                    x.val("");
+                    y.val("");
+                    managers.find(":selected").val("");
+                }
+            }
+        });
+
         
         const searchTxt = $('#searchTxt');
 

@@ -111,6 +111,28 @@ const searchOrder = async (req, res) => {
       return res.status(404).json({errors:['Order not found']});
     }
 
+    if (req.query.group) {
+        if(req.query.meals) {
+            const meals = await OrderService.groupByMeals(order);
+
+            if (!meals) {
+                return res.status(404).json({errors:["Order's meals not found"]});
+            }
+
+            res.json(meals);
+            return;
+        } else {
+            const dishes = await OrderService.groupByDishes(order);
+
+            if (!dishes) {
+                return res.status(404).json({errors:["Order's dishes not found"]});
+            }
+
+            res.json(dishes);
+            return;
+        }
+    }
+
     res.json(order);
 }
 

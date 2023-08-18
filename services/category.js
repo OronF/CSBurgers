@@ -4,9 +4,10 @@ const getAll = async() => {
     return await Category.find({});
 }
 
-const createCatrgory = async (name) => {
+const createCatrgory = async (name, categorytype) => {
     const category = new Category({
-        name: name
+        name: name,
+        categorytype: categorytype
     });
     
     return await category.save();
@@ -36,8 +37,14 @@ const updateCatrgory = async (newCatrgory) => {
     }
        
     category.name = newCatrgory.name;
+    category.categorytype = newCatrgory.categorytype;
+
     await category.save();
     return category;
+}
+
+const searchCatrgoryByType = async (categorytype) => {
+    return await Category.find({categorytype});
 }
 
 module.exports = {
@@ -45,5 +52,6 @@ module.exports = {
     create: createCatrgory,
     delete: deleteCatrgory,
     update: updateCatrgory,
-    search: searchCatrgory
+    search: searchCatrgory,
+    searchCatrgoryByType
 }

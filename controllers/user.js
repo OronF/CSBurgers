@@ -1,17 +1,36 @@
 const UserService = require('../services/user');
 
-const getAllUsers = async (req,res) => {
+const getAllUsers = async (req, res) => {
     try {
-
         let Users;
+
+        let flag = 1;
 
         if (req.query.is_Manager) {
             Users = await UserService.getAllManagers(req.query.is_Manager);
-        } else {
-            Users = await UserService.getAll();
+            flag = 2;
         }
         
-        if(!Users) {
+        if (!req.query.phoneNumber && flag === 1){
+            if (!req.query.fname || !req.query.lname || !req.query.password) {
+                throw new Error('You have not entered all the details');
+            } else {
+                Users = await UserService.searchForLogIn(req.query.fname, req.query.lname, req.query.password);
+            }
+        } else if (flag === 1) {
+            if (req.query.fname || req.query.lname || req.query.phoneNumber)
+            {
+                if (!req.query.fname || !req.query.lname || !req.query.phoneNumber) {
+                    throw new Error('You have not entered all the details');
+                } else {
+                    Users = await UserService.searchForPassward(req.query.fname, req.query.lname);
+                }
+            } else {
+                Users = await UserService.getAll();
+            }
+        }
+        
+        if(!Users || Users.length === 0) {
             throw new Error('Non existing users');
         }
 
@@ -26,7 +45,7 @@ const getAllUsers = async (req,res) => {
     }
 }
 
-const createUser = async (req,res) => {
+const createUser = async (req, res) => {
     try {
         const tmp = {
             fname: req.body.fname,
@@ -53,7 +72,7 @@ const createUser = async (req,res) => {
     }
 }
 
-const updateUser = async (req,res) => {
+const updateUser = async (req, res) => {
     if (!req.body.fname) {
         res.status(400).json({message:'The new fname to the user is required'});
     }
@@ -87,9 +106,9 @@ const updateUser = async (req,res) => {
         password: req.body.password,
         is_Manager: req.body.is_Manager
     }
-
+    
     if (req.body.currentOrder) {
-        tmp.currentOrder = req.body.currentOrder;
+        newUser.currentOrder = req.body.currentOrder;
     }
 
     const user = await UserService.update(newUser);
@@ -101,7 +120,7 @@ const updateUser = async (req,res) => {
 };
 
 
-const deleteUser = async (req,res) => {
+const deleteUser = async (req, res) => {
     const user = await UserService.delete(req.params.id);
 
     if (!user) {
@@ -111,7 +130,7 @@ const deleteUser = async (req,res) => {
     res.send();
 }
 
-const searchUser = async (req,res) => {
+const searchUser = async (req, res) => {
     const user = await UserService.search(req.params.id);
 
     if (!user) {

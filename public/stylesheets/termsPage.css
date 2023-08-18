@@ -1,0 +1,21 @@
+body {
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;
+    margin: 0;
+    direction:rtl;
+  }
+  
+  html {
+    box-sizing: border-box;
+  }
+  
+  .terms-section {
+    padding: 50px;
+    text-align: center;
+    background-color: #474e5d;
+    color: white;
+  }
+  
+  .title {
+    color: grey;
+  }

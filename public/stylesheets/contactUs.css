@@ -4,6 +4,18 @@
     font-family: 'Noto Sans Hebrew', sans-serif;
 }
 
+.btn-back {
+    font-size: 1.5vw;
+    position: fixed;
+    right: 3vw;
+    top: 1vw;
+    color:rgb(154, 13, 13);
+    text-decoration: none;
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;
+    transition: all 0.4s;
+}
+
 .form-control
 {
     text-align: right;
@@ -19,9 +31,4 @@
 .approve
 {
     font-size: xx-large;
-}
-
-.name {
-    display: flex;
-    flex-direction: row-reverse;
 }

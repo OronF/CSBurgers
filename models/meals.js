@@ -16,12 +16,17 @@ const MealSchema = new mongoose.Schema({
         required: true
     },
 
-    CategoryId: {
+    categoryId: {
         type: mongoose.Schema.Types.ObjectId,
         required: true
     },
 
     picture:{
+        type: String,
+        required: true
+    }, 
+
+    description: {
         type: String,
         required: true
     }

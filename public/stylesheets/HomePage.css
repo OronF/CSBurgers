@@ -16,8 +16,7 @@
     transition: all 0.4s;
     border: none;
     background: transparent;
-    color: rgb(154, 13, 13);
-
+    color: rgb(154, 13, 13);;
     text-align: center;
     font-size: 1.3vw;
     margin-top: 1.5vw;
@@ -26,6 +25,11 @@
 
     font-family: 'Lato', sans-serif;
     font-family: 'Noto Sans Hebrew', sans-serif;
+}
+
+.btn-css{
+    color: rgb(154, 13, 13);
+    text-decoration: none;
 }
 
 /* the button's placing */
@@ -42,8 +46,6 @@
     font-family: 'Lato', sans-serif;
     font-family: 'Noto Sans Hebrew', sans-serif;
     text-align: center;
-    
-
 }
 
 .btn-bar{
@@ -110,6 +112,10 @@
     text-align: right;
 }
 
+.hide {
+    display: none;
+}
+
 .cartAndUser {
     display: flex;
     flex-direction: row-reverse;
@@ -123,4 +129,45 @@
 .cart {
     color: black;
     margin-right: 2vw;
+}
+
+#container {
+    display: flex;
+    flex-direction: column;
+}
+
+.social-links-nav {
+    display: flex;
+    justify-content: center;
+}
+
+ .links-nav {
+    display: flex;
+    justify-content: center;
+} 
+
+.link {
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;
+    margin-right: 2vw;
+}
+
+.footer-links{
+    color:black;
+    font-size: 1.5vw;
+}
+
+.footer-social-links{
+    color:black;
+    font-size: 2vw;
+}
+
+.cs-logo{
+    display: flex;
+    justify-content: center;
+}
+
+.csBurger-logo{
+    width: 20vw;
+    margin-top: 2vw;
 }
