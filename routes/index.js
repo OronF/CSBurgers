@@ -49,8 +49,5 @@ router.get('/AccessibilityStatement', function(req, res, next) {
 router.get('/order', function(req, res, next) {  
   res.render("order");
 });
-router.get('/paying', function(req, res, next) {  
-  res.render("paying");
-});
 
 module.exports = router;
