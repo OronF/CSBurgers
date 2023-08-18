@@ -1,7 +1,5 @@
-.register-container
-{
-    font-family: 'Lato', sans-serif;
-    font-family: 'Noto Sans Hebrew', sans-serif;
+body {
+    direction:rtl;
 }
 
 .btn-back {
@@ -16,19 +14,29 @@
     transition: all 0.4s;
 }
 
-.form-control
-{
-    text-align: right;
+.card {
+    display: flex;
+}
+.card-body {
+    flex: 1;
+}
+.video-container {
+    flex: 1;
+}
+.video-container video {
+    width: 100%;
+    height: auto;
 }
 
-.sign-up-title
-{
+.aboutUs-title {
     color: rgb(154, 13, 13);
     text-align: center;
     font-size: 3.3vw;
 }
 
-.approve
-{
-    font-size: xx-large;
+.aboutUs-info {
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;
+    margin: 0;
+    direction:rtl;
 }
