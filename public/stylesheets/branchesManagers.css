@@ -1,8 +1,17 @@
 .btn-back {
-    font-size: 2.5vw;
+    font-size: 1.5vw;
     position: fixed;
     right: 3vw;
     top: 1vw;
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;
+    text-decoration: none;
+    color: rgb(154, 13, 13);
+    transition: all 0.4s;
+}
+
+.btn-back:hover{
+    transform: scale(1.2);
 }
 
 /*------------------------------------------------------- branches css ------------------------------------------------------------*/
@@ -12,25 +21,30 @@
     font-size: 2.8vw;
     color: rgb(154, 13, 13);
     margin: 1.5vw;
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;
 }
 
 .search-wrapper {
     display: flex;
     justify-content: center;
+
+    direction: rtl; 
     margin: 1.5vw;
 }
 
 #searchTxt {
     width: 55vw;
     border-radius: 0.5vw;
-    border: solid 2px black;
-    
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;
 }
 
 .branches {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    justify-content: center;
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;
 }
 
 .branches-list {
@@ -43,6 +57,11 @@ li {
     flex-direction: column;
 }
 
+.hide {
+    display: none;
+}
+
+
 .location-Section {
     color: white;
     background-color: rgb(154, 13, 13);
@@ -52,15 +71,18 @@ li {
     flex-direction: row-reverse;
     justify-content: space-between;
     align-items: center;
+    border-radius: 0.8vw;
 }
 
 .location-data {
     display: flex;
     flex-direction: row;
+    text-align: right;
     height: 12vw;
     justify-content: space-evenly;
-    border: solid 2px black;
+    border: none;
 }
+
 
 .location {
     margin-right: 1vw;
@@ -88,6 +110,17 @@ li {
     margin-right: 0.5vw;
 }
 
+.branch-data {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 50%; 
+}
+
+.map {
+    width: 50%
+}
+
 #addNewBranch {
     border: 2px dotted black;
     width: 55vw;
@@ -113,8 +146,4 @@ li {
 .inputs {
     display: flex;
     flex-direction: column;
-}
-
-.hide {
-    display: none;
 }

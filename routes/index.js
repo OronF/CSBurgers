@@ -19,8 +19,8 @@ router.get('/forgotPassword', function(req, res, next) {
   res.render("forgotPassword");
 });
 
-router.get('/branchesManger', function(req, res, next) {
-  res.render("branchesMangers"); 
+router.get('/branchesManager', function(req, res, next) {
+  res.render("branchesManagers"); 
 });
 
 router.get('/signUp', function(req, res, next) {

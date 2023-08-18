@@ -7,7 +7,8 @@ $(document).ready(async function() {
     const dishesSection = $('#dishesSection');
     const mealsSection = $('#mealsSection');
 
-    const productsList = $('.products-list');
+    const mealsproductsList = $('.meals-products-list');
+    const dishesproductsList = $('.dishes-products-list');
 
     const putHideOnElement = (element) => {
         element.removeClass('nohide').addClass('hide');
@@ -40,8 +41,8 @@ $(document).ready(async function() {
         </li>`);
 
         newElement.find(`#order-btn-${dish._id}`).on('click', async function() {
-            if (productsList.length > 0) {
-                productsList.empty();
+            if (dishesproductsList.length > 0) {
+                dishesproductsList.empty();
             }
 
             const btn = $(this);
@@ -122,7 +123,7 @@ $(document).ready(async function() {
                             }
                         });
 
-                        productsList.append(`<li><span>${name}</span><span>${dishes.count}</span></li>`);
+                        dishesproductsList.append(`<li><span>${name}</span><span>${dishes.count}</span></li>`);
                     })
                 },
                 error: function(error) {
@@ -160,8 +161,8 @@ $(document).ready(async function() {
         </li>`);
 
         newElement.find(`#order-btn-${meal._id}`).on('click', async function() {
-            if (productsList.length > 0) {
-                productsList.empty();
+            if (mealsproductsList.length > 0) {
+                mealsproductsList.empty();
             }
 
             const btn = $(this);
@@ -243,7 +244,7 @@ $(document).ready(async function() {
                             }
                         });
 
-                        productsList.append(`<li><span>${name}</span><span>${meals.count}</span></li>`);
+                        mealsproductsList.append(`<li><span>${name}</span><span>${meals.count}</span></li>`);
                     })
                 },
                 error: function(error) {

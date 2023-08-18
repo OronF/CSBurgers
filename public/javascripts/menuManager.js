@@ -82,7 +82,7 @@ $(document).ready(async function() {
                 $(`#text-${id}`).remove();
                 $(`#info-${id}`).remove();
 
-                $(`#card-${id}`).append(`<div class="inputs">
+                $(`#card-${id}`).append(`<div class="inputs-${id}">
                     <input value="${Dish.name}" class="form-control" id="name-${id}">
                     <input value="${Dish.price}" class="form-control" id="price-${id}">
                     <input value="${Dish.description}" class="form-control" id="description-${id}">
@@ -117,7 +117,7 @@ $(document).ready(async function() {
                     }
                 });
 
-                $('.inputs').remove();
+                $(`.inputs-${id}`).remove();
 
                 $(`#card-${id}`).append(`
                     <h5 class="card-title" id="title-${newDish._id}">${newDish.name}</h5>
@@ -196,7 +196,7 @@ $(document).ready(async function() {
                 $(`#text-${id}`).remove();
                 $(`#info-${id}`).remove();
 
-                $(`#card-${id}`).append(`<div class="inputs">
+                $(`#card-${id}`).append(`<div class="inputs-${id}">
                     <input value="${Meal.name}" class="form-control" id="name-${id}">
                     <input value="${Meal.price}" class="form-control" id="price-${id}">
                     <input value="${Meal.description}" class="form-control" id="description-${id}">
@@ -232,7 +232,7 @@ $(document).ready(async function() {
                     }
                 });
 
-                $('.inputs').remove();
+                $(`.inputs-${id}`).remove();
 
                 $(`#card-${id}`).append(`
                     <h5 class="card-title" id="title-${newMeal._id}">${newMeal.name}</h5>
