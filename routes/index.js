@@ -47,6 +47,11 @@ router.get('/AccessibilityStatement', function(req, res, next) {
   res.render("AccessibilityStatement");
 });
 
+
+router.get('/menuManager', function(req, res, next) {
+  res.render("menuManager");
+});
+
 router.get('/order', function(req, res, next) {  
   res.render("order");
 });

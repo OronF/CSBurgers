@@ -2,7 +2,14 @@ const CatrgoryService = require('../services/category');
 
 const getAllCategories = async (req, res) => {
     try {
-        const Catrgories = await CatrgoryService.getAll();
+
+        let Catrgories;
+
+        if(req.query.categorytype) {
+            Catrgories = await CatrgoryService.searchCatrgoryByType(req.query.categorytype);
+        } else {
+            Catrgories = await CatrgoryService.getAll();
+        }
 
         if(!Catrgories) {
             throw new Error('Non existing categories');
