@@ -1,0 +1,21 @@
+.frame {
+    border-radius: 25px;
+    border: 2px solid black;
+    padding: 20px; 
+    width: 50vw;
+    height: 25vw;  
+    position: fixed;
+    right: 27vw;
+    top:10vw;
+  }
+.products-item{
+    border-radius: 25px;
+    border: 2px solid black;
+    padding: 20px; 
+    width: 40vw;
+    height: 3vw;  
+    position: relative;
+    text-align: right;
+    list-style-type: none;
+    left:3vw;
+}
