@@ -136,7 +136,7 @@ $(document).ready(function() {
 
             const managers = $('#managers');
 
-            managers.append(`<option  disabled selected class="text-blue-600/100">שם מנהל</option>`);
+            managers.append(`<option disabled selected class="text-blue-600/100">שם מנהל</option>`);
 
             let index = 1;
 
@@ -145,18 +145,26 @@ $(document).ready(function() {
                 index++;
             });
 
-            const closeBtn = $('.closeBtn');
-
-            closeBtn.on('click', function() { 
-                hide.removeClass('nohide').addClass('hide');
-                nohide.removeClass('hide').addClass('nohide');
-            });
-    
             const branchName = $("#branchName");
             const address = $("#address");
             const Activity = $("#Activity");
             const x = $("#x");
             const y = $("#y");
+
+            const closeBtn = $('.closeBtn');
+
+            closeBtn.on('click', function() { 
+                hide.removeClass('nohide').addClass('hide');
+                nohide.removeClass('hide').addClass('nohide');
+
+                branchName.val("");
+                address.val("");
+                Activity.val("");
+                x.val("");
+                y.val("");
+                managers.find(":selected").val("");
+                managers.empty();
+            });
     
             const saveBtn = $('.saveBtn');
 
@@ -193,6 +201,14 @@ $(document).ready(function() {
                             }
                         });
                     }
+
+                    branchName.val("");
+                    address.val("");
+                    Activity.val("");
+                    x.val("");
+                    y.val("");
+                    managers.find(":selected").val("");
+                    managers.empty();
                 }
             });
         });
