@@ -4,14 +4,18 @@ const getAll = async() => {
     return await Dish.find({});
 }
 
-const createDish = async (name, price, categoryId, picture, description) => {
+const createDish = async (newDish) => {
     const dish = new Dish({
-        name: name,
-        price: price,
-        categoryId: categoryId,
-        picture: picture,
-        description: description
+        name: newDish.name,
+        price: newDish.price,
+        categoryId: newDish.categoryId,
+        picture: newDish.picture,
+        description: newDish.description
     });
+
+    if (newDish.webServiceId) {
+        dish.webServiceId = newDish.webServiceId;
+    }
     
     return await dish.save();
 }
@@ -44,6 +48,10 @@ const updateDish = async (newDish) => {
     dish.categoryId = newDish.categoryId;
     dish.picture = newDish.picture;
     dish.description = newDish.description;
+
+    if (newDish.webServiceId) {
+        dish.webServiceId = newDish.webServiceId;
+    }
 
     await dish.save();
     return dish;

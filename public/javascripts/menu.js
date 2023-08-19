@@ -27,34 +27,26 @@ $(document).ready(async function() {
                         <h5 class="card-title">${dish.name}</h5>
                         <p class="card-text"> ${dish.price}₪</p>
                         <p class="card-info"> ${dish.description}</p>
-
                     </div>
                 </div>
             </div>
-            <a href="/delivery" type="button" class="order-btn" data-dish-id="${dish._id}">הוספה להזמנה</a>
 
         </div>
     
         </li>`);
 
-        newElement.find('.nameOfCategory').on('click', async function() {
-            const btn = $(this);
-            const id = btn.attr('data-dish-id');
-            
+        if (dish.webServiceId) {
             $.ajax({
-                url: '/delivery',
-                method: 'GET',
-                dataType: "json",
-                contentType: 'application/json',
-                data: JSON.stringify({ id }),
+                url: `https://world.openfoodfacts.org/api/v0/product/${dish.webServiceId}`,
+                method: "GET",
                 success: function(response) {
-                    console.log("Data saved successfully:", response);
+                    newElement.find('.card-body').append(`<p>ערך תזונתי: ${response.product.nutriments.energy_value} קלוריות</p>`);
                 },
                 error: function(error) {
-                    console.error("Error saving data:", error);
+                    console.error("Error finding data:", error);
                 }
             });
-        });
+        }
 
         dishesList.append(newElement);
     }
@@ -72,33 +64,25 @@ $(document).ready(async function() {
                     <h5 class="card-title title-color">${meal.name}</h5>
                     <p class="card-text"> ${meal.price}₪</p>
                     <p class="card-info"> ${meal.description}</p>
-
                 </div>
             </div>
-            <a href="/delivery" type="button" class="order-btn" data-meal-id="${meal._id}">הוספה להזמנה</a>
 
         </div>
 
         </li>`);
 
-        newElement.find('.nameOfCategory').on('click', async function() {
-            const btn = $(this);
-            const id = btn.attr('data-meal-id');
-            
+        if (meal.webServiceId) {
             $.ajax({
-                url: '/delivery',
-                method: 'GET',
-                dataType: "json",
-                contentType: 'application/json',
-                data: JSON.stringify({ id }),
+                url: `https://world.openfoodfacts.org/api/v0/product/${meal.webServiceId}`,
+                method: "GET",
                 success: function(response) {
-                    console.log("Data saved successfully:", response);
+                    newElement.find('.card-body').append(`<p>ערך תזונתי: ${response.product.nutriments.energy_value} קלוריות</p>`);
                 },
                 error: function(error) {
-                    console.error("Error saving data:", error);
+                    console.error("Error finding data:", error);
                 }
             });
-        });
+        }
 
         mealsList.append(newElement);
     }
