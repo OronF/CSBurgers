@@ -42,19 +42,21 @@
                                   </div>
         
                                 <!-- fname input -->
-                                <div class="form-outline mb-4">
-                                  <input placeholder="שם פרטי" type="email" class="form-control input-email" id="fnameTxt" />
-                                </div>
+                                <div class="col-md-12 mb-4">
+                                  <div class="form-outline">
+                                      <input type="text" placeholder="שם פרטי" id="fname" class="form-control form-control-lg" required />
+                                  </div>
+                              </div>
         
-                                <!-- lname input -->
+                                <!-- PhoneNumber input -->
                                 <div class="form-outline mb-4">
-                                  <input placeholder="שם משפחה" type="email" class="form-control input-email" id="lnameTxt" />
-                                </div>
+                                  <input type="tel" id="phone-number" onkeydown="phoneNumberFormatter()" placeholder="מספר טלפון" class="form-control form-control-lg" required />
+                              </div>
         
                                 <!-- Password input -->
                                 <div class="form-outline mb-4">
-                                  <input placeholder="סיסמה" type="password"class="form-control input-password" id="passwordTxt" />
-                                </div>
+                                  <input type="password" placeholder="סיסמה"  id="form3Example4cg" class="form-control form-control-lg" required />
+                              </div>
                                   
                               <div class="row mb-4">
                               <div class="col-md-6 d-flex justify-content-between">
@@ -77,4 +79,45 @@
     </div>
   </section>
 </body>
+<script>
+    function phoneNumberFormatter()
+    {
+        const phoneNumberField = document.getElementById("phone-number");
+        const formattedInputVal = formatPhoneNumber(phoneNumberField.value);
+        phoneNumberField.value = formattedInputVal;
+
+    }
+    function phoneNumberFormatter()
+    {
+        const phoneNumberField = document.getElementById("phone-number");
+        const formattedInputVal = formatPhoneNumber(phoneNumberField.value);
+        phoneNumberField.value = formattedInputVal;
+
+    }
+    function phoneNumberFormatter()
+    {
+        const phoneNumberField = document.getElementById("phone-number");
+        const formattedInputVal = formatPhoneNumber(phoneNumberField.value);
+        phoneNumberField.value = formattedInputVal;
+
+    }
+    function formatPhoneNumber(value)
+    {
+        if(!value) return value;
+
+        const phoneNumber = value.replace(/[^\d]/g, '');
+        const phoneNumberLength = phoneNumber.length;
+
+        if(phoneNumberLength < 4) return phoneNumber;
+        if(phoneNumberLength < 7){
+            return `(${phoneNumber.slice(0,3)}) ${phoneNumber.slice(3)}`;
+        }
+        return `(${phoneNumber.slice(0,3)}) ${phoneNumber.slice(
+            3,
+            6,
+        )}-${phoneNumber.slice(6,9)
+        }`;
+    }
+</script>
+
 </html>
