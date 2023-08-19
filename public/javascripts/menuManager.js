@@ -41,7 +41,6 @@ $(document).ready(async function() {
                     </div>
                 </div>
             </div>
-            <a href="#" type="button" class="order-btn">הוספה להזמנה</a>
 
         </div>
         </li>`);
@@ -160,9 +159,6 @@ $(document).ready(async function() {
                 </div>
             </div>
         </div>
-        
-        <a href="#" type="button" class="order-btn">הוספה להזמנה</a>
-
     </div>
     </li>`);
 
