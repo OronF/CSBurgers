@@ -56,4 +56,8 @@ router.get('/order', function(req, res, next) {
   res.render("order");
 });
 
+router.get('/logInPage', function(req, res, next) {  
+  res.render("logInPage");
+});
+
 module.exports = router;
