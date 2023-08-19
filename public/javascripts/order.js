@@ -1,5 +1,22 @@
 $(document).ready(async function() {
 
+    const params = window.location.pathname;
+    const pathParts = params.split('/');
+    const orderID = pathParts[pathParts.length - 1];
+
+    let order;
+
+    await $.ajax({
+        url: `/api/order/${orderID}`,
+        method: "GET",
+        success: function(data) {
+            order = data;
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    });
+
     const dishesList = $('.dishes-list');
     const mealsList = $('.meals-list');
     const categories = $('.categories');
@@ -9,6 +26,10 @@ $(document).ready(async function() {
 
     const mealsproductsList = $('.meals-products-list');
     const dishesproductsList = $('.dishes-products-list');
+
+    const orderPrice = $('#order-price');
+    const totalPrice = $('#total-price');
+    const branch = $('#branch');
 
     const putHideOnElement = (element) => {
         element.removeClass('nohide').addClass('hide');
@@ -51,25 +72,12 @@ $(document).ready(async function() {
             let Dish;
 
             await $.ajax({
-                url:`api/dish/${id}`,
+                url: `/api/dish/${id}`,
                 method: "GET",
-                success: (data) => {
+                success: function(data) {
                     Dish = data;
                 },
-                error: (error) => {
-                    console.log(error);
-                }
-            });
-
-            let order;
-
-            await $.ajax({
-                url:`api/order/64d2a8c12fd6b3552f5dfcbd`,
-                method: "GET",
-                success: (data) => {
-                    order = data;
-                },
-                error: (error) => {
+                error: function(error) {
                     console.log(error);
                 }
             });
@@ -77,21 +85,38 @@ $(document).ready(async function() {
             order.dishes.push(Dish._id);
 
             await $.ajax({
-                url: `api/order/64d2a8c12fd6b3552f5dfcbd`,
-                method: 'PUT',
+                url: `/api/order/${orderID}`,
+                method: "PUT",
                 dataType: "json",
                 contentType: 'application/json',
                 data: JSON.stringify({
                     orderNumber: order.orderNumber,
                     orderDate: order.orderDate,
-                    location: order.location,
-                    totalprice: order.totalprice,
+                    location: order.location, 
+                    totalprice: order.totalprice + Dish.price,
                     meals: order.meals,
                     dishes: order.dishes
                 }),
                 success: function(data) {
-                    console.log("Data saved successfully:", data);
-                    newOrder = data;
+                    order = data;
+                },
+                error: function(error) {
+                    console.error("Error saving data:", error);
+                }
+            });
+
+            let names;
+
+            await $.ajax({
+                url: `/api/order/${orderID}`,
+                method: "GET",
+                dataType: "json",
+                contentType: 'application/json',
+                data: {
+                    group: true
+                },
+                success: function(data) {
+                   names = data;
                 },
                 error: function(error) {
                     console.error("Error saving data:", error);
@@ -100,38 +125,23 @@ $(document).ready(async function() {
 
             let name;
 
-            await $.ajax({
-                url:`api/order/64d2a8c12fd6b3552f5dfcbd`,
-                method: "GET",
-                dataType: "json",
-                contentType: 'application/json',
-                data: {
-                    group: true
-                },
-                success: function(data) {
-                    data.forEach(async (dishes) => {
-                        
+            names.forEach(async (dishes) => {
+                await $.ajax({
+                    url: `/api/dish/${dishes._id}`,
+                    method: "GET",
+                    success: function(data) {
+                        name = data.name;
+                    },
+                    error: function(error) {
+                        console.error(error);
+                    }
+                });
 
-                        await $.ajax({
-                            url: `api/dish/${dishes._id}`,
-                            method: 'GET',
-                            success: (dataDish) => {
-                                name = dataDish.name;
-                            },
-                            error: (error) => {
-                                console.log(error);
-                            }
-                        });
-
-                        dishesproductsList.append(`<li><span>${name}</span><span>${dishes.count}</span></li>`);
-                    })
-                },
-                error: function(error) {
-                    console.error("Error saving data:", error);
-                }
+                dishesproductsList.append(`<li><span>${name}</span><span>${dishes.count}</span></li>`);
             });
 
-        
+            orderPrice.html(`מחיר הזמנה: ${order.totalprice - 15}₪`);
+            totalPrice.html(`מחיר כללי: ${order.totalprice}₪`);
         });
 
         dishesList.append(newElement);
@@ -171,25 +181,12 @@ $(document).ready(async function() {
             let Meal;
 
             await $.ajax({
-                url:`api/meal/${id}`,
+                url: `/api/meal/${id}`,
                 method: "GET",
-                success: (data) => {
+                success: function(data) {
                     Meal = data;
                 },
-                error: (error) => {
-                    console.log(error);
-                }
-            });
-
-            let order;
-
-            await $.ajax({
-                url:`api/order/64d2a8c12fd6b3552f5dfcbd`,
-                method: "GET",
-                success: (data) => {
-                    order = data;
-                },
-                error: (error) => {
+                error: function(error) {
                     console.log(error);
                 }
             });
@@ -197,31 +194,30 @@ $(document).ready(async function() {
             order.meals.push(Meal._id);
 
             await $.ajax({
-                url: `api/order/64d2a8c12fd6b3552f5dfcbd`,
-                method: 'PUT',
+                url: `/api/order/${orderID}`,
+                method: "PUT",
                 dataType: "json",
                 contentType: 'application/json',
                 data: JSON.stringify({
                     orderNumber: order.orderNumber,
                     orderDate: order.orderDate,
-                    location: order.location,
-                    totalprice: order.totalprice,
+                    location: order.location, 
+                    totalprice: order.totalprice + Meal.price,
                     meals: order.meals,
                     dishes: order.dishes
                 }),
                 success: function(data) {
-                    console.log("Data saved successfully:", data);
-                    newOrder = data;
+                    order = data;
                 },
                 error: function(error) {
                     console.error("Error saving data:", error);
                 }
             });
 
-            let name;
+            let names;
 
             await $.ajax({
-                url:`api/order/64d2a8c12fd6b3552f5dfcbd`,
+                url: `/api/order/${orderID}`,
                 method: "GET",
                 dataType: "json",
                 contentType: 'application/json',
@@ -230,38 +226,35 @@ $(document).ready(async function() {
                     meals: true
                 },
                 success: function(data) {
-                    data.forEach(async (meals) => {
-                        
-
-                        await $.ajax({
-                            url: `api/meal/${meals._id}`,
-                            method: 'GET',
-                            success: (dataMeal) => {
-                                name = dataMeal.name;
-                            },
-                            error: (error) => {
-                                console.log(error);
-                            }
-                        });
-
-                        mealsproductsList.append(`<li><span>${name}</span><span>${meals.count}</span></li>`);
-                    })
+                   names = data;
                 },
                 error: function(error) {
                     console.error("Error saving data:", error);
                 }
             });
 
-        
+            let name;
+
+            names.forEach(async (meals) => {
+                await $.ajax({
+                    url: `/api/meal/${meals._id}`,
+                    method: "GET",
+                    success: function(data) {
+                        name = data.name;
+                    },
+                    error: function(error) {
+                        console.error(error);
+                    }
+                });
+
+                mealsproductsList.append(`<li><span>${name}</span><span>${meals.count}</span></li>`);
+            });
+
+            orderPrice.html(`מחיר הזמנה: ${order.totalprice - 15}₪`);
+            totalPrice.html(`מחיר כללי: ${order.totalprice}₪`);
         });
         mealsList.append(newElement);
     }
-
-    /*const renderDishes = (data) => {
-        data.forEach(dish => {
-            appendDishesLi(dish);
-        });
-    }*/
 
     const renderMeals = (data) => {
         data.forEach(dish => {
@@ -270,8 +263,10 @@ $(document).ready(async function() {
     }
 
     const appendCategoryLi = (category) => {
+        
+
         const newElement = $(`<li id="${category._id}" class="li-category" type="button">
-            <a class="nameOfCategory" id="${category._id}" data-category-id="${category._id}" data-category-categorytype="${category.categorytype}" href="/order#${category.name}">${category.name}</a>
+            <a class="nameOfCategory" id="${category._id}" data-category-id="${category._id}" data-category-categorytype="${category.categorytype}" href="/orders/${orderID}#${category.name}">${category.name}</a>
         </li>`);
 
         newElement.find('.nameOfCategory').on('click', async function() {
@@ -361,17 +356,6 @@ $(document).ready(async function() {
         }
     });
 
-    /*$.ajax({
-        url:"/api/dish",
-        method: "GET",
-        success: (data) => {
-            renderDishes(data);
-        },
-        error: (error) => {
-            console.log(error);
-        }
-    });*/
-
     $.ajax({
         url:"/api/meal",
         method: "GET",
@@ -385,6 +369,85 @@ $(document).ready(async function() {
         },
         error: (error) => {
             console.log(error);
+        }
+    });
+
+    let names;
+
+    await $.ajax({
+        url: `/api/order/${orderID}`,
+        method: "GET",
+        dataType: "json",
+        contentType: 'application/json',
+        data: {
+            group: true
+        },
+        success: function(data) {
+           names = data;
+        },
+        error: function(error) {
+            console.error("Error saving data:", error);
+        }
+    });
+
+    let name;
+
+    names.forEach(async (dishes) => {
+        await $.ajax({
+            url: `/api/dish/${dishes._id}`,
+            method: "GET",
+            success: function(data) {
+                name = data.name;
+            },
+            error: function(error) {
+                console.error(error);
+            }
+        })
+        dishesproductsList.append(`<li><span>${name}</span><span>${dishes.count}</span></li>`);
+    });
+
+    await $.ajax({
+        url: `/api/order/${orderID}`,
+        method: "GET",
+        dataType: "json",
+        contentType: 'application/json',
+        data: {
+            group: true,
+            meals: true
+        },
+        success: function(data) {
+           names = data;
+        },
+        error: function(error) {
+            console.error("Error saving data:", error);
+        }
+    });
+
+    names.forEach(async (meals) => {
+        await $.ajax({
+            url: `/api/meal/${meals._id}`,
+            method: "GET",
+            success: function(data) {
+                name = data.name;
+            },
+            error: function(error) {
+                console.error(error);
+            }
+        })
+        mealsproductsList.append(`<li><span>${name}</span><span>${meals.count}</span></li>`);
+    });
+
+    orderPrice.html(`מחיר הזמנה: ${order.totalprice - 15}₪`);
+    totalPrice.html(`מחיר כללי: ${order.totalprice}₪`);
+
+    await $.ajax({
+        url: `/api/branch/${order.branch}`,
+        method: "GET",
+        success: function(data) {
+            branch.html(`סניף: ${data.name}`);
+        },
+        error: function(error) {
+            console.error(error);
         }
     });
 });

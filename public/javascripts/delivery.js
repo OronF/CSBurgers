@@ -8,8 +8,8 @@ $(document).ready(function() {
     let index = 1;
 
     const createSelection = (branch) => {
-        framework.append(`<option value="${index}" data-manager-id="${branch._id}">${branch.name}</option>`);
-        branches.append(`<option value="${index}" data-manager-id="${branch._id}">${branch.name}</option>`);
+        framework.append(`<option value="${index}" data-branch-id="${branch._id}">${branch.name}</option>`);
+        branches.append(`<option value="${index}" data-branch-id="${branch._id}">${branch.name}</option>`);
         index++;
     }
 
@@ -19,15 +19,47 @@ $(document).ready(function() {
         });
     }
 
-    $.ajax({
-        dataType: "json",
-        url: '/delivery',
-        method: 'GET',
-        success: (data) => {
-            console.log(data.id);
-        },
-        error: (error) => {
-            console.error(error);
+    $('#first-btn').on('click', async function() {
+        const city = $('#city').val();
+        const street = $('#street').val();
+        const houseNum = $('#houseNum').val();
+        const framework = $('#framework').find(":selected").attr('data-branch-id');
+
+        let length;
+
+        await $.ajax({
+            url: "api/order",
+            method: "GET",
+            success: function(data) {
+                length = data.length + 1;
+            },
+            error: function (error) {
+                console.error(error);
+            }
+        });
+
+        if (city && street && houseNum && framework) {
+            $.ajax({
+                url: "api/order",
+                method: "POST",
+                dataType: "json",
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    orderNumber: length,
+                    orderDate: Date.now,
+                    location: `${city}, ${street}, ${houseNum}`,
+                    totalprice: 15,
+                    meals: [],
+                    dishes: [],
+                    branch: framework
+                }),
+                success: function(data) {
+                    window.location.href = `orders/${data._id}`;
+                },
+                error: function(error) {
+                    console.error(error);
+                }
+            });        
         }
     });
 

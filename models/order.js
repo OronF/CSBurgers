@@ -32,6 +32,11 @@ const OrderSchema = new mongoose.Schema({
         required: true
     },
 
+    branch: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true
+    },
+
     customerId: {
         type: mongoose.Schema.Types.ObjectId,
     }
