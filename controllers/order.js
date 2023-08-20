@@ -5,7 +5,7 @@ const getAllOrders = async (req, res) => {
         let orders = await OrderService.getAll();
 
         if (req.query.group) {
-            let ordersGroup = await OrderService.groupByBranches(orders);
+            let ordersGroup = await OrderService.groupByBranches();
 
             if (!ordersGroup) {
                 return res.status(404).json({errors:["orders not found"]});

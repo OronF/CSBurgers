@@ -98,15 +98,16 @@ $(document).ready(async function() {
     async function fetchBranchDetails() {
         // Fetch branch details for each branch
         for (const branch of branchData) {
-            try {
-                const branchDetails = await $.ajax({
-                    url: `/api/branches/${branch._id}`,
-                    method: "GET"
-                });
-                branch._id = branchDetails.name;
-            } catch (error) {
-                console.error(error);
-            }
+            await $.ajax({
+                url: `/api/branches/${branch._id}`,
+                method: "GET",
+                success: function(data) {
+                    branch._id = data.name;
+                },
+                error: function(error) {
+                    console.error(error);
+                }
+            });      
         }
 
         // Parse and draw chart

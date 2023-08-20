@@ -91,7 +91,7 @@ const groupByDishes = async (order) => {
     return dishes;
 }
 
-const groupByBranches = async (orders) => {
+const groupByBranches = async () => {
     const branches = await Order.aggregate([
         {
             $group: {
