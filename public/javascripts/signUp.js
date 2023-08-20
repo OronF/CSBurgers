@@ -12,14 +12,35 @@ function checkIfPhoneNumberIsValid(inp)
     return true;
 }
 
-function checkIfEmpty(inp, generalError)
+function checkIfEmpty(inp, Error)
 {
     if(inp === "")
     {
-        generalError.html("שדה ריק אינו חוקי");
-        return true;
+        Error.html("שדה ריק אינו חוקי");
+        return;
     }
-    return false;
+}
+
+function nameValidation(name, error)
+{
+    if(name.length < 2)
+    {
+        error.html("על השדה להכיל לפחות 2 תווים בעברית");
+    }
+    
+    for (let i = 0; i < name.length; i++) {
+        const charCode = name.charCodeAt(i);
+        
+        // Check if the character is a valid Hebrew letter
+        if (charCode < 1488 || charCode > 1514) {
+            error.html("על השדה להכיל תווים בעברית בלבד");
+            if(name.length<2)
+            error.html("על השדה להכיל תווים בעברית בלבד ולפחות 2 תווים")
+
+        }
+    }
+
+    
 }
 
 $(document).ready(function() {
@@ -38,23 +59,24 @@ $(document).ready(function() {
         const passwordError = $('#passwordError');
         const approvePasswordError = $('#approvePasswordError');
         const phoneNumberError = $('#phoneNumberError');
-        const generalError = $('.generalError');
+        const termsCheckBox = $('#form2Example32')
+        const termsError = $('#termsError')
 
         const fnameVal = fnameTxt.val();
         const lnameVal = lnameTxt.val();
         const phoneNumberVal = phoneNumberTxt.val();
         const passwordVal = passwordTxt.val();
         const passwordApproveVal = passwordApproveTxt.val();
+        checkIfEmpty(passwordApproveVal, approvePasswordError);
 
-        checkIfEmpty(fnameVal, generalError);
-        checkIfEmpty(lnameVal, generalError);
-        checkIfEmpty(passwordVal, generalError);
-        checkIfEmpty(passwordApproveVal, generalError);
+        nameValidation(fnameVal, fnameError);
+        nameValidation(lnameVal, lnameError);
 
+        if(!termsCheckBox.prop('checked'))
+            termsError.html("חובה להסכים לתנאי השימוש")
 
             if (fnameVal.length > 10) {
                 fnameError.html( "הזנת שם פרטי ארוך מדי");
-                
             } 
             
             if (lnameVal.length > 10){
@@ -64,7 +86,16 @@ $(document).ready(function() {
             if (false === checkIfPhoneNumberIsValid(phoneNumberVal)){
                 phoneNumberError.html("הזנת מספר טלפון לא חוקי");
             }
-                
+
+
+            if(passwordVal.length < 8)
+            {
+                passwordError.html("על הסיסמה להכיל לפחות 8 תווים");
+            }
+
+            if(passwordApproveVal !== passwordVal)
+            approvePasswordError.html("שדה אישור הסיסמה אינו זהה לסיסמה")
+
 
 
             $.ajax({

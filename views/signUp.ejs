@@ -50,7 +50,6 @@
                                     <div class="form-outline">
                                         <input type="text" placeholder="שם משפחה" id="lname" class="form-control form-control-lg" required />
                                         <div class="error" id="lnameError"></div>
-                                        <div class="generalError error"></div>
 
                                     </div>
                                 </div>
@@ -59,7 +58,6 @@
                                     <div class="form-outline">
                                         <input type="text" placeholder="שם פרטי" id="fname" class="form-control form-control-lg" required />
                                         <div class="error" id="fnameError"></div>
-                                        <div class="generalError error"></div>
 
                                     </div>
                                 </div>
@@ -73,24 +71,26 @@
                             <div class="form-outline mb-4">
                                 <input type="password" id="passowrdInput" placeholder="סיסמה"  id="form3Example4cg" class="form-control form-control-lg" required />
                                 <div class="error" id="passwordError"></div>
-                                <div class="generalError error"></div>
 
                             </div>
           
                           <div class="form-outline mb-4">
                             <input type="password"  id="confirmPassowrdInput" placeholder="אישור סיסמה" id="form3Example4cdg" class="form-control form-control-lg" required />
                             <div class="error" id="approvePasswordError"></div>
-                            <div class="generalError error"></div>
 
                           </div>
           
-                          <div class="row justify-content-center">
-                                <div class="col-md-6 mb-4">
+                          <div class="row justify-content-center checkBoxes">
+                                <div class="col-md-6 mb-4 ">
                                     <div class="form-check mb-4">
-                                        <label for="checkbox-input">אני מסכימ\ה ל<a href="#!" class="text-body"><u>תנאי השימוש</u></a></label>
-                                        <input type="checkbox" id="form2Example32" value="" checked class="form-check-input me-2" required>
-                                        <div id="error"></div>
-                                        <div class="generalError error"></div>
+                                        
+                                        <label for="checkbox-input" class="checkBox">                                     
+                                            <input type="checkbox" id="form2Example32" value="" required>
+                                            <span>
+                                            אני מסכימ\ה ל<a href="#!" class="text-body"><u>תנאי השימוש</u></a></label>
+                                        </span>
+
+                                        <div class="error"id="termsError"></div>
 
                                     </div>
                                 </div>
@@ -98,7 +98,7 @@
                                 <div class="col-md-6 mb-4">
                                     <div class="form-check mb-4">
                                         <label for="checkbox-input">מאשר\ת קבלת פרסומות</label>
-                                        <input type="checkbox" id="form2Example33" value="" checked class="form-check-input me-2" required>
+                                        <input type="checkbox" id="form2Example33" value=""  class="checkBox" required>
                                     </div>
                                 </div>
                           </div>
