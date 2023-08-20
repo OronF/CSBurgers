@@ -38,7 +38,8 @@ const creatOrder = async (req, res) => {
             location: req.body.location,
             totalprice: req.body.totalprice,
             meals: req.body.meals,
-            dishes: req.body.dishes
+            dishes: req.body.dishes,
+            branch: req.body.branch
         }
     
         if (req.body.customerId) {
@@ -82,6 +83,10 @@ const updateOrder = async (req, res) => {
         res.status(400).json({message:'The new meals to the order is required'});
     }
 
+    if (!req.body.branch) {
+        res.status(400).json({message:'The new branch to the order is required'});
+    }
+
     const newOrder = {
         id: req.params.id,
         orderNumber: req.body.orderNumber,
@@ -89,7 +94,8 @@ const updateOrder = async (req, res) => {
         location: req.body.location,
         totalprice: req.body.totalprice,
         meals: req.body.meals,
-        dishes: req.body.dishes
+        dishes: req.body.dishes,
+        branch: req.body.branch
     }
 
     if (req.body.customerId) {

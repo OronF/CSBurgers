@@ -60,4 +60,8 @@ router.get('/graphs', function(req, res, next) {
   res.render("graphs");
 });
 
+router.get('/orders/:id', function(req, res, next) {  
+  res.render("order");
+});
+
 module.exports = router;
