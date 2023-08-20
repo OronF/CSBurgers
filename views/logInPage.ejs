@@ -4,6 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Log In</title>
+    <script
+    src="https://code.jquery.com/jquery-3.7.0.js"
+    integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
+    crossorigin="anonymous">
+    </script>
+
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"
+    integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0="
+    crossorigin="anonymous">
+    </script>
+
     <link rel="stylesheet" href="./stylesheets/logInPage.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
         <!-- icon-->
@@ -37,7 +48,7 @@
                                       </p> 
         
                                       <div class="hide" id="error">
-        
+
                                       </div>
                                   </div>
         
@@ -51,11 +62,15 @@
                                 <!-- PhoneNumber input -->
                                 <div class="form-outline mb-4">
                                   <input type="tel" id="phone-number" onkeydown="phoneNumberFormatter()" placeholder="מספר טלפון" class="form-control form-control-lg" required />
+                                  <div id = "ErrorPhoneNumber"> </div>
                               </div>
         
                                 <!-- Password input -->
                                 <div class="form-outline mb-4">
                                   <input type="password" placeholder="סיסמה"  id="form3Example4cg" class="form-control form-control-lg" required />
+                                  <div id = "ErrorPassword"> </div>
+
+                                  </div>
                               </div>
                                   
                               <div class="row mb-4">
@@ -63,6 +78,7 @@
                                   <button class="submit-btn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 0 16 16">
                                     <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
                                   </svg> לכניסה</button>
+
                               </div>
                       
                               <div class="col-md-6 d-flex justify-content-end">
@@ -78,6 +94,7 @@
       </div>
     </div>
   </section>
+  <script src="/javascripts/logInPage.js"></script>
 </body>
 <script>
     function phoneNumberFormatter()
