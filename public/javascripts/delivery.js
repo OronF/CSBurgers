@@ -63,6 +63,61 @@ $(document).ready(function() {
         }
     });
 
+    $('#second-btn').on('click', async function() {
+        const branchID = $('#branches').find(":selected").attr('data-branch-id');
+
+        let length;
+
+        await $.ajax({
+            url: "api/order",
+            method: "GET",
+            success: function(data) {
+                length = data.length + 1;
+            },
+            error: function (error) {
+                console.error(error);
+            }
+        });
+
+        if (branchID) {
+
+            let branch;
+
+            await $.ajax({
+                url: `/api/branches/${branchID}`,
+                method: "GET",
+                success: function(data) {
+                    branch = data;
+                },
+                error: function(error) {
+                    console.error(error);
+                }
+            });
+
+            $.ajax({
+                url: "api/order",
+                method: "POST",
+                dataType: "json",
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    orderNumber: length,
+                    orderDate: Date.now,
+                    location: `${branch.address}`,
+                    totalprice: 15,
+                    meals: [],
+                    dishes: [],
+                    branch: branchID
+                }),
+                success: function(data) {
+                    window.location.href = `orders/${data._id}`;
+                },
+                error: function(error) {
+                    console.error(error);
+                }
+            });        
+        }
+    });
+
     $.ajax({
         url: "/api/branches",
         method: "GET",
@@ -71,6 +126,6 @@ $(document).ready(function() {
         },
         error: (error) => {
             console.log(error);
-        }
+        }   
     });
 });
