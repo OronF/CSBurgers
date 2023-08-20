@@ -5,9 +5,6 @@ function checkIfPhoneNumberIsValid(inp)
         if(isNaN(inp[i]))
         return false;
     }
-
-    if(inp[0] !== 0 || inp[1] !== 3 || inp[1] !==5)
-        return false;
     
     return true;
 }
@@ -83,7 +80,7 @@ $(document).ready(function() {
                 lnameError.html("הזנת שם משפחה ארוך מדי");
             } 
             
-            if (false === checkIfPhoneNumberIsValid(phoneNumberVal)){
+            if (!checkIfPhoneNumberIsValid(phoneNumberVal)){
                 phoneNumberError.html("הזנת מספר טלפון לא חוקי");
             }
 
@@ -119,30 +116,6 @@ $(document).ready(function() {
                     console.error("Error saving data:", error);
                 }
             });
-        
-        // if (fnameVal.length < 2) {
-        //     return;
-        // }
-
-        // if (lnameVal.length < 2) {
-        //     return;
-        // } 
-    
-        // if (phoneNumberVal.length != 13 && phoneNumberVal.length != 14) {
-        //     return;
-        // }
-
-        // if (passwordVal.length < 8)
-        // {
-        //     return;
-        // }
-
-        // if (passwordApproveVal !== passwordVal) {
-        //     return;
-        // }
-
-        
-        
     });
 });
 
