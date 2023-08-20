@@ -2,7 +2,18 @@ const OrderService = require('../services/order');
 
 const getAllOrders = async (req, res) => {
     try {
-        const orders = await OrderService.getAll();
+        let orders = await OrderService.getAll();
+
+        if (req.query.group) {
+            let ordersGroup = await OrderService.groupByBranches(orders);
+
+            if (!ordersGroup) {
+                return res.status(404).json({errors:["orders not found"]});
+            }
+
+            res.json(ordersGroup);
+            return;
+        } 
         
         if(!orders) {
             throw new Error('Non existing orders');
