@@ -56,4 +56,8 @@ router.get('/order', function(req, res, next) {
   res.render("order");
 });
 
+router.get('/graphs', function(req, res, next) {  
+  res.render("graphs");
+});
+
 module.exports = router;
