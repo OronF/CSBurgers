@@ -31,7 +31,7 @@ const getAllUsers = async (req, res) => {
         }
 
         res.json(Users);
-    }
+        }
     }
     catch (error) {
         res.status(400).json({

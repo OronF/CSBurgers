@@ -82,3 +82,48 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+
+/* --------------------------------------------- middleware sign up ------------------------------------------ */
+
+app.use(siggner);
+
+function validPhoneNumber(number)
+{
+  var flag = 0;
+  if(number.value.length !== 14)
+  {
+    return false;
+  }
+  return true;
+}
+
+function checkField(inp)
+{
+  if(inp === "")
+  {
+    return false;
+  }
+  return true;
+}
+
+function isEmpty(req)
+{
+  checkField(req.phoneNumber);
+  checkField(req.fname);
+  checkField(req.lname);
+  checkField(req.password);
+  checkField(req.approvePassword);
+}
+
+
+function siggner(req, res, next)
+{
+  if(isEmpty(req))
+  {
+    if(validPhoneNumber(req.body.phoneNumber))
+    {
+      
+    }
+  }
+  next();
+}
