@@ -91,6 +91,19 @@ const groupByDishes = async (order) => {
     return dishes;
 }
 
+const groupByBranches = async (orders) => {
+    const branches = await Order.aggregate([
+        {
+            $group: {
+                _id: '$branch',
+                count: { $sum: 1 }
+            }
+        }
+    ]);
+
+    return branches;
+}
+
 module.exports = {
     getAll,
     create: createOrder,
@@ -98,5 +111,6 @@ module.exports = {
     update: updateOrder,
     search: searchOrder,
     groupByMeals,
-    groupByDishes
+    groupByDishes,
+    groupByBranches
 }
