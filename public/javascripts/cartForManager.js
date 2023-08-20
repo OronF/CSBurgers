@@ -1,5 +1,8 @@
 $(document).ready(function() {
 
+    let users = [];
+    let orders = [];
+
     const usersList =  $('.usersList');
     const ordersList =  $('.ordersList');
     const usersBtn = $('.users');
@@ -91,8 +94,13 @@ $(document).ready(function() {
     const renderUsers = (data) => {
         data.forEach(user => {
             appendUserLi(user);
+            users.push({
+                id: user._id,
+                name: `${user.fname} ${user.lname}`,
+                element: $(`#${user._id}`) // Assuming this is the ID of the user's list item
+            });
         });
-    }
+    };
 
     const appendOrderLi = (order) => {
         const newElement = $(`<li id="${order._id}">
@@ -144,13 +152,18 @@ $(document).ready(function() {
         });
 
         ordersList.append(newElement);
+        orders.push({
+            id: order._id,
+            name: `${order.orderNumber}`,
+            element: newElement
+        });
     }
 
     const renderOrders = (data) => {
         data.forEach(order => {
             appendOrderLi(order);
         });
-    }
+    };
 
     $.ajax({
         url:"/api/user",
@@ -187,4 +200,26 @@ $(document).ready(function() {
             usersData.removeClass('nohide').addClass('hide');
         }
     });
+
+    const searchUser = $('#searchUser');
+    const searchOrder = $('#searchOrder');
+
+    searchUser.on('input', function() {
+        const value = searchUser.val().toLowerCase();
+
+        users.forEach(user => {
+            const isVisible = user.name.toLowerCase().includes(value);
+            user.element.toggleClass("hide", !isVisible);
+        });
+    });
+
+    searchOrder.on('input', function() {
+        const value = searchOrder.val().toLowerCase();
+
+        orders.forEach(order => {
+            const isVisible = order.name.toLowerCase().includes(value);
+            order.element.toggleClass("hide", !isVisible);
+        });
+    });
+
 });

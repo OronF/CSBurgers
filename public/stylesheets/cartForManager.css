@@ -12,9 +12,6 @@ header {
 }
 
 aside {
-    background-color: #f1f1f1;
-    width: 250px;
-    padding: 10px;
     float: right;
 }
 
@@ -26,12 +23,72 @@ section {
 ul {
     list-style: none;
     padding: 0;
+    
 }
 
 li {
-    margin-bottom: 5px;
+   margin-top: 1vw;
 }
 
 .hide {
     display: none;
+}
+
+.title
+{
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;
+    background-color: rgb(154, 13, 13);
+    text-align: center;
+}
+
+.users,.orders
+{
+    background-color: rgb(154, 13, 13);
+    padding-top: 0.8vw;
+    padding-bottom: 0.8vw;
+    padding-left: 1.3vw;
+    padding-right: 1.3vw;
+    text-align: center;;
+    transition:all 0.4s ;
+}
+
+.users:hover,.orders:hover
+{
+    background-color: rgb(126, 16, 16);
+    padding-top: 0.8vw;
+    padding-bottom: 0.8vw;
+    padding-left: 1.3vw;
+    padding-right: 1.3vw;
+    text-align: center;;
+    transition:all 0.4s ;
+    transform: scale(1.1);
+}
+
+li
+{
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;
+}
+
+
+.btnsList
+{
+    direction: rtl;
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;
+    font-size: 1.4vw;
+    color:white;
+    margin-right: 0.5vw;
+}
+
+.ordersList, .usersList
+{
+    direction: rtl;
+}
+
+.orderItem, .orderItem
+{
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;
 }
