@@ -111,11 +111,24 @@ $(document).ready(function() {
                 }),
                 success: function(response) {
                     console.log("Data saved successfully:", response);
+
+                    // Read the 'signUpCookie' value
+                    const phoneNumberCookie = getCookie('signUpCookie');
+                    console.log('Phone number from cookie:', phoneNumberCookie);
                 },
                 error: function(error) {
                     console.error("Error saving data:", error);
                 }
             });
+
+            
+            function getCookie(name) {
+                const value = "; " + document.cookie;
+                const parts = value.split("; " + name + "=");
+                if (parts.length === 2) {
+                  return parts.pop().split(";").shift();
+                }
+            }
     });
 });
 
