@@ -50,6 +50,8 @@ app.set('view engine', 'ejs');
 app.set('views', __dirname);
 app.set('views', './views');
 
+const siggner = require('./middlewares/siggner');
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -57,6 +59,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
+app.use(siggner);
+
 app.use('/users', usersRouter);
 app.use('/api/category', categoryRouter);
 app.use('/api/dish', dishRouter);
@@ -82,16 +86,3 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
-
-// const express = require("express")
-// const app = express()
-
-// app.get("/", (req, res) => {
-//   res.send("Home Page")
-// })
-
-// app.get("/users", (req, res) => {
-//   res.send("Users Page")
-// })
-
-// app.listen(3000, () => console.log("Server Started"))
