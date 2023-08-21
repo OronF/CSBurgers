@@ -30,3 +30,28 @@ body {
     right: 18vw;
     border-radius: 1.8vw;
 }
+
+#client-orders
+{
+    position: fixed;
+    top: 9vw;
+    left:18vw;
+    border-radius: 1.8vw;
+}
+
+.search
+{
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;
+    border: 0.1vw solid rgb(228, 227, 227);
+    transition: border-color 0.3s ease;
+    outline: none;
+    margin-bottom: 1.3vw;
+}
+
+
+.search:focus
+{
+    border-color: rgb(110, 103, 103);
+
+}
