@@ -31,7 +31,7 @@ $(document).ready(function() {
             const id = btn.attr('data-branch-id');
 
             $.ajax({
-                url: `/api/branches/${id}`,
+                url: `/api/branch/${id}`,
                 method: "DELETE",
                 success: function() {
                     $(`#${id}`).remove();
@@ -49,7 +49,7 @@ $(document).ready(function() {
 
             if(icon.hasClass('bi bi-plus-circle-fill')) {
                 $.ajax({
-                    url: `/api/branches/${id}`,
+                    url: `/api/branch/${id}`,
                     method: "GET"
                 }).done(function(data) {
                     const li = $(`#${id}`);
@@ -179,7 +179,7 @@ $(document).ready(function() {
                     const phoneNumber = selectedManager.attr('data-phone-number');
                     
                     await $.ajax({
-                        url: "/api/branches",
+                        url: "/api/branch",
                         method: "POST",
                         dataType: "json",
                         contentType: 'application/json',
@@ -230,7 +230,7 @@ $(document).ready(function() {
     }   
 
     $.ajax({
-        url:"/api/branches",
+        url:"/api/branch",
         method: "GET",
         success: (data) => {
             render(data);

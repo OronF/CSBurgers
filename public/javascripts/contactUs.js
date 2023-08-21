@@ -18,7 +18,7 @@ $(document).ready(function() {
     }
 
     $.ajax({
-        url:"/api/branches",
+        url:"/api/branch",
         method: "GET",
         success: (data) => {
             render(data);

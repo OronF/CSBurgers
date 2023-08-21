@@ -3,7 +3,7 @@ $(document).ready(function() {
     let Branches = [];
 
     $.ajax({
-        url:"/api/branches",
+        url:"/api/branch",
         method: "GET"
     }).done(function(data) {
         Branches = data.map(branch => {
@@ -32,7 +32,7 @@ $(document).ready(function() {
 
             if(icon.hasClass('bi bi-plus-circle-fill')) {
                 $.ajax({
-                    url: `/api/branches/${id}`,
+                    url: `/api/branch/${id}`,
                     method: "GET"
                 }).done(function(data) {
                     const li = $(`#${id}`);

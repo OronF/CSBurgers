@@ -9,9 +9,11 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 
 const auth = require('./middlewares/siggner').auth;
+const admin = require('./middlewares/siggner').admin;
 
 var indexRouter = require('./routes/index');
 var authorizedRouter = require('./routes/authorized');
+var managerRouter = require('./routes/manager');
 var categoryRouter = require('./routes/category');
 var dishRouter = require('./routes/dish');
 var mealsRouter = require('./routes/meals');
@@ -61,14 +63,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 
 app.use(auth);
+app.use(admin);
 
+app.use('/manager', managerRouter);
 app.use('/auth', authorizedRouter);
 app.use('/api/category', categoryRouter);
 app.use('/api/dish', dishRouter);
 app.use('/api/meal', mealsRouter);
 app.use('/api/order', orderRouter);
 app.use('/api/user', userRouter);
-app.use('/api/branches', branchRouter);
+app.use('/api/branch', branchRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
