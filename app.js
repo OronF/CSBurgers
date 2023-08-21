@@ -8,8 +8,10 @@ var logger = require('morgan');
 const mongoose = require('mongoose');
 require('dotenv').config();
 
+const auth = require('./middlewares/siggner').auth;
+
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var authorizedRouter = require('./routes/authorized');
 var categoryRouter = require('./routes/category');
 var dishRouter = require('./routes/dish');
 var mealsRouter = require('./routes/meals');
@@ -57,7 +59,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+
+app.use(auth);
+
+app.use('/auth', authorizedRouter);
 app.use('/api/category', categoryRouter);
 app.use('/api/dish', dishRouter);
 app.use('/api/meal', mealsRouter);
