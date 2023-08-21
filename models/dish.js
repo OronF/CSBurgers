@@ -24,6 +24,12 @@ const DishSchema = new mongoose.Schema({
     description: {
         type: String,
         required: true
+    },
+
+    kosher:
+    {
+        type: Boolean,
+        required: true
     }
 });
 

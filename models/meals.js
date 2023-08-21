@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { boolean } = require('webidl-conversions');
 
 const MealSchema = new mongoose.Schema({
     name: {
@@ -28,6 +29,12 @@ const MealSchema = new mongoose.Schema({
 
     description: {
         type: String,
+        required: true
+    },
+
+    kosher:
+    {
+        type: Boolean,
         required: true
     }
 });

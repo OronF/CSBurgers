@@ -27,7 +27,7 @@ const getAllDishes = async (req,res) => {
 
 const createDish = async (req,res) => {
     try {
-        const newDish = await DishService.create(req.body.name, req.body.price, req.body.categoryId, req.body.picture, req.body.description);
+        const newDish = await DishService.create(req.body.name, req.body.price, req.body.categoryId, req.body.picture, req.body.description, req.body.kosher);
         res.json(newDish);
     }
     
@@ -60,13 +60,18 @@ const updateDish = async (req,res) => {
         res.status(400).json({message:'The new description to the dish is required'});
     }
 
+    if (!req.body.kosher) {
+        res.status(400).json({message:'The new kosher to the dish is required'});
+    }
+
     const newDish = {
         id: req.body.id,
         name: req.body.name,
         price: req.body.price,
         categoryId: req.body.categoryId,
         picture: req.body.picture,
-        description: req.body.description
+        description: req.body.description, 
+        kosher: req.body.kosher
     }
 
     const dish = await DishService.update(newDish);
