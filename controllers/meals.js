@@ -23,7 +23,25 @@ const getAllMeals = async (req, res) => {
 
 const createMeal = async (req, res) => {
     try {
-        const newMeal = await MealService.create(req.body.name, req.body.price, req.body.dishes, req.body.categoryId, req.body.picture, req.body.description);
+        const tmp = {
+            name: req.body.name,
+            price: req.body.price,
+            dishes: req.body.dishes,
+            categoryId: req.body.categoryId,
+            picture: req.body.picture,
+            description: req.body.description
+        }
+
+        if (req.body.webServiceId) {
+            tmp.webServiceId = req.body.webServiceId;
+        }
+
+        const newMeal = await MealService.create(tmp);
+
+        if (!newMeal) {
+            throw new Error("couldn't create new meal");
+        }
+
         res.json(newMeal);
     }
     
@@ -70,7 +88,12 @@ const updateMeal = async (req, res) => {
         description: req.body.description
     }
 
+    if (req.body.webServiceId) {
+        newMeal.webServiceId = req.body.webServiceId;
+    }
+
     const meal = await MealService.update(newMeal);
+    
     if (!meal) {
         return res.status(404).json({errors:['Meal not found']});
     }

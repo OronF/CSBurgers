@@ -59,10 +59,42 @@ const updateOrder = async (newOrder) => {
     return order;
 }
 
+const groupByMeals = async (order) => {
+    const meals = await Order.aggregate([
+        { $match: { _id: order._id } },
+        { $unwind: '$meals' },
+        {
+            $group: {
+                _id: '$meals',
+                count: { $sum: 1 }
+            }
+        }
+    ]);
+
+    return meals;
+}
+
+const groupByDishes = async (order) => {
+    const dishes = await Order.aggregate([
+        { $match: { _id: order._id } },
+        { $unwind: '$dishes' },
+        {
+            $group: {
+                _id: '$dishes',
+                count: { $sum: 1 }
+            }
+        }
+    ]);
+
+    return dishes;
+}
+
 module.exports = {
     getAll,
     create: createOrder,
     delete: deleteOrder,
     update: updateOrder,
-    search: searchOrder
+    search: searchOrder,
+    groupByMeals,
+    groupByDishes
 }

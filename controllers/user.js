@@ -4,16 +4,20 @@ const getAllUsers = async (req, res) => {
     try {
         let Users;
 
+        let flag = 1;
+
         if (req.query.is_Manager) {
             Users = await UserService.getAllManagers(req.query.is_Manager);
+            flag = 2;
+        }
         
-        if (!req.query.phoneNumber){
+        if (!req.query.phoneNumber && flag === 1){
             if (!req.query.fname || !req.query.lname || !req.query.password) {
                 throw new Error('You have not entered all the details');
             } else {
                 Users = await UserService.searchForLogIn(req.query.fname, req.query.lname, req.query.password);
             }
-        } else {
+        } else if (flag === 1) {
             if (req.query.fname || req.query.lname || req.query.phoneNumber)
             {
                 if (!req.query.fname || !req.query.lname || !req.query.phoneNumber) {

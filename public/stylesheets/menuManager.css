@@ -119,15 +119,25 @@ body {
 {
     font-size: 1vw;
 }
-.btn-back {
-    font-size: 1.5vw;
-    position: fixed;
-    right: 3vw;
-    top: 1vw;
-    color:rgb(154, 13, 13);
-    text-decoration: none;
-    font-family: 'Lato', sans-serif;
-    font-family: 'Noto Sans Hebrew', sans-serif;
-    transition: all 0.4s;
 
+.addingProduct {
+    position: fixed;
+    top: 11vw;
+    left: 15vw;
+} 
+
+.add-btn{
+    font-size: 40px;
+    color: green;
+}
+
+.inputs {
+    display: flex;
+    flex-direction: column;
+}
+
+.same-level {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
 }
