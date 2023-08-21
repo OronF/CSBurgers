@@ -5,9 +5,8 @@ body {
 }
 
 header {
-    background-color: #333;
     color: white;
-    padding: 10px;
+    padding: 0.7vw;
     text-align: right;
 }
 
@@ -16,8 +15,7 @@ aside {
 }
 
 section {
-    padding: 20px;
-    margin-left: 270px;
+    padding: 1vw;
 }
 
 ul {
@@ -40,6 +38,7 @@ li {
     font-family: 'Noto Sans Hebrew', sans-serif;
     background-color: rgb(154, 13, 13);
     text-align: center;
+    font-size: 3vw;
 }
 
 .users,.orders
@@ -85,10 +84,50 @@ li
 .ordersList, .usersList
 {
     direction: rtl;
+    font-size: 1.5vw;
+    gap: 1.2vw;
 }
 
 .orderItem, .orderItem
 {
     font-family: 'Lato', sans-serif;
     font-family: 'Noto Sans Hebrew', sans-serif;
+    
+}
+
+.search
+{
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;
+    border: 0.1vw solid rgb(228, 227, 227);
+    transition: border-color 0.3s ease;
+    outline: none;
+    margin-bottom: 1.3vw;
+}
+
+
+.search:focus
+{
+    border-color: rgb(110, 103, 103);
+
+}
+
+.arrow
+{
+    color:  rgb(110, 103, 103);
+    padding-left: 1vw;
+}
+.numberOfOrder, .nameOfUser
+{
+
+}
+
+
+.user-data-section {
+    color:  rgb(110, 103, 103);
+}
+
+.img
+{
+    width: 4vw;
 }

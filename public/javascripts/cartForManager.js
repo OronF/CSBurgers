@@ -14,11 +14,13 @@ $(document).ready(function() {
     const appendUserLi = (user) => {
         const newElement = $(`<li id="${user._id}">
         <div class="user-Section"> 
+    
+            <span type="button" class="userInfoButton" data-user-id="${user._id}">
+                <i class="bi bi-chevron-down arrow" id="iconToClick-${user._id}"></i>
+            </span>
+
             <span class="nameOfUser">${user.fname} ${user.lname}</span>
 
-            <div type="button" class="userInfoButton" data-user-id="${user._id}">
-                <i class="bi bi-chevron-down" id="iconToClick-${user._id}"></i>
-            </div>
         </div>
         </li>`);
 
@@ -33,7 +35,7 @@ $(document).ready(function() {
                     <div class="user-data">
                         <div class="data">שם פרטי: ${data.fname}</div>
                         <div class="data">שם משפחה: ${data.lname}</div>
-                        <div class="data">${data.phoneNumber} :טלפון</div>
+                        <div class="data">טלפון: ${data.phoneNumber} </div>
                         <div class="data-orders">
                             הזמנות: 
                             <ul class="data-orders-list"></ul>
@@ -55,11 +57,13 @@ $(document).ready(function() {
     
                     const newElement = $(`<li id="${order._id}">
                         <div class="order-Section"> 
-                            <span class="numberOfOrder">${order.orderNumber}</span>
     
-                            <div type="button" class="orderInfoButton" data-order-id="${order._id}">
-                                <i class="bi bi-chevron-down" id="iconToClick-${order._id}"></i>
-                            </div>
+                            <span type="button" class="orderInfoButton" data-order-id="${order._id}">
+                                <i class="bi bi-chevron-down arrow" id="iconToClick-${order._id}"></i>
+                            </span>
+
+                            <span class="numberOfOrder">${order.orderNumber}</span>
+
                         </div>
                     </li>`);
     
@@ -105,11 +109,13 @@ $(document).ready(function() {
     const appendOrderLi = (order) => {
         const newElement = $(`<li id="${order._id}">
         <div class="order-Section"> 
+
+            <span type="button" class="orderInfoButton" data-order-id="${order._id}">
+                <i class="bi bi-chevron-down arrow" id="iconToClick-${order._id}"></i>
+            </span>
+
             <span class="numberOfOrder">${order.orderNumber}</span>
 
-            <div type="button" class="orderInfoButton" data-order-id="${order._id}">
-                <i class="bi bi-chevron-down" id="iconToClick-${order._id}"></i>
-            </div>
         </div>
         </li>`);
 
