@@ -59,12 +59,6 @@
                                   </div>
                               </div>
         
-                                <!-- PhoneNumber input -->
-                                <div class="form-outline mb-4">
-                                  <input type="tel" id="phone-number" onkeydown="phoneNumberFormatter()" placeholder="מספר טלפון" class="form-control form-control-lg" required />
-                                  <div id = "ErrorPhoneNumber"> </div>
-                              </div>
-        
                                 <!-- Password input -->
                                 <div class="form-outline mb-4">
                                   <input type="password" placeholder="סיסמה"  id="form3Example4cg" class="form-control form-control-lg" required />
@@ -96,45 +90,4 @@
   </section>
   <script src="/javascripts/logInPage.js"></script>
 </body>
-<script>
-    function phoneNumberFormatter()
-    {
-        const phoneNumberField = document.getElementById("phone-number");
-        const formattedInputVal = formatPhoneNumber(phoneNumberField.value);
-        phoneNumberField.value = formattedInputVal;
-
-    }
-    function phoneNumberFormatter()
-    {
-        const phoneNumberField = document.getElementById("phone-number");
-        const formattedInputVal = formatPhoneNumber(phoneNumberField.value);
-        phoneNumberField.value = formattedInputVal;
-
-    }
-    function phoneNumberFormatter()
-    {
-        const phoneNumberField = document.getElementById("phone-number");
-        const formattedInputVal = formatPhoneNumber(phoneNumberField.value);
-        phoneNumberField.value = formattedInputVal;
-
-    }
-    function formatPhoneNumber(value)
-    {
-        if(!value) return value;
-
-        const phoneNumber = value.replace(/[^\d]/g, '');
-        const phoneNumberLength = phoneNumber.length;
-
-        if(phoneNumberLength < 4) return phoneNumber;
-        if(phoneNumberLength < 7){
-            return `(${phoneNumber.slice(0,3)}) ${phoneNumber.slice(3)}`;
-        }
-        return `(${phoneNumber.slice(0,3)}) ${phoneNumber.slice(
-            3,
-            6,
-        )}-${phoneNumber.slice(6,9)
-        }`;
-    }
-</script>
-
 </html>

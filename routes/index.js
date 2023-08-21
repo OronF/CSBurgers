@@ -19,16 +19,8 @@ router.get('/forgotPassword', function(req, res, next) {
   res.render("forgotPassword");
 });
 
-router.get('/branchesManager', function(req, res, next) {
-  res.render("branchesManagers"); 
-});
-
 router.get('/signUp', function(req, res, next) {
   res.render("signUp");
-});
-
-router.get('/delivery', function(req, res, next) {
-  res.render("delivery");
 });
 
 router.get('/contactUs', function(req, res, next) {
@@ -50,10 +42,6 @@ router.get('/AccessibilityStatement', function(req, res, next) {
 
 router.get('/menuManager', function(req, res, next) {
   res.render("menuManager");
-});
-
-router.get('/order', function(req, res, next) {  
-  res.render("order");
 });
 
 router.get('/logInPage', function(req, res, next) {  

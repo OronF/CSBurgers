@@ -1,39 +1,45 @@
 $(document).ready(function() {
 
-    const phoneNumber = $('#phone-number');
-    const ErrorPhoneNumber = $('#ErrorPhoneNumber');
-    const Password = $('#password');
-    const ErrorPassword = $('#ErrorPassword');
+    const btnSubmit = $('.submit-btn');
 
-    $('.submit-btn').on('click', function() {
-        const btn = $(this);
+    btnSubmit.on('click', function() {
+        const fnameTxt = $('#fname');
+        const passwordTxt = $('#form3Example4cg');
+        const Error = $('#error');
+        
+        const fnameVal = fnameTxt.val();
+        const passwordVal = passwordTxt.val();
 
-        const phoneNumberVal = phoneNumber.val();
-
-        const PasswordVal = Password.val();
-
-        if(phoneNumberVal && PasswordVal) {
+        if (!fnameVal && !passwordVal) {
+            Error.html('לא הזנת את כל כל הנתונים');
+            if (Error.hasClass('hide')) {
+                Error.removeClass('hide');
+            }
+        } else {
             $.ajax({
-                url: `/api/users/`,
+                url:"/api/user",
                 method: "GET",
-                success: function(data) {
-                    data.forEach(user => {
-                        if(user.phoneNumberVal() === phoneNumberVal()){
-                            if(user.PasswordVal() === PasswordVal()){
-                                
-                            }
-                            else{
-                                ErrorPassword.html("הסיסמה חרא");
-                            }
-                        }
-                        else{
-                            ErrorPhoneNumber.html("אתה חרא אתה לא קיים במערכת, תיצור משתמש חדש ");
-                        }
-                            
-                    });
+                dataType: "json",
+                contentType: 'application/json',
+                data: {
+                    fname: fnameVal,
+                    password: passwordVal
                 },
-            })
+                success: function(response) {
+                    if (!Error.hasClass('hide')) {
+                        Error.addClass('hide');
+                    }
+                    console.log("Data saved successfully:", response);
+                    window.location.href = '/';
+                },
+                error: function(error) {
+                    console.error("Error saving data:", error);
+                    Error.html('יש לך טעות בשם או בסיסמה אנא תקן כדי להתחבר');
+                    if (Error.hasClass('hide')) {
+                        Error.removeClass('hide');
+                    }
+                }
+            });
         }
-    })
-
+    });
 });
