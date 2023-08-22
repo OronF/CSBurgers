@@ -82,10 +82,10 @@
                     <div class="modal-dialog modal-dialog-centered">
                       <div class="modal-content">
                         <div class="modal-header">
-                          <h5 class="modal-title" id="PayingSelectModalLabel">נא לבחור אמצעי תשלום</h5>
+                          <h5 class="modal-title" id="PayingSelectModalLabel" style = "text-align: center;">נא לבחור אמצעי תשלום</h5>
                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div>
+                        <div id = "PriceInPayPage">
                             סה"כ לתשלום: 
                         </div>
                         <div class="modal-body" id = "pay-select">
@@ -103,24 +103,29 @@
                     <div class="modal-dialog modal-dialog-centered">
                       <div class="modal-content">
                         <div class="modal-header">
-                          <h5 class="modal-title" id="CreditModalLabel">תשלום באשראי</h5>
+                          <h5 class="modal-title" id="CreditModalLabel" style = "text-align: center;">תשלום באשראי</h5>
                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                           <div class="form-outline mb-4">
                             <input placeholder="שם בעל הכרטיס" class="form-control" id="creditCardOwnerName" />
+                            <div class="error" id="NameCreditCardOwnerError"></div>
                           </div>
                           <div class="form-outline mb-4">
                             <input placeholder="מספר כרטיס  " class="form-control" id="creditCardOwnerName" />
+                            <div class="error" id="CreditCardNumberError"></div>
                           </div>
                           <div class="form-outline mb-4">
                             <input placeholder="  תוקף כרטיס" class="form-control" id="creditCardOwnerName" />
+                            <div class="error" id="validityCreditCardError"></div>
                           </div>
                           <div class="form-outline mb-4">
                             <input placeholder="תעודת זהות  " class="form-control" id="creditCardOwnerName" />
+                            <div class="error" id="IDError"></div>
                           </div>
                           <div class="form-outline mb-4">
                             <input placeholder="שלוש ספרות בגב הכרטיס  " class="form-control" id="creditCardOwnerName" />
+                            <div class="error" id="ThreeNumberBackOfTheCardError"></div>
                           </div>
                         </div>
                         <div class="modal-footer">
@@ -135,7 +140,7 @@
                     <div class="modal-dialog modal-dialog-centered">
                       <div class="modal-content">
                         <div class="modal-header">
-                          <h5 class="modal-title" id="CashModalLabel">תשלום במזומן</h5>
+                          <h5 class="modal-title" id="CashModalLabel" style="text-align:center; display:block;" >תשלום במזומן</h5>
                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-footer">

@@ -31,6 +31,7 @@ $(document).ready(async function() {
     const totalPrice = $('#total-price');
     const branch = $('#branch');
     const delivery = $('#delivery');
+    const TotalPricePayPage = $('#PriceInPayPage');
 
     const putHideOnElement = (element) => {
         element.removeClass('nohide').addClass('hide');
@@ -144,6 +145,7 @@ $(document).ready(async function() {
 
             orderPrice.html(`מחיר הזמנה: ${order.totalprice - 15}₪`);
             totalPrice.html(`מחיר כללי: ${order.totalprice}₪`);
+            TotalPricePayPage.html(`סה"כ לתשלום: ${order.totalprice}₪`);
         });
 
         dishesList.append(newElement);
@@ -255,6 +257,7 @@ $(document).ready(async function() {
 
             orderPrice.html(`מחיר הזמנה: ${order.totalprice - 15}₪`);
             totalPrice.html(`מחיר כללי: ${order.totalprice}₪`);
+            TotalPricePayPage.html(`סה"כ לתשלום: ${order.totalprice}₪`);
         });
         mealsList.append(newElement);
     }
@@ -446,6 +449,7 @@ $(document).ready(async function() {
     delivery.html(`משלוח ל: ${order.location}`)
     orderPrice.html(`מחיר הזמנה: ${order.totalprice - 15}₪`);
     totalPrice.html(`מחיר כללי: ${order.totalprice}₪`);
+    TotalPricePayPage.html(`סה"כ לתשלום: ${order.totalprice}₪`);
 
     await $.ajax({
         url: `/api/branch/${order.branch}`,
