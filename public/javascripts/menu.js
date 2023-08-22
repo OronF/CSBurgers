@@ -196,16 +196,10 @@ $(document).ready(async function() {
             console.log(error);
         }
     });
-});
 
- function restrictInputToNumbers(event) {
-    const input = event.target;
-    const inputValue = input.value;
-    const sanitizedValue = inputValue.replace(/[^\d]/g, ''); // Remove non-digit characters
-    input.value = sanitizedValue;
-  }
 
-  const kosherCheck = document.getElementsByClassName('kosher-check'); 
+    
+  const kosherCheck = $('#kosherCheckbox'); 
 
 kosherCheck.addEventListener('change', async function() {
     if (kosherCheck.checked) {
@@ -218,6 +212,13 @@ kosherCheck.addEventListener('change', async function() {
                 data: {
                     kosher: true
                 },
+                success: function(dishes)
+                {
+                    dishesList.empty();
+                    dishes.forEach(dish => {
+                        appendDishesLi(dish);
+                    });
+                },
                 error: function(error) {
                     console.error("Error finding data:", error);
                 }
@@ -229,3 +230,12 @@ kosherCheck.addEventListener('change', async function() {
         }
     }
 });
+
+});
+
+ function restrictInputToNumbers(event) {
+    const input = event.target;
+    const inputValue = input.value;
+    const sanitizedValue = inputValue.replace(/[^\d]/g, ''); // Remove non-digit characters
+    input.value = sanitizedValue;
+  }

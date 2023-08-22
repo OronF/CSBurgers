@@ -55,11 +55,13 @@ const getByCategory = async (categoryId) => {
     return await Dish.find({categoryId});
 }
 
-const isKosher = async (categoryId) => {
-    let d = await Dish.find({categoryId});
-    if(d.kosher)
-        return d;
+const isKosher = async (kosherValue, dishes) =>
+{
+    return dishes.filter((dish) => {
+        return dish.kosher === kosherValue;
+    })
 }
+
 
 module.exports = {
     getAll,

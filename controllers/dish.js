@@ -14,6 +14,9 @@ const getAllDishes = async (req,res) => {
             throw new Error('Non existing dishes');
         }
 
+        if(req.query.kosher)
+            dishes = await DishService.isKosher(req.query.kosher, dishes);
+
         res.json(dishes);
     }
     
