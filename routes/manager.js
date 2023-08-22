@@ -2,10 +2,6 @@ var express = require('express');
 //const path = require('path');
 var router = express.Router();
 
-router.get('/', function(req, res, next) {
-    res.render("homePage");
-});
-
 router.get('/Managerbranches', function(req, res, next) {
     res.render("branchesManagers"); 
 });

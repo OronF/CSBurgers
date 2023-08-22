@@ -8,8 +8,8 @@ var logger = require('morgan');
 const mongoose = require('mongoose');
 require('dotenv').config();
 
-const auth = require('./middlewares/siggner').auth;
-const admin = require('./middlewares/siggner').admin;
+const auth = require('./middlewares/signIn').auth;
+const admin = require('./middlewares/signIn').admin;
 
 var indexRouter = require('./routes/index');
 var authorizedRouter = require('./routes/authorized');

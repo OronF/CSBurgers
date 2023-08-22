@@ -50,6 +50,14 @@ function admin (req, res, next) {
     }
   }
 
+  else if (req.url.indexOf('/manager/graphs') >= 0) { 
+    if(req.cookies.admin) {
+      next();
+    } else {
+      res.render('error');
+    }
+  }
+
   else {
     next();
   }
