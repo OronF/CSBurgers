@@ -4,10 +4,14 @@ function admin (req, res, next) {
 
   if (req.url.indexOf('/branches') >= 0) {
     if (req.cookies.admin) {
-      console.log('1');
       res.redirect('/manager/Managerbranches');
     } else {
-      console.log('2');
+      next();
+    }
+  } else if (req.url.indexOf('/menu') >= 0) {
+    if (req.cookies.admin) {
+      res.redirect('/manager/managerMenu');
+    } else {
       next();
     }
   } else {

@@ -14,7 +14,7 @@ router.get('/graphs', function(req, res, next) {
     res.render("graphs");
 });
 
-router.get('/menu', function(req, res, next) {
+router.get('/managerMenu', function(req, res, next) {
     res.render("menuManager");
 });
 
