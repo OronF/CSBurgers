@@ -24,6 +24,21 @@ $(document).ready(async function() {
         const user = $('.user');
         user.html(`שלום: ${userName}`);
 
+        const btnGuest = $('.btn-guest');
+        btnGuest.remove();
+
+        const Guestdiv = $('#Guestdiv');
+
+        const appendLogOutBtn = function() {
+            const newElement = $(`
+                <button class="btn-logout" ><a class="btn-css" href="/logout">התנתקות</a></button>
+            `);
+
+            Guestdiv.append(newElement);
+        }
+
+        appendLogOutBtn();
+
         if (cookieName === 'admin') {
             const cartAndUser = $('.cartAndUser');
 

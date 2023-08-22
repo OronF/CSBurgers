@@ -12,7 +12,7 @@
 }
 
 /* the button's font, size, placing, and animation transition time*/
-.btn-about, .btn-accessibility, .btn-contact, .btn-guest, .btn-ig, .btn-menu, .btn-ToOrder {
+.btn-about, .btn-accessibility, .btn-contact, .btn-guest, .btn-ig, .btn-menu, .btn-ToOrder, .btn-logout {
     transition: all 0.4s;
     border: none;
     background: transparent;
