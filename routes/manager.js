@@ -21,5 +21,9 @@ router.get('/Managerdelivery', function(req, res, next) {
 router.get('/orders/:id', function(req, res, next) {  
     res.render("order");
 });
+
+router.get('/cartForManager', function(req, res, next) {
+    res.render("cartForManager");
+});
   
 module.exports = router;

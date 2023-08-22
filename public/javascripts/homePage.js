@@ -49,7 +49,7 @@ $(document).ready(async function() {
                         <i class="bi bi-graph-up-arrow"></i>
                     </a>
 
-                    <a class="ordersAndUsers" href="/manager/graphs">הזמנות ומשתמשים</a>
+                    <a class="ordersAndUsers" href="/manager/cartForManager">הזמנות ומשתמשים</a>
                 </div>
                 `);
 
