@@ -67,3 +67,7 @@ body {
     border-color: rgb(110, 103, 103);
 
 }
+
+.hide {
+    display: none;
+}
