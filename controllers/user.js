@@ -19,7 +19,7 @@ const getAllUsers = async (req, res) => {
             }
 
             const oneDayToSeconds = 24 * 60 * 60;
-            res.cookie(Users.is_Manager ? 'admin' : 'user', req.query.fname, { maxAge: oneDayToSeconds});
+            res.cookie(Users.is_Manager ? 'admin' : 'user', Users._id, { maxAge: oneDayToSeconds});
             console.log(res.cookies);
 
             res.json(Users);
