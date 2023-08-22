@@ -8,7 +8,13 @@ src="https://cdn.socket.io/socket.io-3.1.1.min.js"
 
   // Listen for incoming messages
   socket.on('message', (message) => {
-    // Handle the incoming message (display, notify, etc.)
-    // For example, you can append it to a chat window.
+    // Create a new message element
+    const messageElement = document.createElement('div');
+    messageElement.className = 'message';
+    messageElement.textContent = message;
+
+    // Append the message to the container
+    const messageContainer = document.getElementById('messageContainer');
+    messageContainer.appendChild(messageElement);
   });
  
