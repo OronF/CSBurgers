@@ -1,4 +1,11 @@
-$(document).ready(function() {
+$(document).ready(async function() {
+
+    const cookieValue = document.cookie;
+    const decodedValue = decodeURIComponent(cookieValue);
+
+    const matches = decodedValue.match(/"([^"]+)"/);
+    const extractedContent = matches ? matches[1] : null;
+
     const framework = $('#framework');
     const branches = $('#branches');
 
@@ -51,7 +58,8 @@ $(document).ready(function() {
                     totalprice: 15,
                     meals: [],
                     dishes: [],
-                    branch: framework
+                    branch: framework,
+                    customerId: extractedContent
                 }),
                 success: function(data) {
                     window.location.href = `orders/${data._id}`;
@@ -106,7 +114,8 @@ $(document).ready(function() {
                     totalprice: 15,
                     meals: [],
                     dishes: [],
-                    branch: branchID
+                    branch: branchID,
+                    customerId: extractedContent
                 }),
                 success: function(data) {
                     window.location.href = `orders/${data._id}`;

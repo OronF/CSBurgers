@@ -1,47 +1,63 @@
-$(document).ready(function() {
+$(document).ready(async function() {
 
-    const btnSubmit = $('.submit-btn');
+    const cookieValue = document.cookie;
+    const [cookieName, encodedContent] = cookieValue.split('=');
+    const decodedValue = decodeURIComponent(encodedContent);
 
-    btnSubmit.on('click', function() {
-        const fnameTxt = $('#fnameTxt');
-        const lnameTxt = $('#lnameTxt');
-        const passwordTxt = $('#passwordTxt');
-        const Error = $('#error');
-        
-        const fnameVal = fnameTxt.val();
-        const lnameVal = lnameTxt.val();
-        const passwordVal = passwordTxt.val();
+    const matches = decodedValue.match(/"([^"]+)"/);
+    const extractedContent = matches ? matches[1] : null;
 
-        if (!fnameVal && !lnameVal && !passwordVal) {
-            Error.html('לא הזנת את כל כל הנתונים');
-            if (Error.hasClass('hide')) {
-                Error.removeClass('hide');
+    if (extractedContent) {
+        let userName;
+
+        await $.ajax({
+            url: `/api/user/${extractedContent}`,
+            method: "GET",
+            success: function(data) {
+                userName = data.fname;
+            },
+            error: function(error) {
+                console.error(error);
             }
-        } else {
-            $.ajax({
-                url:"/api/user",
-                method: "GET",
-                dataType: "json",
-                contentType: 'application/json',
-                data: {
-                    fname: fnameVal,
-                    lname: lnameVal,
-                    password: passwordVal
-                },
-                success: function(response) {
-                    if (!Error.hasClass('hide')) {
-                        Error.addClass('hide');
-                    }
-                    console.log("Data saved successfully:", response);
-                },
-                error: function(error) {
-                    console.error("Error saving data:", error);
-                    Error.html('יש לך טעות בשם או בסיסמה אנא תקן כדי להתחבר');
-                    if (Error.hasClass('hide')) {
-                        Error.removeClass('hide');
-                    }
-                }
-            });
+        })
+
+        const user = $('.user');
+        user.html(`שלום: ${userName}`);
+
+        const btnGuest = $('.btn-guest');
+        btnGuest.remove();
+
+        const Guestdiv = $('#Guestdiv');
+
+        const appendLogOutBtn = function() {
+            const newElement = $(`
+                <button class="btn-logout" ><a class="btn-css" href="/logout">התנתקות</a></button>
+            `);
+
+            Guestdiv.append(newElement);
         }
-    });
+
+        appendLogOutBtn();
+
+        if (cookieName === 'admin') {
+            const cartAndUser = $('.cartAndUser');
+
+
+            const appendManagerPages = function() {
+                const newElement = $(`<div class="managerPages">
+                    <a class="graphs" href="/manager/graphs">
+                        <i class="bi bi-graph-up-arrow"></i>
+                    </a>
+
+                    <a class="ordersAndUsers" href="/manager/graphs">הזמנות ומשתמשים</a>
+                </div>
+                `);
+
+                cartAndUser.append(newElement);
+            }
+
+            appendManagerPages();
+        }
+    }
+
 });
