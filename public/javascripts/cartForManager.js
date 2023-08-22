@@ -45,33 +45,21 @@ $(document).ready(function() {
 
                 const userOrdersList = newElement.find('.data-orders-list');
 
-                const appendsOrderssLi = async (id) => {
-                    let order;
-    
+                let Order;
+
+                data.orders.forEach(async (order_id) => {
                     await $.ajax({
-                        url: `/api/order/${id}`,
-                        method: "GET"
-                    }).done(function(data) {
-                        order = data;
+                        url: `/api/order/${order_id}`,
+                        method: "GET",
+                        success: function(data) {
+                            Order = data;
+                        },
+                        error: function(error) {
+                            console.error(error);
+                        }
                     });
-    
-                    const newElement = $(`<li id="${order._id}">
-                        <div class="order-Section"> 
-    
-                            <span type="button" class="orderInfoButton" data-order-id="${order._id}">
-                                <i class="bi bi-chevron-down arrow" id="iconToClick-${order._id}"></i>
-                            </span>
 
-                            <span class="numberOfOrder">${order.orderNumber}</span>
-
-                        </div>
-                    </li>`);
-    
-                    userOrdersList.append(newElement);
-                }
-
-                data.orders.forEach(order_id => {
-                    appendsOrderssLi(order_id);
+                    appendOrderLi(Order, userOrdersList);
                 });
 
                 li.append(newElement);
@@ -106,7 +94,7 @@ $(document).ready(function() {
         });
     };
 
-    const appendOrderLi = (order) => {
+    const appendOrderLi = (order, list) => {
         const newElement = $(`<li id="${order._id}">
         <div class="order-Section"> 
 
@@ -114,7 +102,7 @@ $(document).ready(function() {
                 <i class="bi bi-chevron-down arrow" id="iconToClick-${order._id}"></i>
             </span>
 
-            <span class="numberOfOrder">${order.orderNumber}</span>
+            <span class="numberOfOrder">מספר הזמנה: ${order.orderNumber}</span>
 
         </div>
         </li>`);
@@ -126,9 +114,22 @@ $(document).ready(function() {
             const li = $(`#${id}`);
 
             const appendOrdersDataLi = async (data) => { 
+                let user;
+
+                await $.ajax({
+                    url:`/api/user/${data.customerId}`,
+                    method: "GET",
+                    success: (data) => {
+                        user = data;
+                    },
+                    error: (error) => {
+                        console.log(error);
+                    }
+                });
+
                 const newElement = $(`<div class="order-data-section" id="order-data-${id}">
                     <div class="order-data">
-                        <div class="data">שם הלקוח: </div>
+                        <div class="data">שם הלקוח: ${user.fname} ${user.lname}</div>
                         <div class="data">תאריך: ${data.orderDate}</div>
                         <div class="data">כתובת: ${data.location}</div>
                         <div class="data">מחיר: ${data.totalprice}</div>
@@ -222,7 +223,7 @@ $(document).ready(function() {
             }
         });
 
-        ordersList.append(newElement);
+        list.append(newElement);
 
         orders.push({
             id: order._id,
@@ -233,7 +234,7 @@ $(document).ready(function() {
 
     const renderOrders = (data) => {
         data.forEach(order => {
-            appendOrderLi(order);
+            appendOrderLi(order, ordersList);
         });
     };
 

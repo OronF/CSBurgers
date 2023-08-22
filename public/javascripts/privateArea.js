@@ -50,7 +50,7 @@ $(document).ready(async function() {
             const appendOrdersDataLi = async (data) => { 
                 const newElement = $(`<div class="order-data-section" id="order-data-${id}">
                     <div class="order-data">
-                        <div class="data">שם הלקוח: </div>
+                        <div class="data">שם הלקוח: ${userData.fname} ${userData.lname}</div>
                         <div class="data">תאריך: ${data.orderDate}</div>
                         <div class="data">כתובת: ${data.location}</div>
                         <div class="data">מחיר: ${data.totalprice}</div>
