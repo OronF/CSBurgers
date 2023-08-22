@@ -44,4 +44,8 @@ router.get('/logInPage', function(req, res, next) {
 });
 
 
+router.get('/privateArea', function(req, res, next) {  
+  res.render("privateArea");
+});
+
 module.exports = router;
