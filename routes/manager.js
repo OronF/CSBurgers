@@ -18,7 +18,7 @@ router.get('/managerMenu', function(req, res, next) {
     res.render("menuManager");
 });
 
-router.get('/delivery', function(req, res, next) {
+router.get('/Managerdelivery', function(req, res, next) {
     res.render("delivery");
 });
   

@@ -14,7 +14,14 @@ function admin (req, res, next) {
     } else {
       next();
     }
-  } else {
+  } if (req.url.indexOf('/delivery') >= 0) {
+    if (req.cookies.admin) {
+      res.redirect('/manager/Managerdelivery');
+    } else {
+      next();
+    }
+  }
+  else {
     next();
   }
 }
