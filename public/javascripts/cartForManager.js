@@ -125,7 +125,7 @@ $(document).ready(function() {
             const icon = $(`#iconToClick-${id}`);
             const li = $(`#${id}`);
 
-            const appendOrdersDataLi = (data) => { 
+            const appendOrdersDataLi = async (data) => { 
                 const newElement = $(`<div class="order-data-section" id="order-data-${id}">
                     <div class="order-data">
                         <div class="data">שם הלקוח: </div>
@@ -138,6 +138,71 @@ $(document).ready(function() {
                         </div>
                     </div>
                 </div>`);
+
+                const dataordersdisheslist = newElement.find('.data-orders-dishes-list');
+
+                let Meals;
+
+                await $.ajax({
+                    url: `/api/order/${data._id}`,
+                    method: "GET",
+                    dataType: "json",
+                    contentType: 'application/json',
+                    data: { 
+                        group :true,
+                        meals: true 
+                    },
+                    success: function(data) {
+                        Meals = data;
+                    },
+                    error: function(error) {
+                        console.error(error);
+                    }
+                });
+                    
+                Meals.forEach(async (meal) => {
+                    await $.ajax({
+                        url: `/api/meal/${meal._id}`,
+                        method: "GET",
+                        success: function(Mealdata) {
+                            dataordersdisheslist.append(`<li>${Mealdata.name} ${meal.count}</li>`);
+                        },
+                        error: function(error) {
+                            console.error(error);
+                        }
+                    });
+                });
+
+                let Dishes;
+
+                await $.ajax({
+                    url: `/api/order/${data._id}`,
+                    method: "GET",
+                    dataType: "json",
+                    contentType: 'application/json',
+                    data: { 
+                        group :true,
+                    },
+                    success: function(data) {
+                        Dishes = data;
+                    },
+                    error: function(error) {
+                        console.error(error);
+                    }
+                });
+                    
+                Dishes.forEach(async (dish) => {
+                    await $.ajax({
+                        url: `/api/dish/${dish._id}`,
+                        method: "GET",
+                        success: function(Dishdata) {
+                            dataordersdisheslist.append(`<li>${Dishdata.name} ${dish.count}</li>`);
+                        },
+                        error: function(error) {
+                            console.error(error);
+                        }
+                    });
+                });
 
                 li.append(newElement);
             }
@@ -158,6 +223,7 @@ $(document).ready(function() {
         });
 
         ordersList.append(newElement);
+
         orders.push({
             id: order._id,
             name: `${order.orderNumber}`,
