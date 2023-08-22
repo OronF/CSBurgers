@@ -28,3 +28,25 @@ $(document).ready(function() {
         }
     });
 });
+
+
+const express = require('express');
+const http = require('http');
+const socketIo = require('socket.io');
+
+const app = express();
+const server = http.createServer(app);
+const io = socketIo(server);
+
+// Handle incoming socket connections
+io.on('connection', (socket) => {
+  // When a client sends a message
+  socket.on('message', (data) => {
+    // Emit the message to the selected branch manager
+    io.to(data.branch).emit('message', data.message);
+  });
+});
+
+server.listen(3000, () => {
+  console.log('Server is running on port 3000');
+});
