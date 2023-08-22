@@ -8,19 +8,48 @@ function admin (req, res, next) {
     } else {
       next();
     }
-  } else if (req.url.indexOf('/menu') >= 0) {
+  } 
+  
+  else if (req.url.indexOf('/menu') >= 0) {
     if (req.cookies.admin) {
       res.redirect('/manager/managerMenu');
     } else {
       next();
     }
-  } if (req.url.indexOf('/delivery') >= 0) {
+  } 
+  
+  else if (req.url.indexOf('/delivery') >= 0) {
     if (req.cookies.admin) {
       res.redirect('/manager/Managerdelivery');
     } else {
       next();
     }
+  } 
+
+  else if (req.url.indexOf('/manager/Managerbranches') >= 0) {
+    if(req.cookies.admin) {
+      next();
+    } else {
+      res.render('error');
+    }
+  } 
+
+  else if (req.url.indexOf('/manager/managerMenu') >= 0) { 
+    if(req.cookies.admin) {
+      next();
+    } else {
+      res.render('error');
+    }
   }
+
+  else if (req.url.indexOf('/manager/Managerdelivery') >= 0) { 
+    if(req.cookies.admin) {
+      next();
+    } else {
+      res.render('error');
+    }
+  }
+
   else {
     next();
   }
