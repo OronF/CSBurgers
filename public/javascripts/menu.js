@@ -197,3 +197,35 @@ $(document).ready(async function() {
         }
     });
 });
+
+ function restrictInputToNumbers(event) {
+    const input = event.target;
+    const inputValue = input.value;
+    const sanitizedValue = inputValue.replace(/[^\d]/g, ''); // Remove non-digit characters
+    input.value = sanitizedValue;
+  }
+
+  const kosherCheck = document.getElementsByClassName('kosher-check'); 
+
+kosherCheck.addEventListener('change', async function() {
+    if (kosherCheck.checked) {
+        try {
+            const data = await $.ajax({
+                url: "/api/dish",
+                method: "GET",
+                dataType: "json",
+                contentType: 'application/json',
+                data: {
+                    kosher: true
+                },
+                error: function(error) {
+                    console.error("Error finding data:", error);
+                }
+            });
+
+            console.log(data);
+        } catch (error) {
+            console.error("AJAX request error:", error);
+        }
+    }
+});

@@ -33,7 +33,18 @@
     <header class="title">
         <h1 class="page-title">תפריט המסעדה</h1>
     </header>
-
+        <span class="filters">
+            <input type="checkbox" id="form2Example32" value="" class="form-check-input me-2 kosher-check">
+            <label for="checkbox-input">מוצרים כשרים בלבד<a href="#!" class="text-body"></a></label>
+            <input type="checkbox" id="form2Example32" value="" class="form-check-input me-2 maxprice-check">
+            <label for="checkbox-input">מחיר מקסימלי: <input oninput="restrictInputToNumbers(event)" class="maxPriceInp">₪</label>
+            <input type="checkbox" id="form2Example32" value="" class="form-check-input me-2 sortby-check">
+            <label for="checkbox-input">מיון לפי: <select>
+                <option value="" disabled selected>בחר מיון...</option>
+                <option>מהמחיר הגבוה לנמוך</option>
+                <option>מהמחיר הנמוך לגבוה</option>
+            </select></label>
+        </span>
         <aside class="categories-aside">
 
             <ul class="categories">

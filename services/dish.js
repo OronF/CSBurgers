@@ -55,11 +55,18 @@ const getByCategory = async (categoryId) => {
     return await Dish.find({categoryId});
 }
 
+const isKosher = async (categoryId) => {
+    let d = await Dish.find({categoryId});
+    if(d.kosher)
+        return d;
+}
+
 module.exports = {
     getAll,
     create: createDish,
     delete: deleteDish,
     update: updateDish,
     search: searchDish,
-    getByCategory
+    getByCategory,
+    isKosher
 }
