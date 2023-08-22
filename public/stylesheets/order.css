@@ -153,3 +153,16 @@ body {
 .Sum {
     text-align: center;
 }
+.modal {
+    background: rgba(0, 0, 0, 0.5); 
+}
+.modal-backdrop {
+    display: none;
+}
+.pay
+{
+
+}
+.btn-close{
+    right:10vw
+}
