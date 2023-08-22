@@ -269,7 +269,7 @@ $(document).ready(async function() {
         
 
         const newElement = $(`<li id="${category._id}" class="li-category" type="button">
-            <a class="nameOfCategory" id="${category._id}" data-category-id="${category._id}" data-category-categorytype="${category.categorytype}" href="/orders/${orderID}#${category.name}">${category.name}</a>
+            <a class="nameOfCategory" id="${category._id}" data-category-id="${category._id}" data-category-categorytype="${category.categorytype}" href="${orderID}#${category.name}">${category.name}</a>
         </li>`);
 
         newElement.find('.nameOfCategory').on('click', async function() {
@@ -448,7 +448,7 @@ $(document).ready(async function() {
     totalPrice.html(`מחיר כללי: ${order.totalprice}₪`);
 
     await $.ajax({
-        url: `/api/branches/${order.branch}`,
+        url: `/api/branch/${order.branch}`,
         method: "GET",
         success: function(data) {
             branch.html(`סניף: ${data.name}`);

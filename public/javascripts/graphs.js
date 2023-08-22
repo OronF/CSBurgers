@@ -99,7 +99,7 @@ $(document).ready(async function() {
         // Fetch branch details for each branch
         for (const branch of branchData) {
             await $.ajax({
-                url: `/api/branches/${branch._id}`,
+                url: `/api/branch/${branch._id}`,
                 method: "GET",
                 success: function(data) {
                     branch._id = data.name;

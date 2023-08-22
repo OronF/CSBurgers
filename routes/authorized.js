@@ -6,8 +6,12 @@ router.get('/delivery', function(req, res, next) {
   res.render("delivery");
 });
 
-router.get('/order', function(req, res, next) {  
+router.get('/orders/:id', function(req, res, next) {  
   res.render("order");
+});
+
+router.get('/privateArea', function(req, res, next) {  
+  res.render("privateArea");
 });
 
 module.exports = router;

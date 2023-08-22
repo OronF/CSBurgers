@@ -28,7 +28,7 @@ $(document).ready(function() {
         let length;
 
         await $.ajax({
-            url: "api/order",
+            url: "/api/order",
             method: "GET",
             success: function(data) {
                 length = data.length + 1;
@@ -40,7 +40,7 @@ $(document).ready(function() {
 
         if (city && street && houseNum && framework) {
             $.ajax({
-                url: "api/order",
+                url: "/api/order",
                 method: "POST",
                 dataType: "json",
                 contentType: 'application/json',
@@ -69,7 +69,7 @@ $(document).ready(function() {
         let length;
 
         await $.ajax({
-            url: "api/order",
+            url: "/api/order",
             method: "GET",
             success: function(data) {
                 length = data.length + 1;
@@ -84,7 +84,7 @@ $(document).ready(function() {
             let branch;
 
             await $.ajax({
-                url: `/api/branches/${branchID}`,
+                url: `/api/branch/${branchID}`,
                 method: "GET",
                 success: function(data) {
                     branch = data;
@@ -95,7 +95,7 @@ $(document).ready(function() {
             });
 
             $.ajax({
-                url: "api/order",
+                url: "/api/order",
                 method: "POST",
                 dataType: "json",
                 contentType: 'application/json',
@@ -119,7 +119,7 @@ $(document).ready(function() {
     });
 
     $.ajax({
-        url: "/api/branches",
+        url: "/api/branch",
         method: "GET",
         success: (data) => {
             render(data);
