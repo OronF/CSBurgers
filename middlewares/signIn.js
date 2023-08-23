@@ -98,7 +98,7 @@ function auth (req, res, next) {
     } else {
       next();
     } 
-  }
+  }  
 }
 
 module.exports = { auth, admin };

@@ -1,5 +1,11 @@
 $(document).ready(async function() {
 
+    const deleteOrderBtn = $('.deleteLastOrder');
+    const returnOrderBtn = $('.recreateLastOrder');
+
+    deleteOrderBtn.hide();
+    returnOrderBtn.hide();
+
     const cookieValue = document.cookie;
     const decodedValue = decodeURIComponent(cookieValue);
 
@@ -150,7 +156,7 @@ $(document).ready(async function() {
                     is_Manager: user.is_Manager,
                     currentOrder: order._id
                 }),
-                success: function(data) {
+                success: function (data) {
                     window.location.href = `orders/${order._id}`;
                 },
                 error: function(error) {
@@ -170,4 +176,39 @@ $(document).ready(async function() {
             console.log(error);
         }   
     });
+
+    if (extractedContent) {
+        await $.ajax({
+            url: `/api/order/${user.currentOrder}`,
+            method: "GET",
+            success: function(data) {
+                order = data;
+            },
+            error: function(error) {
+                console.error(error);
+            }
+        });
+    
+        if (!order.closed) {
+            deleteOrderBtn.show();
+            returnOrderBtn.show();
+
+            returnOrderBtn.on('click', function() {
+                window.location.href = `orders/${user.currentOrder}`;
+            });
+    
+            deleteOrderBtn.on('click', async function() {
+                await $.ajax({
+                    url: `/api/order/${user.currentOrder}`,
+                    method: "DELETE",
+                    success: function(data) {
+                        window.location.href = "/";
+                    }, 
+                    error: function(error) {
+                        console.error(error);
+                    }
+                });
+            });
+        }
+    }
 });
