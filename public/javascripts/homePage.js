@@ -19,7 +19,7 @@ $(document).ready(async function() {
             error: function(error) {
                 console.error(error);
             }
-        })
+        });
 
         const user = $('.user');
         user.html(`שלום: ${userName}`);

@@ -1,5 +1,34 @@
 $(document).ready(function() {
 
+    const deleteOrderFromUser = async (user) => {
+        if(user.currentOrder) {
+            let currentOrder;
+            await $.ajax({
+                url: `/api/order/${user.currentOrder}`,
+                method: "GET",
+                success: function(data) {
+                    currentOrder = data;
+                }, 
+                error: function(error) {
+                    window.location.href = '/';
+                }
+            });
+            
+            if (!currentOrder.closed) {
+                await $.ajax({
+                    url: `/api/order/${user.currentOrder}`,
+                    method: "DELETE",
+                    success: function(data) {
+                        console.log("deleted data", data);
+                    }, 
+                    error: function(error) {
+                        console.error(error);
+                    }
+                });
+            }
+        }
+    }
+
     const btnSubmit = $('.submit-btn');
 
     btnSubmit.on('click', function() {
@@ -25,11 +54,12 @@ $(document).ready(function() {
                     fname: fnameVal,
                     password: passwordVal
                 },
-                success: function(response) {
+                success: async function(response) {
                     if (!Error.hasClass('hide')) {
                         Error.addClass('hide');
                     }
                     console.log("Data saved successfully:", response);
+                    await deleteOrderFromUser(response);
                     window.location.href = '/';
                 },
                 error: function(error) {

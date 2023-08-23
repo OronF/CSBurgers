@@ -14,4 +14,8 @@ router.get('/privateArea', function(req, res, next) {
   res.render("privateArea");
 });
 
+router.get('/continueOrder', function(req, res, next) {  
+  res.render("continueOrder");
+});
+
 module.exports = router;

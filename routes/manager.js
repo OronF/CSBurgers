@@ -25,5 +25,9 @@ router.get('/orders/:id', function(req, res, next) {
 router.get('/cartForManager', function(req, res, next) {
     res.render("cartForManager");
 });
-  
+
+router.get('/continueOrder', function(req, res, next) {  
+    res.render("continueOrder");
+});
+
 module.exports = router;
