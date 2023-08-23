@@ -110,27 +110,28 @@
         }
     </script>
 </body>
-<script src="/socket.io/socket.io.js">
-  var socket = io();
+<script src="/socket.io/socket.io.js"></script>
+  <script>
+    var socket = io();
 
-  const approvebtn = document.getElementById('approve-btn');
+const approvebtn = document.getElementById('approve-btn');
 
-  function sendMessage() {
-    const firstName = document.getElementById('form3Example1m').value();
-    const lastName = document.getElementById('form3Example1n').value();
-    const phoneNumber = document.getElementById('phone-number').value();
-    const branch = document.getElementById('framework').value();
-    const message = document.getElementsByClassName('message').value();
+approvebtn.addEventListener('click', sendMessage);
 
+function sendMessage() {
+  const firstName = document.getElementById('form3Example1m').value;
+  const lastName = document.getElementById('form3Example1n').value;
+  const phoneNumber = document.getElementById('phone-number').value;
+  const branch = document.getElementById('framework').value;
+  const message = document.getElementsByClassName('message')[0].value;
 
-    const fullMessage = `Name: ${firstName} ${lastName}\nPhone: ${phoneNumber}\nMessage: ${message}`;
-    console.log(fullMessage); 
-    console.log("check");
-    
-    socket.emit('message', { message: fullMessage });
-  }
+  const fullMessage = `Name: ${firstName} ${lastName}\nPhone: ${phoneNumber}\nMessage: ${message}`;
+  console.log(fullMessage);
+  console.log("check");
 
-  approvebtn.addEventListener('click', sendMessage());
-</script>
+  socket.emit('message', { message: fullMessage });
+}
+
+  </script>
 
 </html>
