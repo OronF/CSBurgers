@@ -4,7 +4,7 @@
 src="https://cdn.socket.io/socket.io-3.1.1.min.js"
 
   // Connect to the server
-  const socket = io.connect('http://localhost:3000');
+  const socket = io.connect('http://localhost:2000');
 
   // Listen for incoming messages
   socket.on('message', (message) => {
@@ -17,4 +17,3 @@ src="https://cdn.socket.io/socket.io-3.1.1.min.js"
     const messageContainer = document.getElementById('messageContainer');
     messageContainer.appendChild(messageElement);
   });
- 

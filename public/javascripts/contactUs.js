@@ -35,7 +35,7 @@ src="https://cdn.socket.io/socket.io-3.1.1.min.js"
 //client side code
 
   // Connect to the server
-  const socket = io.connect('http://localhost:3000');
+  const socket = io.connect('http://localhost:2000');
 
   // Send a message to a specific branch
   function sendMessage() {
@@ -46,6 +46,7 @@ src="https://cdn.socket.io/socket.io-3.1.1.min.js"
     const message = document.getElementById('message').value;
 
     const fullMessage = `Name: ${firstName} ${lastName}\nPhone: ${phoneNumber}\nMessage: ${message}`;
+    console.log(fullMessage);
     
     socket.emit('message', { branch, message: fullMessage });
   }
