@@ -159,10 +159,12 @@ body {
 .modal-backdrop {
     display: none;
 }
-.pay
-{
 
+.modal-header {
+    display: flex;
+    flex-direction: column-reverse;
 }
+
 .btn-close{
     right:10vw
 }

@@ -91,10 +91,6 @@ const updateUser = async (req, res) => {
         res.status(400).json({message:'The new password to the user is required'});
     }
 
-    if (!req.body.is_Manager) {
-        res.status(400).json({message:'The new is_Manager to the user is required'});
-    }
-
     const newUser = {
         id: req.params.id,
         fname: req.body.fname,

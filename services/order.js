@@ -12,7 +12,8 @@ const createOrder = async (newOrder) => {
         totalprice: newOrder.totalprice,
         meals: newOrder.meals,
         dishes: newOrder.dishes,
-        branch: newOrder.branch
+        branch: newOrder.branch,
+        closed: newOrder.closed
     });
 
     if (newOrder.customerId) {
@@ -52,6 +53,7 @@ const updateOrder = async (newOrder) => {
     order.meals = newOrder.meals;
     order.dishes = newOrder.dishes;
     order.branch = newOrder.branch;
+    order.closed = newOrder.closed;
 
     if (newOrder.customerId) {
         order.customerId = newOrder.customerId;

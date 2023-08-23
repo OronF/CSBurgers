@@ -4,6 +4,13 @@ $(document).ready(async function() {
     const pathParts = params.split('/');
     const orderID = pathParts[pathParts.length - 1];
 
+    const cookieValue = document.cookie;
+    const decodedValue = decodeURIComponent(cookieValue);
+
+    const matches = decodedValue.match(/"([^"]+)"/);
+    const extractedContent = matches ? matches[1] : null;
+
+
     let order;
 
     await $.ajax({
@@ -32,6 +39,7 @@ $(document).ready(async function() {
     const branch = $('#branch');
     const delivery = $('#delivery');
     const TotalPricePayPage = $('#PriceInPayPage');
+    const Confirmationofpurchase = $('#Confirmation-of-purchase');
 
     const putHideOnElement = (element) => {
         element.removeClass('nohide').addClass('hide');
@@ -98,7 +106,9 @@ $(document).ready(async function() {
                     totalprice: order.totalprice + Dish.price,
                     meals: order.meals,
                     dishes: order.dishes,
-                    branch: order.branch
+                    branch: order.branch,
+                    closed: false,
+                    customerId: order.customerId
                 }),
                 success: function(data) {
                     order = data;
@@ -209,7 +219,9 @@ $(document).ready(async function() {
                     totalprice: order.totalprice + Meal.price,
                     meals: order.meals,
                     dishes: order.dishes,
-                    branch: order.branch
+                    branch: order.branch,
+                    closed: false,
+                    customerId: order.customerId
                 }),
                 success: function(data) {
                     order = data;
@@ -460,5 +472,68 @@ $(document).ready(async function() {
         error: function(error) {
             console.error(error);
         }
+    });
+
+    let user;
+
+    await $.ajax({
+        url: `/api/user/${extractedContent}`,
+        method: "GET",
+        success: function(data) {
+            user = data;
+        },
+        error: function(error) {
+            console.error("Error saving data:", error);
+        }
+    });
+
+    Confirmationofpurchase.on('click', async function() {
+        await $.ajax({
+            url: `/api/order/${orderID}`,
+            method: "PUT",
+            dataType: "json",
+            contentType: 'application/json',
+            data: JSON.stringify({
+                orderNumber: order.orderNumber,
+                orderDate: order.orderDate,
+                location: order.location, 
+                totalprice: order.totalprice,
+                meals: order.meals,
+                dishes: order.dishes,
+                branch: order.branch,
+                closed: true,
+                customerId: order.customerId
+            }),
+            success: function(data) {
+                console.log('data is saved', data);
+            },
+            error: function(error) {
+                console.error("Error saving data:", error);
+            }
+        });
+
+        user.orders.push(order._id);
+
+        await $.ajax({
+            url: `/api/user/${user._id}`,
+            method: "PUT",
+            dataType: "json",
+            contentType: 'application/json',
+            data: JSON.stringify({
+                fname: user.fname,
+                lname: user.lname,
+                orders: user.orders,
+                phoneNumber: user.phoneNumber,
+                password: user.password,
+                is_Manager: user.is_Manager,
+                currentOrder: undefined
+            }),
+            success: function(data) {
+                console.log('data is saved', data);
+            },
+            error: function(error) {
+                console.error("Error saving data:", error);
+            }
+        });
     });
 });

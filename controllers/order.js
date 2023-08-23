@@ -39,7 +39,8 @@ const creatOrder = async (req, res) => {
             totalprice: req.body.totalprice,
             meals: req.body.meals,
             dishes: req.body.dishes,
-            branch: req.body.branch
+            branch: req.body.branch,
+            closed: req.body.closed
         }
     
         if (req.body.customerId) {
@@ -95,11 +96,12 @@ const updateOrder = async (req, res) => {
         totalprice: req.body.totalprice,
         meals: req.body.meals,
         dishes: req.body.dishes,
-        branch: req.body.branch
+        branch: req.body.branch,
+        closed: req.body.closed
     }
 
     if (req.body.customerId) {
-        tmp.customerId = req.body.customerId;
+        newOrder.customerId = req.body.customerId;
     }
 
     const order = await OrderService.update(newOrder);

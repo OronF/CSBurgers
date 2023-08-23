@@ -31,7 +31,7 @@ const UserSchema = new mongoose.Schema({
         required: true
     },
 
-    currentNumber:{
+    currentOrder:{
         type: mongoose.Schema.Types.ObjectId
     }
 });
