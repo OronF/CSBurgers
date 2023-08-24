@@ -18,8 +18,9 @@ const getAllUsers = async (req, res) => {
                 throw new Error('Non existing users');
             }
 
-            const oneDayToSeconds = 24 * 60 * 60;
-            res.cookie(Users.is_Manager ? 'admin' : 'user', Users._id, { maxAge: oneDayToSeconds});
+            const twentyMinutesToSeconds = 20 * 60; 
+            const twentyMinutesToMilliseconds = twentyMinutesToSeconds * 1000; 
+            res.cookie(Users.is_Manager ? 'admin' : 'user', Users._id, { maxAge: twentyMinutesToMilliseconds});
             console.log(res.cookies);
 
             res.json(Users);
@@ -89,10 +90,6 @@ const updateUser = async (req, res) => {
 
     if (!req.body.password) {
         res.status(400).json({message:'The new password to the user is required'});
-    }
-
-    if (!req.body.is_Manager) {
-        res.status(400).json({message:'The new is_Manager to the user is required'});
     }
 
     const newUser = {

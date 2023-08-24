@@ -155,21 +155,9 @@ $(document).ready(function() {
         const x = $("#x");
         const y = $("#y");
 
-        const closeBtn = $('.closeBtn');
-
-        closeBtn.on('click', function() { 
-            hide.removeClass('nohide').addClass('hide');
-            nohide.removeClass('hide').addClass('nohide');
-
-            branchName.val("");
-            address.val("");
-            Activity.val("");
-            x.val("");
-            y.val("");
-            managers.find(":selected").val("");
-        });
-
         const saveBtn = $('.saveBtn');
+
+        const modalbuttons = $('.modal-buttons');
 
         saveBtn.on('click', async function() {
             if (branchName.val() && address.val() && Activity.val() && x.val() && y.val()) {
@@ -193,9 +181,6 @@ $(document).ready(function() {
                             coordinateY: y.val()
                         }),
                         success: function(newData) {
-                            hide.removeClass('nohide').addClass('hide');
-                            nohide.removeClass('hide').addClass('nohide');
-
                             data.push(newData);
                             appendBranchLi(newData);
                         },
@@ -210,11 +195,25 @@ $(document).ready(function() {
                     x.val("");
                     y.val("");
                     managers.find(":selected").val("");
+
+                    nohide.removeClass('hide').addClass('nohide');
+
+                    const newElement = $(`<button type="button" class="closebtn" data-bs-dismiss="modal" aria-label="Close"><i class="bi bi-check2"></i></button>`);
+
+                    newElement.find('.clodebtn').on('click', function() {
+                        modalbuttons.append(saveBtn);
+                        newElement.find('.clodebtn').remove();
+                    });
+
+                    modalbuttons.append(newElement);
+
+                    saveBtn.remove();
                 }
             }
         });
 
-        
+
+
         const searchTxt = $('#searchTxt');
 
         searchTxt.on('input', function() {

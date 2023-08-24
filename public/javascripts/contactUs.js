@@ -28,6 +28,3 @@ $(document).ready(function() {
         }
     });
 });
-
-
-//client side code

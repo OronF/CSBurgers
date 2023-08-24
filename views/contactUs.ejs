@@ -110,6 +110,8 @@
         }
     </script>
 </body>
+
+<!-- client side code -->
 <script src="/socket.io/socket.io.js"></script>
   <script>
     $(document).ready(function() {
@@ -127,9 +129,7 @@
         const manager = $('#framework').find(':selected').attr('data-manager-id');
 
         const fullMessage = `Name: ${firstName} ${lastName}\nPhone: ${phoneNumber}\nMessage: ${message}`;
-        console.log(fullMessage);
-        console.log("check");
-
+        
         socket.emit('message', { message: fullMessage, manager: manager });
       }
     });

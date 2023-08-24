@@ -153,3 +153,30 @@ body {
 .Sum {
     text-align: center;
 }
+.modal {
+    background: rgba(0, 0, 0, 0.5); 
+}
+.modal-backdrop {
+    display: none;
+}
+
+.modal-header {
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.btn-close{
+    right:10vw
+}
+
+.btn-back {
+    font-size: 1.5vw;
+    right: 3vw;
+    top: 1vw;
+    color:rgb(154, 13, 13);
+    text-decoration: none;
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;
+    transition: all 0.4s;
+
+}

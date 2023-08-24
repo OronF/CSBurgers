@@ -37,6 +37,11 @@ const OrderSchema = new mongoose.Schema({
         required: true
     },
 
+    closed: {
+        type: Boolean,
+        required: true
+    },
+
     customerId: {
         type: mongoose.Schema.Types.ObjectId,
     }

@@ -58,6 +58,14 @@ function admin (req, res, next) {
     }
   }
 
+  else if (req.url.indexOf('/manager/cartForManager') >= 0) { 
+    if(req.cookies.admin) {
+      next();
+    } else {
+      res.render('error');
+    }
+  }
+
   else {
     next();
   }
@@ -90,7 +98,7 @@ function auth (req, res, next) {
     } else {
       next();
     } 
-  }
+  }  
 }
 
 module.exports = { auth, admin };
