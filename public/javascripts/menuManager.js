@@ -22,8 +22,8 @@ $(document).ready(async function() {
         const newElement = $(`<li id="${dish._id}" class="nohide" data-dish-categoryId="${dish.categoryId}">
             <div class="card">
             <div class="row">
-            <div class="col-md-4">
-                    <img src="${dish.picture}" class="card-img-top" alt="${dish.name}" id="picture">
+            <div class="col-md-4" id="picture-div-${dish._id}">
+                    <img src="${dish.picture}" class="card-img-top" alt="${dish.name}" id="picture-${dish._id}">
                 </div>
                 <div class="col-md-8" id="card-${dish._id}">
                 <div class="card-body">
@@ -83,11 +83,13 @@ $(document).ready(async function() {
                 $(`#title-${id}`).remove();
                 $(`#text-${id}`).remove();
                 $(`#info-${id}`).remove();
+                $(`#picture-${id}`).remove();
 
                 $(`#card-${id}`).append(`<div class="inputs-${id}">
                     <input value="${Dish.name}" class="form-control" id="name-${id}">
                     <input value="${Dish.price}" class="form-control" id="price-${id}">
                     <input value="${Dish.description}" class="form-control" id="description-${id}">
+                    <input value="${Dish.picture}" class="form-control" id="new-picture-${id}">
                 </div>`);
 
                 
@@ -97,6 +99,7 @@ $(document).ready(async function() {
                 const name = $(`#name-${id}`).val();
                 const price = $(`#price-${id}`).val();
                 const description = $(`#description-${id}`).val();
+                const picture = $(`#new-picture-${id}`).val();
 
                 await $.ajax({
                     url:`/api/dish/${id}`,
@@ -107,8 +110,9 @@ $(document).ready(async function() {
                         name: name,
                         price: price,
                         categoryId: Dish.categoryId,
-                        picture: Dish.picture,
-                        description: description
+                        picture: picture,
+                        description: description,
+                        kosher: Dish.kosher
                     }),
                     success: function(data) {
                         console.log("Data saved successfully:", data);
@@ -122,6 +126,7 @@ $(document).ready(async function() {
                 $(`.inputs-${id}`).remove();
 
                 $(`#same-level-${id}`).append(`<h5 class="card-title" id="title-${newDish._id}">${newDish.name}</h5>`);
+                $(`#picture-div-${id}`).append(`<img src="${newDish.picture}" class="card-img-top" alt="${newDish.name}" id="picture-${newDish._id}">`);
                 $(`#card-${id}`).append(`
                     <p class="card-text" id="text-${newDish._id}"> ${newDish.price}₪</p>
                     <p class="card-info" id="info-${newDish._id}"> ${newDish.description}</p>
@@ -138,8 +143,8 @@ $(document).ready(async function() {
         const newElement = $(`<li id="${meal._id}" class="nohide" data-meal-categoryId="${meal.categoryId}">
         <div class="card">
         <div class="row">
-        <div class="col-md-4">
-                <img src="${meal.picture}" class="card-img-top" alt="${meal.name}" id="picture">
+        <div class="col-md-4" id="picture-div-${meal._id}">
+                <img src="${meal.picture}" class="card-img-top" alt="${meal.name}" id="picture-${meal._id}">
             </div>
             <div class="col-md-8" id="card-${meal._id}">
                 <div class="card-body">
@@ -200,11 +205,13 @@ $(document).ready(async function() {
                 $(`#title-${id}`).remove();
                 $(`#text-${id}`).remove();
                 $(`#info-${id}`).remove();
+                $(`#picture-${id}`).remove();
 
                 $(`#card-${id}`).append(`<div class="inputs-${id}">
                     <input value="${Meal.name}" class="form-control" id="name-${id}">
                     <input value="${Meal.price}" class="form-control" id="price-${id}">
                     <input value="${Meal.description}" class="form-control" id="description-${id}">
+                    <input value="${Meal.picture}" class="form-control" id="new-picture-${id}">
                 </div>`);
 
                 
@@ -214,6 +221,7 @@ $(document).ready(async function() {
                 const name = $(`#name-${id}`).val();
                 const price = $(`#price-${id}`).val();
                 const description = $(`#description-${id}`).val();
+                const picture = $(`#new-picture-${id}`).val();
 
                 await $.ajax({
                     url:`/api/meal/${id}`,
@@ -225,8 +233,9 @@ $(document).ready(async function() {
                         price: price,
                         dishes: Meal.dishes,
                         categoryId: Meal.categoryId,
-                        picture: Meal.picture,
-                        description: description
+                        picture: picture,
+                        description: description,
+                        kosher: Meal.kosher
                     }),
                     success: function(data) {
                         console.log("Data saved successfully:", data);
@@ -240,6 +249,7 @@ $(document).ready(async function() {
                 $(`.inputs-${id}`).remove();
 
                 $(`#same-level-${id}`).append(`<h5 class="card-title" id="title-${newMeal._id}">${newMeal.name}</h5>`);
+                $(`#picture-div-${id}`).append(`<img src="${newMeal.picture}" class="card-img-top" alt="${newMeal.name}" id="picture-${newMeal._id}">`);
                 $(`#card-${id}`).append(`
                     <p class="card-text" id="text-${newMeal._id}"> ${newMeal.price}₪</p>
                     <p class="card-info" id="info-${newMeal._id}"> ${newMeal.description}</p>
@@ -558,7 +568,7 @@ $(document).ready(async function() {
 
     const appendCategoryLi = (category) => {
         const newElement = $(`<li id="${category._id}" class="li-category" type="button">
-            <a class="nameOfCategory" data-category-id="${category._id}" data-category-categorytype="${category.categorytype}" href="/menuManager#${category.name}">${category.name}</a>
+            <a class="nameOfCategory" data-category-id="${category._id}" data-category-categorytype="${category.categorytype}" href="/manager/managerMenu#${category.name}">${category.name}</a>
         </li>`);
 
         newElement.find('.nameOfCategory').on('click', async function() {
