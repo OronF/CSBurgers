@@ -2,7 +2,18 @@ const OrderService = require('../services/order');
 
 const getAllOrders = async (req, res) => {
     try {
-        const orders = await OrderService.getAll();
+        let orders = await OrderService.getAll();
+
+        if (req.query.group) {
+            let ordersGroup = await OrderService.groupByBranches();
+
+            if (!ordersGroup) {
+                return res.status(404).json({errors:["orders not found"]});
+            }
+
+            res.json(ordersGroup);
+            return;
+        } 
         
         if(!orders) {
             throw new Error('Non existing orders');
@@ -27,7 +38,9 @@ const creatOrder = async (req, res) => {
             location: req.body.location,
             totalprice: req.body.totalprice,
             meals: req.body.meals,
-            dishes: req.body.dishes
+            dishes: req.body.dishes,
+            branch: req.body.branch,
+            closed: req.body.closed
         }
     
         if (req.body.customerId) {
@@ -71,6 +84,10 @@ const updateOrder = async (req, res) => {
         res.status(400).json({message:'The new meals to the order is required'});
     }
 
+    if (!req.body.branch) {
+        res.status(400).json({message:'The new branch to the order is required'});
+    }
+
     const newOrder = {
         id: req.params.id,
         orderNumber: req.body.orderNumber,
@@ -78,11 +95,13 @@ const updateOrder = async (req, res) => {
         location: req.body.location,
         totalprice: req.body.totalprice,
         meals: req.body.meals,
-        dishes: req.body.dishes
+        dishes: req.body.dishes,
+        branch: req.body.branch,
+        closed: req.body.closed
     }
 
     if (req.body.customerId) {
-        tmp.customerId = req.body.customerId;
+        newOrder.customerId = req.body.customerId;
     }
 
     const order = await OrderService.update(newOrder);
@@ -109,6 +128,28 @@ const searchOrder = async (req, res) => {
 
     if (!order) {
       return res.status(404).json({errors:['Order not found']});
+    }
+
+    if (req.query.group) {
+        if(req.query.meals) {
+            const meals = await OrderService.groupByMeals(order);
+
+            if (!meals) {
+                return res.status(404).json({errors:["Order's meals not found"]});
+            }
+
+            res.json(meals);
+            return;
+        } else {
+            const dishes = await OrderService.groupByDishes(order);
+
+            if (!dishes) {
+                return res.status(404).json({errors:["Order's dishes not found"]});
+            }
+
+            res.json(dishes);
+            return;
+        }
     }
 
     res.json(order);

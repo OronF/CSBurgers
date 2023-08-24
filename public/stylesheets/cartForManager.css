@@ -1,0 +1,140 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    color: white;
+    padding: 0.7vw;
+    text-align: right;
+}
+
+aside {
+    float: right;
+}
+
+section {
+    padding: 1vw;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    
+}
+
+li {
+   margin-top: 1vw;
+}
+
+.hide {
+    display: none;
+}
+
+.title
+{
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;
+    background-color: rgb(154, 13, 13);
+    text-align: center;
+    font-size: 3vw;
+}
+
+.users,.orders
+{
+    background-color: rgb(154, 13, 13);
+    padding-top: 0.8vw;
+    padding-bottom: 0.8vw;
+    padding-left: 1.3vw;
+    padding-right: 1.3vw;
+    text-align: center;;
+    transition:all 0.4s ;
+}
+
+.users:hover,.orders:hover
+{
+    background-color: rgb(126, 16, 16);
+    padding-top: 0.8vw;
+    padding-bottom: 0.8vw;
+    padding-left: 1.3vw;
+    padding-right: 1.3vw;
+    text-align: center;;
+    transition:all 0.4s ;
+    transform: scale(1.1);
+}
+
+li
+{
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;
+}
+
+
+.btnsList
+{
+    direction: rtl;
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;
+    font-size: 1.4vw;
+    color:white;
+    margin-right: 0.5vw;
+}
+
+.ordersList, .usersList
+{
+    direction: rtl;
+    font-size: 1.5vw;
+    gap: 1.2vw;
+}
+
+.orderItem, .orderItem
+{
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;
+    
+}
+
+.search
+{
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;
+    border: 0.1vw solid rgb(228, 227, 227);
+    transition: border-color 0.3s ease;
+    outline: none;
+    margin-bottom: 1.3vw;
+}
+
+
+.search:focus
+{
+    border-color: rgb(110, 103, 103);
+
+}
+
+.arrow
+{
+    color:  rgb(110, 103, 103);
+    padding-left: 1vw;
+}
+
+.btn-back {
+    font-size: 1.5vw;
+    position: fixed;
+    right: 3vw;
+    top: 2vw;
+    color: white;
+    text-decoration: none;
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;
+    transition: all 0.4s;
+}
+
+.user-data-section {
+    color:  rgb(110, 103, 103);
+}
+
+.img
+{
+    width: 4vw;
+}

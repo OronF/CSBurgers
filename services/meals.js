@@ -4,14 +4,19 @@ const getAll = async() => {
     return await Meal.find({});
 }
 
-const createMeal = async (name, price, dishes, CategoryId, picture) => {
+const createMeal = async (newMeal) => {
     const meal = new Meal({
-        name: name,
-        price: price,
-        dishes: dishes,
-        CategoryId: CategoryId,
-        picture: picture
+        name: newMeal.name,
+        price: newMeal.price,
+        dishes: newMeal.dishes,
+        categoryId: newMeal.categoryId,
+        picture: newMeal.picture,
+        description: newMeal.description
     });
+
+    if (newMeal.webServiceId) {
+        meal.webServiceId = newMeal.webServiceId;
+    }
 
     return await meal.save();
 }
@@ -42,11 +47,20 @@ const updateMeal = async (newMeal) => {
     meal.name = newMeal.name;
     meal.price = newMeal.price;
     meal.dishes = newMeal.dishes;
-    meal.CategoryId = newMeal.CategoryId;
+    meal.categoryId = newMeal.categoryId;
     meal.picture = newMeal.picture;
+    meal.description = newMeal.description;
+
+    if (newMeal.webServiceId) {
+        meal.webServiceId = newMeal.webServiceId;
+    }
 
     await meal.save()
     return meal;
+}
+
+const getByCategory = async (categoryId) => {
+    return await Meal.find({categoryId});
 }
 
 module.exports = {
@@ -54,5 +68,6 @@ module.exports = {
     create: createMeal,
     delete: deleteMeal,
     update: updateMeal,
-    search: searchMeal
+    search: searchMeal,
+    getByCategory
 }

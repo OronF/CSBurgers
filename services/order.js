@@ -11,7 +11,9 @@ const createOrder = async (newOrder) => {
         location: newOrder.location,
         totalprice: newOrder.totalprice,
         meals: newOrder.meals,
-        dishes: newOrder.dishes
+        dishes: newOrder.dishes,
+        branch: newOrder.branch,
+        closed: newOrder.closed
     });
 
     if (newOrder.customerId) {
@@ -50,6 +52,8 @@ const updateOrder = async (newOrder) => {
     order.totalprice = newOrder.totalprice;
     order.meals = newOrder.meals;
     order.dishes = newOrder.dishes;
+    order.branch = newOrder.branch;
+    order.closed = newOrder.closed;
 
     if (newOrder.customerId) {
         order.customerId = newOrder.customerId;
@@ -59,10 +63,56 @@ const updateOrder = async (newOrder) => {
     return order;
 }
 
+const groupByMeals = async (order) => {
+    const meals = await Order.aggregate([
+        { $match: { _id: order._id } },
+        { $unwind: '$meals' },
+        {
+            $group: {
+                _id: '$meals',
+                count: { $sum: 1 }
+            }
+        }
+    ]);
+
+    return meals;
+}
+
+const groupByDishes = async (order) => {
+    const dishes = await Order.aggregate([
+        { $match: { _id: order._id } },
+        { $unwind: '$dishes' },
+        {
+            $group: {
+                _id: '$dishes',
+                count: { $sum: 1 }
+            }
+        }
+    ]);
+
+    return dishes;
+}
+
+const groupByBranches = async () => {
+    const branches = await Order.aggregate([
+        {
+            $group: {
+                _id: '$branch',
+                count: { $sum: 1 }
+            }
+        }
+    ]);
+
+    return branches;
+}
+
 module.exports = {
     getAll,
     create: createOrder,
     delete: deleteOrder,
     update: updateOrder,
-    search: searchOrder
+    search: searchOrder,
+    groupByMeals,
+    groupByDishes,
+    groupByBranches
 }

@@ -111,12 +111,12 @@ li {
 }
 
 .branch-data {
-    /* display: flex;
+    display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    width: 50%; */
+    width: 50%; 
 }
 
 .map {
-    width: 50%
-}   
+    width: 50%;
+}

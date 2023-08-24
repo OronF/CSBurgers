@@ -4,13 +4,18 @@ const getAll = async() => {
     return await Dish.find({});
 }
 
-const createDish = async (name, price, CategoryId, picture) => {
+const createDish = async (newDish) => {
     const dish = new Dish({
-        name: name,
-        price: price,
-        CategoryId: CategoryId,
-        picture: picture
+        name: newDish.name,
+        price: newDish.price,
+        categoryId: newDish.categoryId,
+        picture: newDish.picture,
+        description: newDish.description
     });
+
+    if (newDish.webServiceId) {
+        dish.webServiceId = newDish.webServiceId;
+    }
     
     return await dish.save();
 }
@@ -40,11 +45,20 @@ const updateDish = async (newDish) => {
        
     dish.name = newDish.name;
     dish.price = newDish.price;
-    dish.CategoryId = newDish.CategoryId;
+    dish.categoryId = newDish.categoryId;
     dish.picture = newDish.picture;
+    dish.description = newDish.description;
+
+    if (newDish.webServiceId) {
+        dish.webServiceId = newDish.webServiceId;
+    }
 
     await dish.save();
     return dish;
+}
+
+const getByCategory = async (categoryId) => {
+    return await Dish.find({categoryId});
 }
 
 module.exports = {
@@ -52,5 +66,6 @@ module.exports = {
     create: createDish,
     delete: deleteDish,
     update: updateDish,
-    search: searchDish
+    search: searchDish,
+    getByCategory
 }

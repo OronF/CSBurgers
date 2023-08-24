@@ -20,3 +20,26 @@
 {
     font-size: xx-large;
 }
+
+.name {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.error
+{
+    color:rgb(216, 12, 12);
+    font-size: 1vw;
+    text-align: right;
+}
+
+#termsError
+{
+    text-align: center;
+}
+
+
+.checkBox
+{
+    direction: rtl;
+}
