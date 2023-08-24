@@ -7,7 +7,7 @@ $(document).ready(function() {
     let index = 1;
 
     const createSelection = (branch) => {
-        framework.append(`<option value="${index}" data-manager-id="${branch._id}">${branch.name}</option>`);
+        framework.append(`<option value="${index}" data-manager-id="${branch.manager}">${branch.name}</option>`);
         index++;
     }
 
