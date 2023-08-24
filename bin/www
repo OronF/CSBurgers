@@ -20,6 +20,7 @@ app.set('port', port);
  * Create HTTP server.
  */
 
+// server side code (contact us page)
 var server = http.createServer(app);
 
 const io = new Server(server);
