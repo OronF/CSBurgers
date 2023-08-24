@@ -67,7 +67,7 @@ $(document).ready(async function() {
             const id = btn.attr('data-dish-id');
 
             await $.ajax({
-                url:`api/dish/${id}`,
+                url:`/api/dish/${id}`,
                 method: "GET",
                 success: (data) => {
                     Dish = data;
@@ -99,7 +99,7 @@ $(document).ready(async function() {
                 const description = $(`#description-${id}`).val();
 
                 await $.ajax({
-                    url:`api/dish/${id}`,
+                    url:`/api/dish/${id}`,
                     method: "PUT",
                     dataType: "json",
                     contentType: 'application/json',
@@ -184,7 +184,7 @@ $(document).ready(async function() {
             const id = btn.attr('data-meal-id');
 
             await $.ajax({
-                url:`api/meal/${id}`,
+                url:`/api/meal/${id}`,
                 method: "GET",
                 success: (data) => {
                     Meal = data;
@@ -216,7 +216,7 @@ $(document).ready(async function() {
                 const description = $(`#description-${id}`).val();
 
                 await $.ajax({
-                    url:`api/meal/${id}`,
+                    url:`/api/meal/${id}`,
                     method: "PUT",
                     dataType: "json",
                     contentType: 'application/json',
@@ -305,7 +305,7 @@ $(document).ready(async function() {
                 let category;
     
                 await $.ajax({
-                    url: `api/category/${selectCategory}`,
+                    url: `/api/category/${selectCategory}`,
                     method: 'GET',
                     success: (data) => {
                         category = data;
@@ -364,7 +364,7 @@ $(document).ready(async function() {
     
                     createDish.find('.foward-create').on('click', async function() {
                         await $.ajax({
-                            url: 'api/dish',
+                            url: '/api/dish',
                             method: 'POST',
                             dataType: "json",
                             contentType: 'application/json',
@@ -518,7 +518,7 @@ $(document).ready(async function() {
 
                     createMeal.find('.foward-create').on('click', async function() {
                         await $.ajax({
-                            url: 'api/meal',
+                            url: '/api/meal',
                             method: 'POST',
                             dataType: "json",
                             contentType: 'application/json',

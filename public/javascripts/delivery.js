@@ -178,37 +178,39 @@ $(document).ready(async function() {
     });
 
     if (extractedContent) {
-        await $.ajax({
-            url: `/api/order/${user.currentOrder}`,
-            method: "GET",
-            success: function(data) {
-                order = data;
-            },
-            error: function(error) {
-                console.error(error);
-            }
-        });
-    
-        if (!order.closed) {
-            deleteOrderBtn.show();
-            returnOrderBtn.show();
-
-            returnOrderBtn.on('click', function() {
-                window.location.href = `orders/${user.currentOrder}`;
+        if (user.orders.length > 0 && user.currentOrder) {
+            await $.ajax({
+                url: `/api/order/${user.currentOrder}`,
+                method: "GET",
+                success: function(data) {
+                    order = data;
+                },
+                error: function(error) {
+                    console.error(error);
+                }
             });
+        
+            if (!order.closed) {
+                deleteOrderBtn.show();
+                returnOrderBtn.show();
     
-            deleteOrderBtn.on('click', async function() {
-                await $.ajax({
-                    url: `/api/order/${user.currentOrder}`,
-                    method: "DELETE",
-                    success: function(data) {
-                        window.location.href = "/";
-                    }, 
-                    error: function(error) {
-                        console.error(error);
-                    }
+                returnOrderBtn.on('click', function() {
+                    window.location.href = `orders/${user.currentOrder}`;
                 });
-            });
+        
+                deleteOrderBtn.on('click', async function() {
+                    await $.ajax({
+                        url: `/api/order/${user.currentOrder}`,
+                        method: "DELETE",
+                        success: function(data) {
+                            window.location.href = "/";
+                        }, 
+                        error: function(error) {
+                            console.error(error);
+                        }
+                    });
+                });
+            }
         }
     }
 });
