@@ -24,7 +24,8 @@
 
 .message {
     border: 1px solid #ddd;
-    padding: 10px;
-    margin-bottom: 10px;
+    padding: 2vw;
+    margin-bottom: 2vh;
     background-color: #f9f9f9;
+    direction:rtl;
   }

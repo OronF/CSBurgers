@@ -127,9 +127,7 @@ function sendMessage() {
   const branch = document.getElementById('framework').value;
   const message = document.getElementsByClassName('message')[0].value;
 
-  const fullMessage = `Name: ${firstName} ${lastName}\nPhone: ${phoneNumber}\nMessage: ${message}`;
-  console.log(fullMessage);
-  console.log("check");
+  const fullMessage = `שם: ${firstName} ${lastName}\nטלפון: ${phoneNumber}\nהודעה: ${message}`;
 
   socket.emit('message', { message: fullMessage });
 }
