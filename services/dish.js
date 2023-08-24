@@ -71,6 +71,15 @@ const maxPrice = async (dishes, priceInp) =>
     });
 }
 
+const HighLowSort = async (dishes) =>
+{
+}
+
+const LowHighSort = async (dishes) =>
+{
+}
+
+
 module.exports = {
     getAll,
     create: createDish,
@@ -79,5 +88,7 @@ module.exports = {
     search: searchDish,
     getByCategory,
     isKosher,
-    maxPrice
+    maxPrice,
+    HighLowSort,
+    LowHighSort
 }

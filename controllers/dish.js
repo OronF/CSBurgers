@@ -28,6 +28,16 @@ const getAllDishes = async (req,res) => {
             return;
         }
 
+        if(req.query.sort === "high-low")
+        {
+            dishes = await DishService.HighLowSort(dishes);
+        }
+
+        if(req.query.sort === "low-high")
+        {
+            dishes = await DishService.LowHighSort(dishes);
+        }
+
 
         res.json(dishes);
     }

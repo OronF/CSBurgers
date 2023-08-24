@@ -265,7 +265,63 @@ maxPriceCheck.addEventListener('change', async function() {
     }
 });
 
+const sortSelect = document.getElementById("sort-select");
+const sortCheck = document.getElementsByClassName("sortby-check");
+
+sortCheck.addEventListener('change', async function() {
+    sortSelect.addEventListener('change', async function() {
+        if(sortCheck.checked == true && sortSelect.value === "מהמחיר הגבוה לנמוך"){
+        await $.ajax({
+            url: "/api/dish",
+            method: "GET",
+            dataType: "json",
+            contentType: 'application/json',
+            data: {
+                sort: "high-low"
+            },
+            success: function(dishes)
+            {
+                console.log("dishes");
+                dishesList.empty();
+                console.log(dishes);
+                dishes.forEach(dish => {
+                    appendDishesLi(dish);
+                });
+            },
+            error: function(error) {
+                console.error("Error finding data:", error);
+            }
+        });
+    }
+    });
+
+    if(sortCheck.checked == true && sortSelect.value === "מהמחיר הנמוך לגבוה"){
+        await $.ajax({
+            url: "/api/dish",
+            method: "GET",
+            dataType: "json",
+            contentType: 'application/json',
+            data: {
+                sort: "low-high"
+            },
+            success: function(dishes)
+            {
+                console.log("dishes");
+                dishesList.empty();
+                console.log(dishes);
+                dishes.forEach(dish => {
+                    appendDishesLi(dish);
+                });
+            },
+            error: function(error) {
+                console.error("Error finding data:", error);
+            }
+        });
+    }
+    });
+    
 });
+
 
  function restrictInputToNumbers(event) {
     const input = event.target;
