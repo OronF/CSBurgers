@@ -197,14 +197,12 @@ $(document).ready(async function() {
         }
     });
 
-
-    
-  const kosherCheck = $('#kosherCheckbox'); 
+const kosherCheck = document.getElementById("kosher-check");
 
 kosherCheck.addEventListener('change', async function() {
-    if (kosherCheck.checked) {
+    if (kosherCheck.checked == true) {
         try {
-            const data = await $.ajax({
+                await $.ajax({
                 url: "/api/dish",
                 method: "GET",
                 dataType: "json",
@@ -214,7 +212,9 @@ kosherCheck.addEventListener('change', async function() {
                 },
                 success: function(dishes)
                 {
+                    console.log("dishes");
                     dishesList.empty();
+                    console.log(dishes);
                     dishes.forEach(dish => {
                         appendDishesLi(dish);
                     });
@@ -224,7 +224,41 @@ kosherCheck.addEventListener('change', async function() {
                 }
             });
 
-            console.log(data);
+        } catch (error) {
+            console.error("AJAX request error:", error);
+        }
+    }
+});
+
+
+const maxPriceCheck = document.getElementById("maxprice-check");
+const priceInp = document.getElementById("priceInp");
+
+maxPriceCheck.addEventListener('change', async function() {
+    if (maxPriceCheck.checked == true && priceInp.value !== "") {
+        try {
+                await $.ajax({
+                url: "/api/dish",
+                method: "GET",
+                dataType: "json",
+                contentType: 'application/json',
+                data: {
+                    price: priceInp.value
+                },
+                success: function(dishes)
+                {
+                    console.log("dishes");
+                    dishesList.empty();
+                    console.log(dishes);
+                    dishes.forEach(dish => {
+                        appendDishesLi(dish);
+                    });
+                },
+                error: function(error) {
+                    console.error("Error finding data:", error);
+                }
+            });
+
         } catch (error) {
             console.error("AJAX request error:", error);
         }

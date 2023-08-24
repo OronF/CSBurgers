@@ -55,13 +55,21 @@ const getByCategory = async (categoryId) => {
     return await Dish.find({categoryId});
 }
 
-const isKosher = async (kosherValue, dishes) =>
+const isKosher = async (categoryId, dishes) =>
 {
     return dishes.filter((dish) => {
-        return dish.kosher === kosherValue;
-    })
+        return dish.kosher;
+    });
 }
 
+const maxPrice = async (dishes, priceInp) =>
+{
+    const parsedPrice = parseInt(priceInp);
+
+    return dishes.filter((dish) => {
+        return dish.price <= parsedPrice;
+    });
+}
 
 module.exports = {
     getAll,
@@ -70,5 +78,6 @@ module.exports = {
     update: updateDish,
     search: searchDish,
     getByCategory,
-    isKosher
+    isKosher,
+    maxPrice
 }

@@ -6,16 +6,28 @@ const getAllDishes = async (req,res) => {
 
         if (req.query.categoryId) {
             dishes = await DishService.getByCategory(req.query.categoryId);
-        } else {
-            dishes = await DishService.getAll();
-        }
-
+            res.json(dishes);
+            return;
+        } 
+            
+        dishes = await DishService.getAll();
+        
         if (!dishes) {
             throw new Error('Non existing dishes');
         }
 
+        if(req.query.price)
+        {
+            dishes = await DishService.maxPrice(dishes, req.query.price);
+        }
+
         if(req.query.kosher)
-            dishes = await DishService.isKosher(req.query.kosher, dishes);
+        {
+            let Dishes = await DishService.isKosher(req.query.categoryId, dishes);
+            res.json(Dishes);
+            return;
+        }
+
 
         res.json(dishes);
     }
