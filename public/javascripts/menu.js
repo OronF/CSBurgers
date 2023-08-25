@@ -265,19 +265,23 @@ maxPriceCheck.addEventListener('change', async function() {
     }
 });
 
-const sortSelect = document.getElementById("sort-select");
-const sortCheck = document.getElementsByClassName("sortby-check");
+const sortSelect = $("#sort-select");
+const sortCheck = $(".sortby-check");
 
-sortCheck.addEventListener('change', async function() {
-    sortSelect.addEventListener('change', async function() {
-        if(sortCheck.checked == true && sortSelect.value === "מהמחיר הגבוה לנמוך"){
+sortCheck.on('change', async function() {
+    console.log("in");
+    sortSelect.on('change', async function() {
+        console.log("in2");
+        if(sortCheck.is(':checked') == true && sortSelect.val() === "מהמחיר הגבוה לנמוך"){
+                console.log("in3");
+
         await $.ajax({
             url: "/api/dish",
             method: "GET",
             dataType: "json",
             contentType: 'application/json',
             data: {
-                sort: "high-low"
+                sort: true
             },
             success: function(dishes)
             {
