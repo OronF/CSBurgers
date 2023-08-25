@@ -358,6 +358,42 @@ $(document).ready(function() {
         });
     }   
 
+    const searcharea = $('#search-area');
+
+    searcharea.on('change', function() {
+        branchList.empty();
+
+        const selectsearcharea = searcharea.find(':selected').attr('data-area');
+        if (selectsearcharea === "everyone") {
+            $.ajax({
+                url:"/api/branch",
+                method: "GET",
+                success: (data) => {
+                    render(data);
+                },
+                error: (error) => {
+                    console.log(error);
+                }
+            });
+        } else {
+            $.ajax({
+                url:"/api/branch",
+                method: "GET",
+                dataType: "json",
+                contentType: 'application/json',
+                data: {
+                    area: selectsearcharea
+                },
+                success: (data) => {
+                    render(data);
+                },
+                error: (error) => {
+                    console.log(error);
+                }
+            });
+        }
+    });
+
     $.ajax({
         url:"/api/branch",
         method: "GET",

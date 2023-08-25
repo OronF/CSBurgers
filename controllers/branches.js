@@ -2,10 +2,14 @@ const branchesService = require('../services/branches');
 
 const getAllBranches = async (req, res) => {
     try {
-        const Branches = await branchesService.getAll();
+        let Branches = await branchesService.getAll();
 
         if(!Branches) {
             throw new Error('Non existing branches');
+        }
+
+        if (req.query.area) {
+            Branches = await branchesService.searchByArea(req.query.area);
         }
 
         res.json(Branches);
