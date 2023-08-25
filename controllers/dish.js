@@ -30,11 +30,12 @@ const getAllDishes = async (req,res) => {
             return;
         }
 
-        if(req.query.sort)
+        if(req.query.sort === "high-low")
         {
-            console("in5");
+            console.log("in5");
             dishes = await DishService.HighLowSort(dishes);
-            console(dishes);
+            console.log(dishes);
+
         }
 
         if(req.query.sort === "low-high")

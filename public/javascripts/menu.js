@@ -281,7 +281,7 @@ sortCheck.on('change', async function() {
             dataType: "json",
             contentType: 'application/json',
             data: {
-                sort: true
+                sort: "high-low"
             },
             success: function(dishes)
             {
