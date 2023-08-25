@@ -110,6 +110,53 @@ const searchClosedOrders = async (closed) => {
     return Order.find({closed});
 }
 
+const filterOrders = async (NumOfProducts, branch, price, orders) => {
+    const parsedPrice = parseInt(price);
+    const paresNumOfProducts = parseInt(NumOfProducts);
+
+    if(NumOfProducts && !branch && !price) {
+        return await orders.filter((order) => {
+            return (order.dishes.length + order.meals.length) >= paresNumOfProducts;
+        });
+    }
+
+    else if (branch && !NumOfProducts && !price) {
+        return await orders.filter((order) => {
+            return order.branch == branch;
+        });
+    }
+
+    else if (price && !NumOfProducts && !branch) {
+        return await orders.filter((order) => {
+            return order.totalprice >= parsedPrice;
+        });
+    }
+
+    else if (NumOfProducts && branch && !price) {
+        return await orders.filter((order) => {
+            return (order.dishes.length + order.meals.length) >= paresNumOfProducts && order.branch == branch;
+        });
+    }
+
+    else if (NumOfProducts && price && !branch) {
+        return await orders.filter((order) => {
+            return (order.dishes.length + order.meals.length) >= paresNumOfProducts && order.totalprice >= parsedPrice;
+        });
+    }
+
+    else if (price && branch && !NumOfProducts) {
+        return await orders.filter((order) => {
+            return order.totalprice >= parsedPrice && order.branch == branch;
+        });
+    }
+
+    else if (price && NumOfProducts && branch) {
+        return await orders.filter((order) => {
+            return (order.dishes.length + order.meals.length) >= paresNumOfProducts && order.totalprice >= parsedPrice && order.branch == branch;
+        });
+    }
+}
+
 module.exports = {
     getAll,
     create: createOrder,
@@ -119,5 +166,6 @@ module.exports = {
     groupByMeals,
     groupByDishes,
     groupByBranches,
-    searchClosedOrders
+    searchClosedOrders,
+    filterOrders
 }
