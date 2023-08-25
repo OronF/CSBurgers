@@ -570,7 +570,7 @@ $(document).ready(async function() {
         const newElement = $(`<li id="${category._id}" class="li-category" type="button">
             <div class="categoryBtns">
             <button class="updateBtn btn btn-success" data-category-id="${category._id}"><i id="button-${category._id}" class="bi bi-pencil-fill"></i></button>
-            <button class="deleteBtn btn btn-danger" data-categoty-id="${category._id}"><i class="bi bi-x-lg"></i></button>
+            <button class="deleteBtn btn btn-danger" data-category-id="${category._id}"><i class="bi bi-x-lg"></i></button>
             </div>
             <a class="nameOfCategory" data-category-id="${category._id}" data-category-categorytype="${category.categorytype}" id="name-${category._id}" href="/manager/managerMenu#${category.name}">${category.name}</a>
         </li>`);
@@ -722,7 +722,7 @@ $(document).ready(async function() {
         });
     }
 
-    $.ajax({
+    await $.ajax({
         url:"/api/category",
         method: "GET",
         success: (data) => {
@@ -759,4 +759,52 @@ $(document).ready(async function() {
             console.log(error);
         }
     });
+
+    const newCategoryBtn = $(`<li class="newCategoryBtn" type="button" data-bs-toggle="modal" data-bs-target="#newCategoryModal"><i class="bi bi-plus-circle" id="addIcon"></i></li>`)
+
+    const saveBtn = $('.saveBtn');
+    const categoryName = $('#categoryName');
+    const Categorytype = $('#Categorytype');
+    const modalbuttons = $('.modal-buttons')
+
+    newCategoryBtn.on('click', function() {
+        newCategoryBtn.remove();
+    });
+
+    saveBtn.on('click', function() {
+        const CategorytypeVal = Categorytype.find(':selected').attr('data-Categorytype');
+        const categoryNameVal = categoryName.val();
+
+        if (categoryNameVal && CategorytypeVal) {
+            $.ajax({
+                url: "/api/category",
+                method: "POST",
+                dataType: "json",
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    name: categoryNameVal,
+                    categorytype: CategorytypeVal
+                }),
+                success: function(data) {
+                    appendCategoryLi(data);
+                    categories.append(newCategoryBtn);
+                    saveBtn.remove();
+                    const newElement = $(`<button type="button" class="closebtn" data-bs-dismiss="modal" aria-label="Close"><i class="bi bi-check2"></i></button>`);
+                    categoryName.val("");
+                    modalbuttons.append(newElement);
+                },
+                error: function(error) {
+                    console.error(error);
+                }
+            });
+            
+        }
+    });
+
+    $('.clodebtn').on('click', function() {
+        modalbuttons.append(saveBtn);
+        newElement.find('.clodebtn').remove();
+    });
+
+    categories.append(newCategoryBtn);
 });

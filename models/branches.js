@@ -37,6 +37,11 @@ const BranchesSchema = new mongoose.Schema({
     {
         type: Number,
         required: true
+    },
+
+    area: {
+        type: String,
+        required: true
     }
 });
 

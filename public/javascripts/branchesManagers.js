@@ -163,13 +163,17 @@ $(document).ready(function() {
             const saveBtn = $('.saveBtn-update');
     
             const modalbuttons = $('.modal-buttons-update');
+
+            const areaupdate = $('#area-update');
     
             saveBtn.on('click', async function() {
                 if (branchName.val() && address.val() && Activity.val() && x.val() && y.val()) {
                     const selectedManager = managers.find(":selected");
-                    if (selectedManager.length) {
+                    const selectedarea = areaupdate.find(":selected");
+                    if (selectedManager.length && selectedarea.length) {
                         const managerId = selectedManager.attr('data-manager-id');
                         const phoneNumber = selectedManager.attr('data-phone-number');
+                        const Area = selectedarea.attr('data-area');
                         
                         await $.ajax({
                             url: `/api/branch/${id}`,
@@ -183,7 +187,8 @@ $(document).ready(function() {
                                 activityTime: Activity.val(),
                                 manager: managerId,
                                 coordinateX: x.val(),
-                                coordinateY: y.val()
+                                coordinateY: y.val(),
+                                area: Area
                             }),
                             success: function(newData) {
                                 console.log("saving data:", error);
@@ -272,14 +277,23 @@ $(document).ready(function() {
 
         const saveBtn = $('.saveBtn');
 
+        const area = $('#area');
+
         const modalbuttons = $('.modal-buttons');
+        const btnclose = $('.btn-close');
+
+        btnclose.on('click', function() {
+            nohide.removeClass('hide').addClass('nohide');
+        });
 
         saveBtn.on('click', async function() {
             if (branchName.val() && address.val() && Activity.val() && x.val() && y.val()) {
                 const selectedManager = managers.find(":selected");
-                if (selectedManager.length) {
+                const selectedarea = area.find(":selected");
+                if (selectedManager.length && selectedarea.length) {
                     const managerId = selectedManager.attr('data-manager-id');
                     const phoneNumber = selectedManager.attr('data-phone-number');
+                    const Area = selectedarea.attr('data-area');
                     
                     await $.ajax({
                         url: "/api/branch",
@@ -293,7 +307,8 @@ $(document).ready(function() {
                             activityTime: Activity.val(),
                             manager: managerId,
                             coordinateX: x.val(),
-                            coordinateY: y.val()
+                            coordinateY: y.val(),
+                            area: Area
                         }),
                         success: function(newData) {
                             data.push(newData);

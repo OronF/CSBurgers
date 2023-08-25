@@ -106,6 +106,10 @@ const groupByBranches = async () => {
     return branches;
 }
 
+const searchClosedOrders = async (closed) => {
+    return Order.find({closed});
+}
+
 module.exports = {
     getAll,
     create: createOrder,
@@ -114,5 +118,6 @@ module.exports = {
     search: searchOrder,
     groupByMeals,
     groupByDishes,
-    groupByBranches
+    groupByBranches,
+    searchClosedOrders
 }

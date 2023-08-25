@@ -28,7 +28,8 @@ const createBranch = async (req, res) => {
             activityTime: req.body.activityTime,
             manager: req.body.manager,
             coordinateX: req.body.coordinateX,
-            coordinateY: req.body.coordinateY
+            coordinateY: req.body.coordinateY,
+            area: req.body.area
         }
 
         const newBranch = await branchesService.create(tmp);
@@ -77,6 +78,10 @@ const updateBranch = async (req, res) => {
         res.status(400).json({message:'The new coordinateY to the branch is required'});
     }
 
+    if (!req.body.area) {
+        res.status(400).json({message:'The new area to the branch is required'});
+    }
+
     const newBranch = {
         id: req.params.id,
         name: req.body.name,
@@ -85,7 +90,8 @@ const updateBranch = async (req, res) => {
         activityTime: req.body.activityTime,
         manager: req.body.manager,
         coordinateX: req.body.coordinateX,
-        coordinateY: req.body.coordinateY
+        coordinateY: req.body.coordinateY,
+        area: req.body.area
     }
 
     const branch = await branchesService.update(newBranch);

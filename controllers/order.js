@@ -14,6 +14,12 @@ const getAllOrders = async (req, res) => {
             res.json(ordersGroup);
             return;
         } 
+
+        if (req.query.closed) {
+            let closedOrders = await OrderService.searchClosedOrders(req.query.closed);
+            res.json(closedOrders);
+            return;
+        }
         
         if(!orders) {
             throw new Error('Non existing orders');

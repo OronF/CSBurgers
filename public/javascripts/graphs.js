@@ -4,6 +4,11 @@ $(document).ready(async function() {
     await $.ajax({
         url: '/api/order',
         method: "GET",
+        dataType: "json",
+        contentType: 'application/json',
+        data: { 
+            closed: true
+        },
         success: function(data) {
             ordersData = parseData1(data);
             drawChart1(ordersData);
