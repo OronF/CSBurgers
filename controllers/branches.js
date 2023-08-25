@@ -65,7 +65,7 @@ const updateBranch = async (req, res) => {
         res.status(400).json({message:'The new activityTime to the branch is required'});
     }
 
-    if (!req.body.manger) {
+    if (!req.body.manager) {
         res.status(400).json({message:'The new manger to the branch is required'});
     }
     
@@ -83,7 +83,7 @@ const updateBranch = async (req, res) => {
         address: req.body.address,
         phoneNumber: req.body.phoneNumber,
         activityTime: req.body.activityTime,
-        manger: req.body.manger,
+        manager: req.body.manager,
         coordinateX: req.body.coordinateX,
         coordinateY: req.body.coordinateY
     }

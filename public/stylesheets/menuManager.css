@@ -63,6 +63,9 @@ body {
     transition: all 0.4s;
     padding-left: 2vw;
     padding-right: 2vw;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
 }
 
 .li-category:hover{

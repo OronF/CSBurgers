@@ -35,7 +35,7 @@ const deleteBranch = async (id) => {
 }
 
 const updateBranch = async (newBranch) => {
-    const branch = await searchUser(newBranch.id);
+    const branch = await searchBranch(newBranch.id);
 
     if (!branch) {
         return null;
@@ -45,7 +45,7 @@ const updateBranch = async (newBranch) => {
     branch.address = newBranch.address;
     branch.phoneNumber = newBranch.phoneNumber;
     branch.activityTime = newBranch.activityTime;
-    branch.manger = newBranch.manger;
+    branch.manager = newBranch.manager;
     branch.coordinateX = newBranch.coordinateX;
     branch.coordinateY = newBranch.coordinateY;
 

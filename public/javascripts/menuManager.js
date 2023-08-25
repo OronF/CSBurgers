@@ -568,8 +568,83 @@ $(document).ready(async function() {
 
     const appendCategoryLi = (category) => {
         const newElement = $(`<li id="${category._id}" class="li-category" type="button">
-            <a class="nameOfCategory" data-category-id="${category._id}" data-category-categorytype="${category.categorytype}" href="/manager/managerMenu#${category.name}">${category.name}</a>
+            <div class="categoryBtns">
+            <button class="updateBtn btn btn-success" data-category-id="${category._id}"><i id="button-${category._id}" class="bi bi-pencil-fill"></i></button>
+            <button class="deleteBtn btn btn-danger" data-categoty-id="${category._id}"><i class="bi bi-x-lg"></i></button>
+            </div>
+            <a class="nameOfCategory" data-category-id="${category._id}" data-category-categorytype="${category.categorytype}" id="name-${category._id}" href="/manager/managerMenu#${category.name}">${category.name}</a>
         </li>`);
+
+        newElement.find('.deleteBtn').on('click', function() {
+            const btn = $(this);
+            const id = btn.attr('data-category-id');
+
+            $.ajax({
+                url: `/api/category/${id}`,
+                method: "DELETE",
+                success: function() {
+                    $(`#${id}`).remove();
+                },
+                error: function(error) {
+                    console.error("Error deleting data:", error);
+                }
+            });
+        });
+
+        newElement.find('.updateBtn').on('click', async function() {
+            let Category;
+            const btn = $(this);
+            const id = btn.attr('data-category-id');
+
+            await $.ajax({
+                url:`/api/category/${id}`,
+                method: "GET",
+                success: (data) => {
+                    Category = data;
+                },
+                error: (error) => {
+                    console.log(error);
+                }
+            });
+
+            if ($(`#button-${Category._id}`).hasClass('bi bi-pencil-fill')) {
+                $(`#button-${Category._id}`).removeClass('bi bi-pencil-fill').addClass('bi bi-check-lg');
+
+                $(`#name-${id}`).remove();
+
+                $(`#${id}`).append(`<div class="inputs-${id}">
+                    <input value="${Category.name}" class="form-control" id="name-${id}">
+                </div>`);  
+            } else {
+                let newCategory;
+
+                const name = $(`#name-${id}`).val();
+
+                await $.ajax({
+                    url:`/api/category/${id}`,
+                    method: "PUT",
+                    dataType: "json",
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        name: name,
+                        categorytype: Category.categorytype
+                    }),
+                    success: function(data) {
+                        console.log("Data saved successfully:", data);
+                        newCategory = data;
+                    },
+                    error: function(error) {
+                        console.error("Error saving data:", error);
+                    }
+                });
+
+                $(`.inputs-${id}`).remove();
+
+                $(`#${id}`).append(`<a class="nameOfCategory" data-category-id="${newCategory._id}" data-category-categorytype="${newCategory.categorytype}" id="name-${newCategory._id}" href="/manager/managerMenu#${newCategory.name}">${newCategory.name}</a>`);
+
+                $(`#button-${Category._id}`).removeClass('bi bi-check-lg').addClass('bi bi-pencil-fill');
+            }
+        });
 
         newElement.find('.nameOfCategory').on('click', async function() {
             const btn = $(this);
