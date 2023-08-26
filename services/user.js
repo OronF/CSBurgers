@@ -59,7 +59,7 @@ const updateUser = async (newUser) => {
     return user;
 }
 
-const searchForLogIn = async (fname, password) => {
+const searchForLogIn = async (fname, password, phoneNumber) => {
     if (!fname) {
         return null;
     }
@@ -68,7 +68,11 @@ const searchForLogIn = async (fname, password) => {
         return null;
     }
 
-    return await User.findOne({fname, password});
+    if (!phoneNumber) {
+        return null;
+    }
+
+    return await User.findOne({fname, password, phoneNumber});
 }
 
 const getAllManagers = async (is_Manager) => {

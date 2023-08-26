@@ -11,8 +11,8 @@ const getAllUsers = async (req, res) => {
             return;
         }
         
-        if (req.query.fname && req.query.password) {
-            Users = await UserService.searchForLogIn(req.query.fname, req.query.password);
+        if (req.query.fname && req.query.password && req.query.phoneNumber) {
+            Users = await UserService.searchForLogIn(req.query.fname, req.query.password, req.query.phoneNumber);
 
             if(!Users) {
                 throw new Error('Non existing users');
