@@ -71,15 +71,19 @@ const maxPrice = async (dishes, priceInp) =>
     });
 }
 
-const HighLowSort = async (dishes) =>
+const HighLowSort = async () =>
 {
     return await Dish.find({}).sort({
         price: 1
     });
 }
 
-const LowHighSort = async (dishes) =>
+const LowHighSort = async () =>
 {
+    console.log("hi");
+    return await Dish.find({}).sort({
+        price: -1
+    });
 }
 
 

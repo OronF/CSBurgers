@@ -2,7 +2,7 @@ const DishService = require('../services/dish');
 
 const getAllDishes = async (req,res) => {
     try {
-        console.log("in4");
+        console.log("in1");
 
         let dishes;
 
@@ -32,15 +32,14 @@ const getAllDishes = async (req,res) => {
 
         if(req.query.sort === "high-low")
         {
-            console.log("in5");
-            dishes = await DishService.HighLowSort(dishes);
-            console.log(dishes);
+            dishes = await DishService.HighLowSort();
 
         }
 
         if(req.query.sort === "low-high")
         {
-            dishes = await DishService.LowHighSort(dishes);
+            console.log("hello");
+            dishes = await DishService.LowHighSort();
         }
 
 

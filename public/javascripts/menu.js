@@ -212,12 +212,17 @@ kosherCheck.addEventListener('change', async function() {
                 },
                 success: function(dishes)
                 {
-                    console.log("dishes");
-                    dishesList.empty();
-                    console.log(dishes);
-                    dishes.forEach(dish => {
-                        appendDishesLi(dish);
+                    dishesList.forEach(Dish =>
+                    {
+                        let flag = 1;
+                        dishes.forEach(dish => {
+                            if(Dish === dish)
+                                flag = 0;
+                        });
+                        if(flag == 1)
+                        Dish.putHideOnElement();
                     });
+                    
                 },
                 error: function(error) {
                     console.error("Error finding data:", error);
@@ -269,37 +274,34 @@ const sortSelect = $("#sort-select");
 const sortCheck = $(".sortby-check");
 
 sortCheck.on('change', async function() {
-    console.log("in");
+
     sortSelect.on('change', async function() {
-        console.log("in2");
-        if(sortCheck.is(':checked') == true && sortSelect.val() === "מהמחיר הגבוה לנמוך"){
-                console.log("in3");
 
-        await $.ajax({
-            url: "/api/dish",
-            method: "GET",
-            dataType: "json",
-            contentType: 'application/json',
-            data: {
-                sort: "high-low"
-            },
-            success: function(dishes)
-            {
-                console.log("dishes");
-                dishesList.empty();
-                console.log(dishes);
-                dishes.forEach(dish => {
-                    appendDishesLi(dish);
-                });
-            },
-            error: function(error) {
-                console.error("Error finding data:", error);
-            }
-        });
+        if(sortCheck.is(':checked') == true && sortSelect.val() === "מהמחיר הנמוך לגבוה"){
+            await $.ajax({
+                url: "/api/dish",
+                method: "GET",
+                dataType: "json",
+                contentType: 'application/json',
+                data: {
+                    sort: "high-low"
+                },
+                success: function(dishes)
+                {
+                    dishesList.empty();
+                    console.log(dishes);
+                    dishes.forEach(dish => {
+                        appendDishesLi(dish);
+                    });
+                },
+                error: function(error) {
+                    console.error("Error finding data:", error);
+                }
+            });
     }
-    });
 
-    if(sortCheck.checked == true && sortSelect.value === "מהמחיר הנמוך לגבוה"){
+    if(sortCheck.is(':checked') == true && sortSelect.val() === "מהמחיר הגבוה לנמוך"){
+        console.log("in");
         await $.ajax({
             url: "/api/dish",
             method: "GET",
@@ -310,7 +312,6 @@ sortCheck.on('change', async function() {
             },
             success: function(dishes)
             {
-                console.log("dishes");
                 dishesList.empty();
                 console.log(dishes);
                 dishes.forEach(dish => {
@@ -323,7 +324,8 @@ sortCheck.on('change', async function() {
         });
     }
     });
-    
+});
+
 });
 
 
