@@ -41,7 +41,7 @@ $(document).ready(function() {
         const phoneNumberVal = phoneNumberTxt.val();
         const passwordVal = passwordTxt.val();
 
-        if (!fnameVal && !passwordVal && !phoneNumberVal) {
+        if (!fnameVal || !passwordVal || !phoneNumberVal) {
             Error.html('לא הזנת את כל כל הנתונים');
             if (Error.hasClass('hide')) {
                 Error.removeClass('hide');
@@ -67,7 +67,7 @@ $(document).ready(function() {
                 },
                 error: function(error) {
                     console.error("Error saving data:", error);
-                    Error.html('יש לך טעות בשם או בסיסמה אנא תקן כדי להתחבר');
+                    Error.html('יש לך טעות באחד מפרטיך אנא תקן כדי להתחבר');
                     if (Error.hasClass('hide')) {
                         Error.removeClass('hide');
                     }
