@@ -180,4 +180,152 @@ $(document).ready(async function() {
             order.element.toggleClass("hide", !isVisible);
         });
     });
+
+    const deleteBtn = $('.delete-btn');
+
+    deleteBtn.on('click', function() {
+        $.ajax({
+            url: `/api/user/${extractedContent}`,
+            method: "DELETE",
+            success: function() {
+                window.location.href = "/logout";
+            },
+            error: function(error) {
+                console.error(error);
+            }
+        });
+    });
+
+    const updatebtn = $('.update-btn');
+
+    updatebtn.on('click', async function() {
+        if ($(`#update-icon`).hasClass('bi bi-pencil-fill')) {
+            $(`#update-icon`).removeClass('bi bi-pencil-fill').addClass('bi bi-check-lg');
+
+            $(`#fname`).remove();
+            $(`#lname`).remove();
+            $(`#phoneNumber`).remove();
+
+            $(`.info`).append(`<div class="inputs">
+                <input value="${userData.fname}" class="form-control" id="fname-${extractedContent}">
+                <input value="${userData.lname}" class="form-control" id="lname-${extractedContent}">
+                <input value="${userData.phoneNumber}" class="form-control" id="phoneNuber-${extractedContent}">
+            </div>`);  
+        } else {
+            const fname = $(`#fname-${extractedContent}`).val();
+            const lname = $(`#lname-${extractedContent}`).val();
+            const phoneNumber = $(`#phoneNuber-${extractedContent}`).val();
+
+            await $.ajax({
+                url:`/api/user/${extractedContent}`,
+                method: "PUT",
+                dataType: "json",
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    fname: fname,
+                    lname: lname,
+                    orders: userData.orders,
+                    phoneNumber: phoneNumber,
+                    password: userData.password,
+                    is_Manager: userData.is_Manager
+                }),
+                success: function(data) {
+                    console.log("Data saved successfully:", data);
+                    userData = data;
+                },
+                error: function(error) {
+                    console.error("Error saving data:", error);
+                }
+            });
+
+            $(`.inputs`).remove();
+
+            $(`.info`).append(`
+                <p class="SomeInfo" id = "fname">שם פרטי: ${fname}</p>
+                <p class="SomeInfo" id = "lname">שם משפחה: ${lname}</p>
+                <p class="SomeInfo" id = "phoneNumber">מספר טלפון: ${phoneNumber}</p>
+            `);
+
+            $(`#update-icon`).removeClass('bi bi-check-lg').addClass('bi bi-pencil-fill');
+        }
+    
+    });
+
+    const framework = $('#framework');
+
+    framework.append(`<option disabled selected class="text-blue-600/100">שם הסניף</option>`);
+
+    let index = 1;
+
+    const createSelection = (branch) => {
+        framework.append(`<option value="${index}" data-branch-id="${branch._id}">${branch.name}</option>`);
+        index++;
+    }
+
+    const render = (data) => {
+        data.forEach(branch => {
+            createSelection(branch);
+        });
+    }
+
+    $.ajax({
+        url: "/api/branch",
+        method: "GET",
+        success: (data) => {
+            render(data);
+        },
+        error: (error) => {
+            console.log(error);
+        }   
+    });
+
+    const numOfProduct = $('#numOfProduct');
+    const priceSelect = $('#priceSelect');
+
+    let numOfProductVal;
+    let priceSelectVal;
+    let frameworkVal;
+
+    numOfProduct.on('change', function() {
+        numOfProductVal = numOfProduct.find(':selected').val();
+        filterOrdersOfUser();
+    });
+
+    priceSelect.on('change', function() {
+        priceSelectVal = priceSelect.find(':selected').val();
+        filterOrdersOfUser();
+    });
+
+    framework.on('change', function() {
+        frameworkVal = framework.find(':selected').attr('data-branch-id');
+        filterOrdersOfUser();
+    });
+
+    function filterOrdersOfUser () {
+        if (numOfProductVal || priceSelectVal || frameworkVal) {
+            console.log('fgfhgh');
+            $.ajax({
+                url: "/api/order",
+                method: "GET",
+                dataType: "json",
+                contentType: 'application/json',
+                data: {
+                    numOfProducts: numOfProductVal,
+                    price: priceSelectVal,
+                    branch: frameworkVal,
+                    userID: extractedContent
+                },
+                success: function (data) {
+                    ordersList.empty();
+    
+                    data.forEach(order => {
+                        appendOrderLi(order);
+                    });
+                },
+                error: function (error) {
+                    console.error(error);
+                }
+            });
+        }
+    }
 });

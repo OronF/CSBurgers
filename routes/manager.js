@@ -10,6 +10,10 @@ router.get('/graphs', function(req, res, next) {
     res.render("graphs");
 });
 
+router.get('/ManagerMessages', function(req, res, next) {  
+    res.render("ManagerMessages");
+});
+
 router.get('/managerMenu', function(req, res, next) {
     res.render("menuManager");
 });

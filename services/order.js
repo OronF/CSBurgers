@@ -106,6 +106,57 @@ const groupByBranches = async () => {
     return branches;
 }
 
+const searchClosedOrders = async (closed) => {
+    return Order.find({closed});
+}
+
+const filterOrders = async (NumOfProducts, branch, price, userId, orders) => {
+    const parsedPrice = parseInt(price);
+    const paresNumOfProducts = parseInt(NumOfProducts);
+
+    if(NumOfProducts && !branch && !price) {
+        return await orders.filter((order) => {
+            return (order.dishes.length + order.meals.length) >= paresNumOfProducts && userId == order.customerId && order.closed;
+        });
+    }
+
+    else if (branch && !NumOfProducts && !price) {
+        return await orders.filter((order) => {
+            return order.branch == branch && userId == order.customerId && order.closed;
+        });
+    }
+
+    else if (price && !NumOfProducts && !branch) {
+        return await orders.filter((order) => {
+            return order.totalprice >= parsedPrice && userId == order.customerId && order.closed;
+        });
+    }
+
+    else if (NumOfProducts && branch && !price) {
+        return await orders.filter((order) => {
+            return (order.dishes.length + order.meals.length) >= paresNumOfProducts && order.branch == branch && userId == order.customerId && order.closed;
+        });
+    }
+
+    else if (NumOfProducts && price && !branch) {
+        return await orders.filter((order) => {
+            return (order.dishes.length + order.meals.length) >= paresNumOfProducts && order.totalprice >= parsedPrice && userId == order.customerId && order.closed;
+        });
+    }
+
+    else if (price && branch && !NumOfProducts) {
+        return await orders.filter((order) => {
+            return order.totalprice >= parsedPrice && order.branch == branch && userId == order.customerId && order.closed;
+        });
+    }
+
+    else if (price && NumOfProducts && branch) {
+        return await orders.filter((order) => {
+            return (order.dishes.length + order.meals.length) >= paresNumOfProducts && order.totalprice >= parsedPrice && order.branch == branch && userId == order.customerId && order.closed;
+        });
+    }
+}
+
 module.exports = {
     getAll,
     create: createOrder,
@@ -114,5 +165,7 @@ module.exports = {
     search: searchOrder,
     groupByMeals,
     groupByDishes,
-    groupByBranches
+    groupByBranches,
+    searchClosedOrders,
+    filterOrders
 }

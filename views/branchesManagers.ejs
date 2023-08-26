@@ -35,32 +35,106 @@
         <div class="search-wrapper">
             <input id="searchTxt" class="form-control" type="search" placeholder="מצא סניף" data-search />
         </div>
+
+        <select id="search-area" class="form-select form-select-lg">
+            <option value="0" disabled selected>אזור הסניף</option>
+            <option value="1" data-area="everyone">כולם</option>
+            <option value="2" data-area="north">צפון</option>
+            <option value="3" data-area="south">דרום</option>
+            <option value="4" data-area="east">מזרח</option>
+            <option value="5" data-area="west">מערב</option>
+        </select>
     </section>
 
     <main class="branches">
         <ol class="branches-list"></ol>
 
         <div id="nohide" class="nohide">
-            <div id="addNewBranch">
+            <div id="addNewBranch" type="button" data-bs-toggle="modal" data-bs-target="#newBranchModal">
                 <i class="bi bi-plus-circle" id="addIcon"></i>
             </div>
         </div>
+
+        <div class="modal fade" id="newBranchModal" tabindex="-1" aria-labelledby="newBranchModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <h3>יצירת סניף חדש</h3>
+                        </div>
+                        <div class="modal-body">
+                            <div id="hide" class="hide">
+                                <div id="info">
+                                    <div class="inputs">
+                                        <input placeholder="שם הסניף" class="info-input input form-control" id="branchName">
+                                        <input placeholder="כתובת" class="info-input input form-control" id="address">
+                                        <input placeholder="שעות פעילות" class="info-input input form-control" id="Activity">
+                                        <input placeholder="קורדינטה אנכית" type="number" class="info-input input form-control" id="x">
+                                        <input placeholder="קורדינטה אופקית" class="info-input input form-control" id="y">
+                                    </div>
+                                    <div class="selection">
+                                        <select id="managers" class="form-select form-select-lg"></select>
+                                        <select id="area" class="form-select form-select-lg">
+                                            <option value="0" disabled selected>אזור הסניף</option>
+                                            <option value="1" data-area="north">צפון</option>
+                                            <option value="2" data-area="south">דרום</option>
+                                            <option value="3" data-area="east">מזרח</option>
+                                            <option value="4" data-area="west">מערב</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                            <div class="row mb-4">
+                                <div class="modal-buttons">
+                                    <button class="saveBtn">שמור</button>
+                                </div>
+                            </div>
+
+                </div>
+            </div>
+        </div>
         
-        <div id="hide" class="hide">
-            <div id="info">
-                <div class="inputs">
-                    <input placeholder="שם הסניף" class="info-input" id="branchName">
-                    <input placeholder="כתובת" class="info-input" id="address">
-                    <input placeholder="שעות פעילות" class="info-input" id="Activity">
-                    <input placeholder="קורדינטה אנכית" type="number" class="info-input" id="x">
-                    <input placeholder="קורדינטה אופקית" class="info-input" id="y">
-                </div>
-                <div class="selection">
-                    <select id="managers" class="form-select form-select-lg"></select>
-                </div>
-                <div class="buttons">
-                    <button class="closeBtn">סגור</button>
-                    <button class="saveBtn">שמור</button>
+        <div class="modal fade" id="updateBranchModal" tabindex="-1" aria-labelledby="updateBranchModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <h3>עדכון סניף</h3>
+                        </div>
+                        <div class="modal-body">
+                            <div id="hide">
+                                <div id="info">
+                                    <div class="inputs">
+                                        <input placeholder="שם הסניף" class="info-input input form-control" id="branchName-update">
+                                        <input placeholder="כתובת" class="info-input input form-control" id="address-update">
+                                        <input placeholder="שעות פעילות" class="info-input input form-control" id="Activity-update">
+                                        <input placeholder="קורדינטה אנכית" type="number" class="info-input input form-control" id="x-update">
+                                        <input placeholder="קורדינטה אופקית" class="info-input input form-control" id="y-update">
+                                    </div>
+                                    <div class="selection">
+                                        <select id="managers-update" class="form-select form-select-lg"></select>
+                                        <select id="area-update" class="form-select form-select-lg">
+                                            <option value="0" disabled selected>אזור הסניף</option>
+                                            <option value="1" data-area="north">צפון</option>
+                                            <option value="2" data-area="south">דרום</option>
+                                            <option value="3" data-area="east">מזרח</option>
+                                            <option value="4" data-area="west">מערב</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                            <div class="row mb-4">
+                                <div class="modal-buttons-update">
+                                    <button class="saveBtn-update">שמור</button>
+                                </div>
+                            </div>
+
                 </div>
             </div>
         </div>

@@ -12,7 +12,8 @@ const createBranch = async (newBranch) => {
         activityTime: newBranch.activityTime,
         manager: newBranch.manager,
         coordinateX: newBranch.coordinateX,
-        coordinateY: newBranch.coordinateY
+        coordinateY: newBranch.coordinateY,
+        area: newBranch.area
     });
 
     return await branch.save();
@@ -35,7 +36,7 @@ const deleteBranch = async (id) => {
 }
 
 const updateBranch = async (newBranch) => {
-    const branch = await searchUser(newBranch.id);
+    const branch = await searchBranch(newBranch.id);
 
     if (!branch) {
         return null;
@@ -45,12 +46,17 @@ const updateBranch = async (newBranch) => {
     branch.address = newBranch.address;
     branch.phoneNumber = newBranch.phoneNumber;
     branch.activityTime = newBranch.activityTime;
-    branch.manger = newBranch.manger;
+    branch.manager = newBranch.manager;
     branch.coordinateX = newBranch.coordinateX;
     branch.coordinateY = newBranch.coordinateY;
+    branch.area = newBranch.area;
 
     await branch.save()
     return branch;
+}
+
+const searchByArea = async (area) => {
+    return await Branch.find({area});
 }
 
 module.exports = {
@@ -58,5 +64,6 @@ module.exports = {
     create: createBranch,
     delete: deleteBranch,
     update: updateBranch,
-    search: searchBranch
+    search: searchBranch,
+    searchByArea
 }

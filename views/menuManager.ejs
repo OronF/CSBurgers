@@ -29,6 +29,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Lato&family=Noto+Sans+Hebrew:wght@500;900&display=swap" rel="stylesheet">
 </head>
 <body>
+
+    <a href="/" class="btn-back"> לחזרה לעמוד הבית
+        <i class="bi bi-arrow-bar-right"></i>
+    </a>
     
     <header class="title">
         <h1 class="page-title">תפריט המסעדה</h1>
@@ -53,9 +57,123 @@
         </ul>
     </section>
     
-    <div class="addingProduct">
-        <div class="add-btn" type="button">
+    <div class="addingDish">
+        <div class="add-btn-dish" type="button" data-bs-toggle="modal" data-bs-target="#newdishModal">
             <i class="bi bi-plus-circle-fill"></i>
+        </div>
+    </div>
+
+    <div class="addingMeal">
+        <div class="add-btn-meal" type="button" data-bs-toggle="modal" data-bs-target="#newmealModal">
+            <i class="bi bi-plus-circle-fill"></i>
+        </div>
+    </div>
+
+    <div class="modal fade" id="newdishModal" tabindex="-1" aria-labelledby="newCategoryModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <h3>יצירת מנה חדש</h3>
+                    </div>
+                    <div class="modal-body">
+                        <div id="hide">
+                            <div id="info">
+                                <div class="inputs">
+                                    <input placeholder="שם המנה" id="dish-name">
+                                    <input placeholder="מחיר" id="dish-price">
+                                    <input placeholder="תיאור" id="dish-description">
+                                    <input placeholder="קישור לתמונה" id="dish-picture">
+                                </div>
+                                <div class="selections">
+                                    <select id="dish-categories" class="form-select form-select-lg"></select>
+                                </div>
+            
+                            </div>
+                        </div>
+
+                    </div>
+
+                        <div class="row mb-4">
+                            <div class="modal-buttons-dish">
+                                <button class="moveBtn">שמור</button>
+                            </div>
+                        </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="newmealModal" tabindex="-1" aria-labelledby="newmealModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <h3>יצירת ארוחה חדש</h3>
+                    </div>
+                    <div class="modal-body">
+                        <div id="hide">
+                            <div id="info">
+                                <div class="inputs">
+                                    <input placeholder="שם הארוחה" id="meal-name">
+                                    <input placeholder="מחיר" id="meal-price">
+                                    <input placeholder="תיאור" id="meal-description">
+                                    <input placeholder="קישור לתמונה" id="meal-picture">
+                                </div>
+                                <div class="selections">
+                                    <select id="meal-categories" class="form-select form-select-lg"></select>
+                                    <select id="meal-dish" class="form-select form-select-lg"></select>
+                                    <select id="meal-drink" class="form-select form-select-lg"></select>
+                                    <select id="meal-extra" class="form-select form-select-lg"></select>
+                                </div>
+            
+                            </div>
+                        </div>
+
+                    </div>
+
+                        <div class="row mb-4">
+                            <div class="modal-buttons-meal">
+                                <button class="moveBtn-meal">שמור</button>
+                            </div>
+                        </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="newCategoryModal" tabindex="-1" aria-labelledby="newProductModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <h3>יצירת קטגוריה חדשה</h3>
+                    </div>
+                    <div class="modal-body">
+                        <div id="hide">
+                            <div id="info">
+                                <div class="inputs">
+                                    <input placeholder="שם הקטגוריה" class="info-input input form-control" id="categoryName">
+                                </div>
+                                <div class="selection">
+                                    <select id="Categorytype" class="form-select form-select-lg">
+                                        <option value="0" disabled selected>סוג קטגוריה</option>
+                                        <option value="1" data-Categorytype="meal">ארוחה</option>
+                                        <option value="2" data-Categorytype="dish">מנה</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                        <div class="row mb-4">
+                            <div class="modal-buttons">
+                                <button class="saveBtn">שמור</button>
+                            </div>
+                        </div>
+
+            </div>
         </div>
     </div>
 

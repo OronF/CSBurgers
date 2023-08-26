@@ -14,6 +14,18 @@ const getAllOrders = async (req, res) => {
             res.json(ordersGroup);
             return;
         } 
+
+        if (req.query.closed) {
+            let closedOrders = await OrderService.searchClosedOrders(req.query.closed);
+            res.json(closedOrders);
+            return;
+        }
+
+        if ((req.query.price || req.query.branch || req.query.numOfProducts) && req.query.userID) {
+            let OrdersFilter = await OrderService.filterOrders(req.query.numOfProducts, req.query.branch, req.query.price, req.query.userID, orders)
+            res.json(OrdersFilter);
+            return;
+        }
         
         if(!orders) {
             throw new Error('Non existing orders');
