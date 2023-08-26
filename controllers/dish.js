@@ -18,30 +18,71 @@ const getAllDishes = async (req,res) => {
             throw new Error('Non existing dishes');
         }
 
-        if(req.query.price)
+        if(req.query.priceValidation && req.query.kosher && req.query.sortIsValid) // price, kosher, sort
         {
+            if(req.query.sort === "מהמחיר הנמוך לגבוה")
+                dishes = await DishService.LowHighSort();
+
+
+            if(req.query.sort === "מהמחיר הגבוה לנמוך")
+                dishes = await DishService.HighLowSort();
+
+            dishes = await DishService.maxPrice(dishes, req.query.price);
+            dishes = await DishService.isKosher(req.query.categoryId, dishes);
+
+        }
+
+        if(!req.query.priceValidation && req.query.kosher && req.query.sortIsValid) // kosher, sort
+        {
+            if(req.query.sort === "מהמחיר הנמוך לגבוה")
+                dishes = await DishService.LowHighSort();
+
+
+            if(req.query.sort === "מהמחיר הגבוה לנמוך")
+                dishes = await DishService.HighLowSort();
+
+            dishes = await DishService.isKosher(req.query.categoryId, dishes);
+        }
+
+
+        if(req.query.priceValidation && req.query.kosher && !req.query.sortIsValid) // kosher, price
+        {
+            dishes = await DishService.maxPrice(dishes, req.query.price);
+            dishes = await DishService.isKosher(req.query.categoryId, dishes);
+        }
+
+        if(!req.query.priceValidation && req.query.kosher && req.query.sortIsValid) // price, sort
+        {
+            if(req.query.sort === "מהמחיר הנמוך לגבוה")
+                dishes = await DishService.LowHighSort();
+
+
+            if(req.query.sort === "מהמחיר הגבוה לנמוך")
+                dishes = await DishService.HighLowSort();
+
             dishes = await DishService.maxPrice(dishes, req.query.price);
         }
 
-        if(req.query.kosher)
+
+        if(!req.query.priceValidation && !req.query.kosher && req.query.sortIsValid) // sort
         {
-            let Dishes = await DishService.isKosher(req.query.categoryId, dishes);
-            res.json(Dishes);
-            return;
+            if(req.query.sort === "מהמחיר הנמוך לגבוה")
+                dishes = await DishService.LowHighSort();
+
+
+            if(req.query.sort === "מהמחיר הגבוה לנמוך")
+                dishes = await DishService.HighLowSort();
         }
 
-        if(req.query.sort === "high-low")
+        if(!req.query.priceValidation && req.query.kosher && !req.query.sortIsValid) // kosher
         {
-            dishes = await DishService.HighLowSort();
-
+            dishes = await DishService.isKosher(req.query.categoryId, dishes);
         }
 
-        if(req.query.sort === "low-high")
+        if(req.query.priceValidation && !req.query.kosher && !req.query.sortIsValid) // price
         {
-            console.log("hello");
-            dishes = await DishService.LowHighSort();
+            dishes = await DishService.maxPrice(dishes, req.query.price);
         }
-
 
         res.json(dishes);
     }

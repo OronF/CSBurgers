@@ -197,94 +197,31 @@ $(document).ready(async function() {
         }
     });
 
-const kosherCheck = document.getElementById("kosher-check");
-
-kosherCheck.addEventListener('change', async function() {
-    if (kosherCheck.checked == true) {
-        try {
-                await $.ajax({
-                url: "/api/dish",
-                method: "GET",
-                dataType: "json",
-                contentType: 'application/json',
-                data: {
-                    kosher: true
-                },
-                success: function(dishes)
-                {
-                    dishesList.forEach(Dish =>
-                    {
-                        let flag = 1;
-                        dishes.forEach(dish => {
-                            if(Dish === dish)
-                                flag = 0;
-                        });
-                        if(flag == 1)
-                        Dish.putHideOnElement();
-                    });
-                    
-                },
-                error: function(error) {
-                    console.error("Error finding data:", error);
-                }
-            });
-
-        } catch (error) {
-            console.error("AJAX request error:", error);
-        }
-    }
-});
-
-
-const maxPriceCheck = document.getElementById("maxprice-check");
-const priceInp = document.getElementById("priceInp");
-
-maxPriceCheck.addEventListener('change', async function() {
-    if (maxPriceCheck.checked == true && priceInp.value !== "") {
-        try {
-                await $.ajax({
-                url: "/api/dish",
-                method: "GET",
-                dataType: "json",
-                contentType: 'application/json',
-                data: {
-                    price: priceInp.value
-                },
-                success: function(dishes)
-                {
-                    console.log("dishes");
-                    dishesList.empty();
-                    console.log(dishes);
-                    dishes.forEach(dish => {
-                        appendDishesLi(dish);
-                    });
-                },
-                error: function(error) {
-                    console.error("Error finding data:", error);
-                }
-            });
-
-        } catch (error) {
-            console.error("AJAX request error:", error);
-        }
-    }
-});
-
-const sortSelect = $("#sort-select");
+const kosherCheck = $("#kosher-check");
+const maxPriceCheck = $("#maxprice-check");
 const sortCheck = $(".sortby-check");
+const priceInp = $("#priceInp");
+const sortSelect = $("#sort-select");
 
-sortCheck.on('change', async function() {
+kosherCheck.on('change', filterDishes());
+maxPriceCheck.on('change', filterDishes());
+sortCheck.on('change', filterDishes());
 
-    sortSelect.on('change', async function() {
+    function filterDishes(){
+        console.log("in");
 
-        if(sortCheck.is(':checked') == true && sortSelect.val() === "מהמחיר הנמוך לגבוה"){
-            await $.ajax({
+        if((sortCheck.is(':checked') == true && (sortSelect.val() === "מהמחיר הנמוך לגבוה" || sortSelect.val() === "מהמחיר הגבוה לנמוך")) || kosherCheck.is(":checked") == true ||  (maxPriceCheck.is(":checked") == true && priceInp.val() !== "")){
+                $.ajax({
                 url: "/api/dish",
                 method: "GET",
                 dataType: "json",
                 contentType: 'application/json',
                 data: {
-                    sort: "high-low"
+                    kosher: kosherCheck.is(":checked"),
+                    sort: sortSelect.val(),
+                    price: priceInp.val(),
+                    priceValidation:  maxPriceCheck.is(":checked"),
+                    sortIsValid: sortCheck.is(':checked')
                 },
                 success: function(dishes)
                 {
@@ -299,33 +236,7 @@ sortCheck.on('change', async function() {
                 }
             });
     }
-
-    if(sortCheck.is(':checked') == true && sortSelect.val() === "מהמחיר הגבוה לנמוך"){
-        console.log("in");
-        await $.ajax({
-            url: "/api/dish",
-            method: "GET",
-            dataType: "json",
-            contentType: 'application/json',
-            data: {
-                sort: "low-high"
-            },
-            success: function(dishes)
-            {
-                dishesList.empty();
-                console.log(dishes);
-                dishes.forEach(dish => {
-                    appendDishesLi(dish);
-                });
-            },
-            error: function(error) {
-                console.error("Error finding data:", error);
-            }
-        });
     }
-    });
-});
-
 });
 
 
