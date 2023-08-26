@@ -21,8 +21,8 @@ const getAllOrders = async (req, res) => {
             return;
         }
 
-        if (req.query.price || req.query.branch || req.query.numOfProducts) {
-            let OrdersFilter = await OrderService.filterOrders(req.query.numOfProducts, req.query.branch, req.query.price, orders)
+        if ((req.query.price || req.query.branch || req.query.numOfProducts) && req.query.userID) {
+            let OrdersFilter = await OrderService.filterOrders(req.query.numOfProducts, req.query.branch, req.query.price, req.query.userID, orders)
             res.json(OrdersFilter);
             return;
         }

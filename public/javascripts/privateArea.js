@@ -250,4 +250,82 @@ $(document).ready(async function() {
         }
     
     });
+
+    const framework = $('#framework');
+
+    framework.append(`<option disabled selected class="text-blue-600/100">שם הסניף</option>`);
+
+    let index = 1;
+
+    const createSelection = (branch) => {
+        framework.append(`<option value="${index}" data-branch-id="${branch._id}">${branch.name}</option>`);
+        index++;
+    }
+
+    const render = (data) => {
+        data.forEach(branch => {
+            createSelection(branch);
+        });
+    }
+
+    $.ajax({
+        url: "/api/branch",
+        method: "GET",
+        success: (data) => {
+            render(data);
+        },
+        error: (error) => {
+            console.log(error);
+        }   
+    });
+
+    const numOfProduct = $('#numOfProduct');
+    const priceSelect = $('#priceSelect');
+
+    let numOfProductVal;
+    let priceSelectVal;
+    let frameworkVal;
+
+    numOfProduct.on('change', function() {
+        numOfProductVal = numOfProduct.find(':selected').val();
+        filterOrdersOfUser();
+    });
+
+    priceSelect.on('change', function() {
+        priceSelectVal = priceSelect.find(':selected').val();
+        filterOrdersOfUser();
+    });
+
+    framework.on('change', function() {
+        frameworkVal = framework.find(':selected').attr('data-branch-id');
+        filterOrdersOfUser();
+    });
+
+    function filterOrdersOfUser () {
+        if (numOfProductVal || priceSelectVal || frameworkVal) {
+            console.log('fgfhgh');
+            $.ajax({
+                url: "/api/order",
+                method: "GET",
+                dataType: "json",
+                contentType: 'application/json',
+                data: {
+                    numOfProducts: numOfProductVal,
+                    price: priceSelectVal,
+                    branch: frameworkVal,
+                    userID: extractedContent
+                },
+                success: function (data) {
+                    ordersList.empty();
+    
+                    data.forEach(order => {
+                        appendOrderLi(order);
+                    });
+                },
+                error: function (error) {
+                    console.error(error);
+                }
+            });
+        }
+    }
 });

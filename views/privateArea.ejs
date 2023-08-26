@@ -50,6 +50,24 @@
     <div class="card-body card" id ="client-orders" style="width: 18rem;">
         <h2 class="card-title">הזמנות קודמות:</h2>
         <input type="text" class="search form-control-sm" id="searchOrder" placeholder="לחיפוש הזמנה...">
+        <div class="selections">
+          <select id="priceSelect" class="form-select form-select-lg">
+            <option value="0" disabled selected>מחיר</option>
+            <option value="100">100</option>
+            <option value="200">200</option>
+            <option value="300">300</option>
+            <option value="400">400</option>
+            <option value="500">500</option>
+          </select>
+          <select id="framework" class="form-select form-select-lg select-branch"></select>
+          <select id="numOfProduct" class="form-select form-select-lg">
+            <option value="0" disabled selected>מספר מוצרים</option>
+            <option value="3">3</option>
+            <option value="5">5</option>
+            <option value="7">7</option>
+            <option value="10">10</option>
+          </select>
+        </div>
       <ul class="order-list"> </ul>
   </div>
 </body>
