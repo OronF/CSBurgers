@@ -203,14 +203,15 @@ const sortCheck = $(".sortby-check");
 const priceInp = $("#priceInp");
 const sortSelect = $("#sort-select");
 
-kosherCheck.on('change', filterDishes());
-maxPriceCheck.on('change', filterDishes());
-sortCheck.on('change', filterDishes());
+kosherCheck.on('change', filterDishes);
+maxPriceCheck.on('change', filterDishes);
+sortCheck.on('change', filterDishes);
 
-    function filterDishes(){
-        console.log("in");
-
+    function filterDishes()
+    {
         if((sortCheck.is(':checked') == true && (sortSelect.val() === "מהמחיר הנמוך לגבוה" || sortSelect.val() === "מהמחיר הגבוה לנמוך")) || kosherCheck.is(":checked") == true ||  (maxPriceCheck.is(":checked") == true && priceInp.val() !== "")){
+                    console.log("in");
+
                 $.ajax({
                 url: "/api/dish",
                 method: "GET",

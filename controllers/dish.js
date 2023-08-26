@@ -20,12 +20,11 @@ const getAllDishes = async (req,res) => {
 
         if(req.query.priceValidation && req.query.kosher && req.query.sortIsValid) // price, kosher, sort
         {
-            if(req.query.sort === "מהמחיר הנמוך לגבוה")
-                dishes = await DishService.LowHighSort();
+                if(req.query.sort === "מהמחיר הגבוה לנמוך")
+                    dishes = await DishService.LowHighSort();
 
-
-            if(req.query.sort === "מהמחיר הגבוה לנמוך")
-                dishes = await DishService.HighLowSort();
+                if(req.query.sort === "מהמחיר הנמוך לגבוה") 
+                    dishes = await DishService.HighLowSort();
 
             dishes = await DishService.maxPrice(dishes, req.query.price);
             dishes = await DishService.isKosher(req.query.categoryId, dishes);
