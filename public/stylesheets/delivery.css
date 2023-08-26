@@ -109,13 +109,3 @@
     direction: rtl;
     margin-bottom: 0.5vw;
 }
-
-
-#branches, #framework {
-    /* Additional styling for the select element */
-    appearance: none; /* Remove default appearance */
-    background: url("path-to-your-arrow-icon.png") no-repeat right center;
-    background-size: 18px;
-    padding-right: 30px; /* Adjust padding to make space for the arrow icon */
-    /* Other styles as needed */
-}
