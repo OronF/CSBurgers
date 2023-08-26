@@ -58,6 +58,12 @@
                                       <input type="text" placeholder="שם פרטי" id="fname" class="form-control form-control-lg" required />
                                   </div>
                               </div>
+
+                                <!-- PhoneNumber input -->
+                                <div class="form-outline mb-4">
+                                  <input type="tel" id="phone-number" onkeydown="phoneNumberFormatter()" placeholder="מספר טלפון" class="form-control form-control-lg" required />
+                                  <div id = "ErrorPhoneNumber"> </div>
+                              </div>
         
                                 <!-- Password input -->
                                 <div class="form-outline mb-4">
