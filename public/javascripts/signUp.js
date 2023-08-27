@@ -113,6 +113,7 @@ $(document).ready(function() {
                     // Read the 'signUpCookie' value
                     const phoneNumberCookie = getCookie('signUpCookie');
                     console.log('Phone number from cookie:', phoneNumberCookie);
+                    $('#exampleModal').modal('show');
                 },
                 error: function(error) {
                     console.error("Error saving data:", error);
