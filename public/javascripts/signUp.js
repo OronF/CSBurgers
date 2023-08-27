@@ -58,7 +58,14 @@ $(document).ready(function() {
         if (passwordApproveVal !== passwordVal) {
             return;
         }
-
+        /*$.ajax({
+            url: "/api/user",
+            method: "POST",
+            success: function(response)
+                array.forEach(element => {
+                    
+                });
+        })*/
         $.ajax({
             url:"/api/user",
             method: "POST",
