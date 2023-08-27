@@ -40,6 +40,21 @@ function nameValidation(name, error)
     
 }
 
+const approve = $('#approveBtn');
+const fname = document.getElementById('fname');
+const lname = document.getElementById('lname');
+const phoneNumber = document.getElementById('phone-number');
+const passowrdInput = document.getElementById('passowrdInput');
+const confirmPassowrdInput = document.getElementById('confirmPassowrdInput');
+
+fname,lname,phoneNumber,passowrdInput,confirmPassowrdInput.addEventListener("keyup", e => {
+    e.preventDefault();
+    if (e.key === "Enter") {
+        approve.click();
+    }
+  });
+
+
 $(document).ready(function() {
 
     const approve = $('#approveBtn');
