@@ -615,6 +615,23 @@ $(document).ready(async function() {
                     console.error(error);
                 }
             });
+
+            $.ajax({
+                url: "/manager/posttopage",
+                method: "POST",
+                dataType: "json",
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    img: pictureDish.val(),
+                    Productdesctiption: descriptionDish.val()
+                }),
+                success: function(response) {
+                    console.log(response);
+                },
+                error: function(error) {
+                    console.error(error);
+                }
+            })
         }
     });
 
@@ -750,6 +767,23 @@ $(document).ready(async function() {
                     $('.moveBtn-meal').remove();
                     const newElement = $(`<button type="button" class="closebtn" data-bs-dismiss="modal" aria-label="Close"><i class="bi bi-check2"></i></button>`);
                     $('.modal-buttons-meal').append(newElement);
+                },
+                error: function(error) {
+                    console.error(error);
+                }
+            });
+
+            $.ajax({
+                url: "/manager/posttopage",
+                method: "POST",
+                dataType: "json",
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    img: pictureMeal.val(),
+                    Productdesctiption: descriptionMeal.val()
+                }),
+                success: function(response) {
+                    console.log(response);
                 },
                 error: function(error) {
                     console.error(error);
