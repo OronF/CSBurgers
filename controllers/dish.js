@@ -20,8 +20,9 @@ const getAllDishes = async (req,res) => {
 
         console.log(req.query.kosher);
 
-        if(req.query.priceValidation == true && req.query.kosher == true && req.query.sortIsValid == true) // price, kosher, sort
+        if(req.query.price && req.query.kosher && req.query.sort) // price, kosher, sort
         {
+
                 console.log("1");
 
                 if(req.query.sort === "מהמחיר הגבוה לנמוך")
@@ -35,7 +36,7 @@ const getAllDishes = async (req,res) => {
 
         }
 
-        if(req.query.priceValidation == false && req.query.kosher == true && req.query.sortIsValid == true) // kosher, sort
+        if(!req.query.price && req.query.kosher && req.query.sort) // kosher, sort
         {
             console.log("2");
 
@@ -50,7 +51,7 @@ const getAllDishes = async (req,res) => {
         }
 
 
-        if(req.query.priceValidation == true && req.query.kosher == true && req.query.sortIsValid == false) // kosher, price
+        if(req.query.price && req.query.kosher && !req.query.sort) // kosher, price
         {
             console.log("3");
 
@@ -58,7 +59,7 @@ const getAllDishes = async (req,res) => {
             dishes = await DishService.isKosher(req.query.categoryId, dishes);
         }
 
-        if(req.query.priceValidation == false && req.query.kosher == true && req.query.sortIsValid == true) // price, sort
+        if(!req.query.price && req.query.kosher && req.query.sort) // price, sort
         {
             console.log("4");
 
@@ -73,7 +74,7 @@ const getAllDishes = async (req,res) => {
         }
 
 
-        if(req.query.priceValidation == false && req.query.kosher == false && req.query.sortIsValid == true) // sort
+        if(!req.query.price && !req.query.kosher && req.query.sort) // sort
         {
             console.log("5");
 
@@ -90,14 +91,14 @@ const getAllDishes = async (req,res) => {
             console.log(dishes);
         }
 
-        if(req.query.priceValidation == false && req.query.kosher == true && req.query.sortIsValid == false) // kosher
+        if(!req.query.price && req.query.kosher && !req.query.sort) // kosher
         {
             console.log("6");
 
             dishes = await DishService.isKosher(req.query.categoryId, dishes);
         }
 
-        if(req.query.priceValidation == true && req.query.kosher == false && req.query.sortIsValid == false) // price
+        if(req.query.price && !req.query.kosher && !req.query.sort) // price
         {
             console.log("7");
 

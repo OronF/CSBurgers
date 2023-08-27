@@ -203,8 +203,6 @@ const sortCheck = $(".sortby-check");
 const priceInp = $("#priceInp");
 const sortSelect = $("#sort-select");
 
-kosherCheck
-
 kosherCheck.on('change', filterDishes);
 maxPriceCheck.on('change', filterDishes);
 sortCheck.on('change', filterDishes);
