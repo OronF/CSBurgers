@@ -135,10 +135,7 @@
                         </div>
                         <div class="modal-footer">
                           <button class="btn btn-primary" data-bs-target="#PayingSelectModal" data-bs-toggle="modal" data-bs-dismiss="modal">בחזרה לבחירת אמצעי תשלום</button>
-                          <button class="btn btn-primary" data-bs-target="#FinishPayModal" data-bs-toggle="modal" data-bs-dismiss="modal" onclick="">אישור הקנייה</button>
-                          <img id="BurgerPicture" width = '0' height = '0' src="http://localhost:3000/images/pagesImgs/burger.png">
-                          <canvas id="CanvasCreditCard" width="1650" height="900">
-                          </canvas>
+                          <button class="btn btn-primary" data-bs-target="#FinishPayModal" data-bs-toggle="modal" data-bs-dismiss="modal" onclick="canvasApp()">אישור הקנייה</button>
                         </div>
                       </div>
                     </div>
@@ -153,10 +150,7 @@
                         </div>
                         <div class="modal-footer">
                           <button class="btn btn-primary" data-bs-target="#PayingSelectModal" data-bs-toggle="modal" data-bs-dismiss="modal">בחזרה לבחירת אמצעי תשלום</button>
-                          <button class="btn btn-primary" data-bs-target="#FinishPayModal" id="Confirmation-of-purchase" data-bs-toggle="modal" data-bs-dismiss="modal">אישור הקנייה</button>
-                          <img id="BurgerPicture" width = '0' height = '0' src="http://localhost:3000/images/pagesImgs/burger.png">
-                          <canvas id="CanvasCash" width="1650" height="900">
-                          </canvas>
+                          <button class="btn btn-primary" data-bs-target="#FinishPayModal" id="Confirmation-of-purchase" data-bs-toggle="modal" data-bs-dismiss="modal" onclick="canvasApp()">אישור הקנייה</button>
                         </div>
                         <span>
                         </span>
@@ -169,6 +163,9 @@
                       <div class="modal-content">
                         <div class="modal-header">
                           <h5 class="modal-title" id="FinishPayModalLabel">הקנייה אושרה </h5>
+                          <img id="BurgerPicture" width = '0' height = '0' src="http://localhost:3000/images/pagesImgs/burger.png">
+                          <canvas id="Canvas" width="490" height="700">
+                          </canvas>
                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">

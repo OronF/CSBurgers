@@ -1,11 +1,13 @@
-var Height = 10;
-let i= 0;
-  function canvasApp(Height) {
+
+function canvasApp(Height) {
+    var Height = 10;
+    let i= 0;
     function  drawScreen () {
+    context.fillStyle = "white"
     context.fillRect(0, 0, theCanvas.width, theCanvas.height);
 
     Height += speed;
-    for(let x = 0; x < 1700; x += 50)
+    for(let x = 0; x < 590; x += 50)
     {
       context.beginPath();
       context.drawImage(img,x,Height,50,50);
@@ -15,14 +17,14 @@ let i= 0;
   }
 
 
-  theCanvas = document.getElementById('canvasOne');
+  theCanvas = document.getElementById('Canvas');
   context = theCanvas.getContext('2d');
   img = document.getElementById("BurgerPicture");
 
   var speed = 3;
 
   function gameLoop() {
-      if(Height > 900)
+      if(Height > 700)
       {
          clearTimeout(timer)
          return;
