@@ -26,14 +26,15 @@ const getAllDishes = async (req,res) => {
 
                 console.log("1");
 
-                if(req.query.sort == "מהמחיר הגבוה לנמוך")
-                {
-                    dishes = await DishService.LowHighSort();
-                }
-
-                if(req.query.sort == "מהמחיר הנמוך לגבוה") 
+                if(req.query.sort === "מהמחיר הגבוה לנמוך")
                 {
                     dishes = await DishService.HighLowSort();
+
+                }
+
+                if(req.query.sort === "מהמחיר הנמוך לגבוה") 
+                {
+                    dishes = await DishService.LowHighSort();
                 }
 
             dishes = await DishService.maxPrice(dishes, req.query.price, req.query.categoryId);
@@ -53,12 +54,16 @@ const getAllDishes = async (req,res) => {
         {
             console.log("4");
 
-            if(req.query.sort === "מהמחיר הנמוך לגבוה")
-                dishes = await DishService.LowHighSort();
-
-
             if(req.query.sort === "מהמחיר הגבוה לנמוך")
+            {
                 dishes = await DishService.HighLowSort();
+
+            }
+
+            if(req.query.sort === "מהמחיר הנמוך לגבוה") 
+            {
+                dishes = await DishService.LowHighSort();
+            }
 
             dishes = await DishService.maxPrice(dishes, req.query.price, req.query.categoryId);
         }
@@ -67,12 +72,16 @@ const getAllDishes = async (req,res) => {
         {
             console.log("4");
 
-            if(req.query.sort === "מהמחיר הנמוך לגבוה")
-                dishes = await DishService.LowHighSort();
-
-
             if(req.query.sort === "מהמחיר הגבוה לנמוך")
+            {
                 dishes = await DishService.HighLowSort();
+
+            }
+
+            if(req.query.sort === "מהמחיר הנמוך לגבוה") 
+            {
+                dishes = await DishService.LowHighSort();
+            }
 
                 dishes = await DishService.isKosher(req.query.categoryId, dishes);
         }
@@ -83,21 +92,16 @@ const getAllDishes = async (req,res) => {
             console.log("5");
 
 
-            console.log(dishes);
-            if(req.query.sort === "מהמחיר הנמוך לגבוה")
-            {
-                console.log("in1");
+             if(req.query.sort === "מהמחיר הגבוה לנמוך")
+                {
+                    dishes = await DishService.HighLowSort();
 
-                dishes = await DishService.LowHighSort();
-            }
+                }
 
-
-            if(req.query.sort === "מהמחיר הגבוה לנמוך")
-            {
-                console.log("in2");
-
-                dishes = await DishService.HighLowSort();
-            }
+                if(req.query.sort === "מהמחיר הנמוך לגבוה") 
+                {
+                    dishes = await DishService.LowHighSort();
+                }
 
             console.log(dishes);
         }

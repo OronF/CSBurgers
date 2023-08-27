@@ -91,6 +91,8 @@ $(document).ready(async function() {
             const categorytype = btn.attr('data-category-categorytype');
             categoryIdForFilter = id;
 
+            filterDishes();
+
             if (categorytype === "meal") {
                 if (mealsSection.hasClass('hide')) {
                     removeHideOnElement(mealsSection);
@@ -209,6 +211,8 @@ const sortSelect = $("#sort-select");
 kosherCheck.on('change', filterDishes);
 maxPriceCheck.on('change', filterDishes);
 sortCheck.on('change', filterDishes);
+sortSelect.on('change', filterDishes);
+priceInp.keyup(filterDishes);
 
     function filterDishes()
     {
@@ -238,6 +242,29 @@ sortCheck.on('change', filterDishes);
                     console.error("Error finding data:", error);
                 }
             });
+    }
+    else
+    {
+        $.ajax({
+        url: "/api/dish",
+        method: "GET",
+        dataType: "json",
+        contentType: 'application/json',
+        data: {
+            categoryId: categoryIdForFilter,
+        },
+        success: function(dishes)
+        {
+            dishesList.empty();
+            console.log(dishes);
+            dishes.forEach(dish => {
+                appendDishesLi(dish);
+            });
+        },
+        error: function(error) {
+            console.error("Error finding data:", error);
+        }
+    });
     }
     }
 });
