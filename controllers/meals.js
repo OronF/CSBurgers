@@ -1,6 +1,6 @@
 const MealService = require('../services/meals');
 
-const getAllMeals = async (req,res) => {
+const getAllMeals = async (req, res) => {
     try {
         let meals;
 
@@ -21,9 +21,28 @@ const getAllMeals = async (req,res) => {
     }
 }
 
-const createMeal = async (req,res) => {
+const createMeal = async (req, res) => {
     try {
-        const newMeal = await MealService.create(req.body.name, req.body.price, req.body.dishes, req.body.categoryId, req.body.picture, req.body.description, req.body.kosher);
+        const tmp = {
+            name: req.body.name,
+            price: req.body.price,
+            dishes: req.body.dishes,
+            categoryId: req.body.categoryId,
+            picture: req.body.picture,
+            description: req.body.description,
+            kosher: req.body.kosher
+        }
+
+        if (req.body.webServiceId) {
+            tmp.webServiceId = req.body.webServiceId;
+        }
+
+        const newMeal = await MealService.create(tmp);
+
+        if (!newMeal) {
+            throw new Error("couldn't create new meal");
+        }
+
         res.json(newMeal);
     }
     
@@ -35,7 +54,7 @@ const createMeal = async (req,res) => {
     }
 }
 
-const updateMeal = async (req,res) => {
+const updateMeal = async (req, res) => {
     if (!req.body.name) {
         res.status(400).json({message:'The new name to the meal is required'});
     }
@@ -65,7 +84,7 @@ const updateMeal = async (req,res) => {
     }
 
     const newMeal = {
-        id: req.body.id,
+        id: req.params.id,
         name: req.body.name,
         price: req.body.price,
         dishes: req.body.dishes,
@@ -75,7 +94,12 @@ const updateMeal = async (req,res) => {
         kosher: req.body.kosher
     }
 
+    if (req.body.webServiceId) {
+        newMeal.webServiceId = req.body.webServiceId;
+    }
+
     const meal = await MealService.update(newMeal);
+    
     if (!meal) {
         return res.status(404).json({errors:['Meal not found']});
     }
@@ -84,7 +108,7 @@ const updateMeal = async (req,res) => {
 };
 
 
-const deleteMeal = async (req,res) => {
+const deleteMeal = async (req, res) => {
     const meal = await MealService.delete(req.params.id);
 
     if (!meal) {
@@ -94,7 +118,7 @@ const deleteMeal = async (req,res) => {
     res.send();
 }
 
-const searchMeal = async (req,res) => {
+const searchMeal = async (req, res) => {
     const meal = await MealService.search(req.params.id);
 
     if (!meal) {

@@ -1,11 +1,15 @@
 const branchesService = require('../services/branches');
 
-const getAllBranches = async (req,res) => {
+const getAllBranches = async (req, res) => {
     try {
-        const Branches = await branchesService.getAll();
+        let Branches = await branchesService.getAll();
 
         if(!Branches) {
             throw new Error('Non existing branches');
+        }
+
+        if (req.query.area) {
+            Branches = await branchesService.searchByArea(req.query.area);
         }
 
         res.json(Branches);
@@ -19,19 +23,25 @@ const getAllBranches = async (req,res) => {
     }
 }
 
-const createBranch = async (req,res) => {
+const createBranch = async (req, res) => {
     try {
         const tmp = {
             name: req.body.name,
             address: req.body.address,
             phoneNumber: req.body.phoneNumber,
             activityTime: req.body.activityTime,
-            manger: req.body.manger,
+            manager: req.body.manager,
             coordinateX: req.body.coordinateX,
-            coordinateY: req.body,coordinateY
+            coordinateY: req.body.coordinateY,
+            area: req.body.area
         }
 
         const newBranch = await branchesService.create(tmp);
+
+        if (!newBranch) {
+            throw new Error("can't create a new branch");
+        }
+
         res.json(newBranch);
     }
 
@@ -43,7 +53,7 @@ const createBranch = async (req,res) => {
     }
 }
 
-const updateBranch = async (req,res) => {
+const updateBranch = async (req, res) => {
     if (!req.body.name) {
         res.status(400).json({message:'The new name to the branch is required'});
     }
@@ -60,7 +70,7 @@ const updateBranch = async (req,res) => {
         res.status(400).json({message:'The new activityTime to the branch is required'});
     }
 
-    if (!req.body.manger) {
+    if (!req.body.manager) {
         res.status(400).json({message:'The new manger to the branch is required'});
     }
     
@@ -72,15 +82,20 @@ const updateBranch = async (req,res) => {
         res.status(400).json({message:'The new coordinateY to the branch is required'});
     }
 
+    if (!req.body.area) {
+        res.status(400).json({message:'The new area to the branch is required'});
+    }
+
     const newBranch = {
-        id: req.body.id,
+        id: req.params.id,
         name: req.body.name,
         address: req.body.address,
         phoneNumber: req.body.phoneNumber,
         activityTime: req.body.activityTime,
-        manger: req.body.manger,
+        manager: req.body.manager,
         coordinateX: req.body.coordinateX,
-        coordinateY: req.body.coordinateY
+        coordinateY: req.body.coordinateY,
+        area: req.body.area
     }
 
     const branch = await branchesService.update(newBranch);
@@ -92,7 +107,7 @@ const updateBranch = async (req,res) => {
 };
 
 
-const deleteBranch = async (req,res) => {
+const deleteBranch = async (req, res) => {
     const branch = await branchesService.delete(req.params.id);
     
     if (!branch) {
@@ -102,7 +117,7 @@ const deleteBranch = async (req,res) => {
     res.send();
 }
 
-const searchBranch = async (req,res) => {
+const searchBranch = async (req, res) => {
     const branch = await branchesService.search(req.params.id);
     
     if (!branch) {

@@ -36,6 +36,10 @@ const MealSchema = new mongoose.Schema({
     {
         type: Boolean,
         required: true
+    },
+  
+    webServiceId: {
+        type: String
     }
 });
 

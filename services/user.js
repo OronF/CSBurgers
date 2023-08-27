@@ -59,10 +59,32 @@ const updateUser = async (newUser) => {
     return user;
 }
 
+const searchForLogIn = async (fname, password, phoneNumber) => {
+    if (!fname) {
+        return null;
+    }
+
+    if (!password) {
+        return null;
+    }
+
+    if (!phoneNumber) {
+        return null;
+    }
+
+    return await User.findOne({fname, password, phoneNumber});
+}
+
+const getAllManagers = async (is_Manager) => {
+    return await User.find({is_Manager});
+}
+
 module.exports = {
     getAll,
     create: createUser,
     delete: deleteUser,
     update: updateUser,
-    search: searchUser
+    search: searchUser,
+    searchForLogIn,
+    getAllManagers
 }

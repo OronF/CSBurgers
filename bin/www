@@ -7,6 +7,7 @@
 var app = require('../app');
 var debug = require('debug')('hamburger-restaurant-app-development-project:server');
 var http = require('http');
+var { Server } = require('socket.io');
 
 /**
  * Get port from environment and store in Express.
@@ -19,8 +20,19 @@ app.set('port', port);
  * Create HTTP server.
  */
 
+// server side code (contact us page)
 var server = http.createServer(app);
 
+const io = new Server(server);
+const chatHistory = [];
+
+io.on('connection', (socket) => {
+  socket.emit('chatHistory', chatHistory);
+  socket.on('message', (data) => {
+    chatHistory.push(data);
+    socket.broadcast.emit('message', data);
+  });
+});
 /**
  * Listen on provided port, on all network interfaces.
  */

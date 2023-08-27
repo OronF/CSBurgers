@@ -13,6 +13,10 @@ const createDish = async (name, price, categoryId, picture, description, kosher)
         description: description,
         kosher: kosher
     });
+
+    if (newDish.webServiceId) {
+        dish.webServiceId = newDish.webServiceId;
+    }
     
     return await dish.save();
 }
@@ -46,6 +50,10 @@ const updateDish = async (newDish) => {
     dish.picture = newDish.picture;
     dish.description = newDish.description;
     dish.kosher = newDish.kosher;
+
+    if (newDish.webServiceId) {
+        dish.webServiceId = newDish.webServiceId;
+    }
 
     await dish.save();
     return dish;

@@ -1,6 +1,6 @@
 const DishService = require('../services/dish');
 
-const getAllDishes = async (req,res) => {
+const getAllDishes = async (req, res) => {
     try {
         let dishes;
 
@@ -131,9 +131,28 @@ const getAllDishes = async (req,res) => {
     }
 }
 
-const createDish = async (req,res) => {
+const createDish = async (req, res) => {
     try {
-        const newDish = await DishService.create(req.body.name, req.body.price, req.body.categoryId, req.body.picture, req.body.description, req.body.kosher);
+
+        const tmp = {
+            name: req.body.name,
+            price: req.body.price,
+            categoryId: req.body.categoryId,
+            picture: req.body.picture,
+            description: req.body.description,
+            kosher: req.body.kosher
+        }
+
+        if (req.body.webServiceId) {
+            tmp.webServiceId = req.body.webServiceId;
+        }
+        
+        const newDish = await DishService.create(tmp);
+
+        if (!newDish) {
+            throw new Error("couldn't create new dish");
+        }
+
         res.json(newDish);
     }
     
@@ -145,7 +164,7 @@ const createDish = async (req,res) => {
     }
 }
 
-const updateDish = async (req,res) => {
+const updateDish = async (req, res) => {
     if (!req.body.name) {
         res.status(400).json({message:'The new name to the dish is required'});
     }
@@ -171,7 +190,7 @@ const updateDish = async (req,res) => {
     }
 
     const newDish = {
-        id: req.body.id,
+        id: req.params.id,
         name: req.body.name,
         price: req.body.price,
         categoryId: req.body.categoryId,
@@ -180,7 +199,12 @@ const updateDish = async (req,res) => {
         kosher: req.body.kosher
     }
 
+    if (req.body.webServiceId) {
+        newDish.webServiceId = req.body.webServiceId;
+    }
+
     const dish = await DishService.update(newDish);
+    
     if (!dish) {
         return res.status(404).json({errors:['Dish not found']});
     }
@@ -189,7 +213,7 @@ const updateDish = async (req,res) => {
 };
 
 
-const deleteDish = async (req,res) => {
+const deleteDish = async (req, res) => {
     const dish = await DishService.delete(req.params.id);
     
     if (!dish) {
@@ -199,7 +223,7 @@ const deleteDish = async (req,res) => {
     res.send();
 }
 
-const searchDish = async (req,res) => {
+const searchDish = async (req, res) => {
     const dish = await DishService.search(req.params.id);
     
     if (!dish) {
