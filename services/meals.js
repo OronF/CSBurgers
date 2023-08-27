@@ -4,14 +4,15 @@ const getAll = async() => {
     return await Meal.find({});
 }
 
-const createMeal = async (newMeal) => {
+const createMeal = async (name, price, dishes, categoryId, picture, description, kosher) => {
     const meal = new Meal({
-        name: newMeal.name,
-        price: newMeal.price,
-        dishes: newMeal.dishes,
-        categoryId: newMeal.categoryId,
-        picture: newMeal.picture,
-        description: newMeal.description
+        name: name,
+        price: price,
+        dishes: dishes,
+        categoryId: categoryId,
+        picture: picture,
+        description: description,
+        kosher: kosher
     });
 
     if (newMeal.webServiceId) {
@@ -50,6 +51,7 @@ const updateMeal = async (newMeal) => {
     meal.categoryId = newMeal.categoryId;
     meal.picture = newMeal.picture;
     meal.description = newMeal.description;
+    meal.koser = newMeal.kosher;
 
     if (newMeal.webServiceId) {
         meal.webServiceId = newMeal.webServiceId;

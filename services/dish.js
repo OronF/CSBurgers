@@ -4,13 +4,14 @@ const getAll = async() => {
     return await Dish.find({});
 }
 
-const createDish = async (newDish) => {
+const createDish = async (name, price, categoryId, picture, description, kosher) => {
     const dish = new Dish({
-        name: newDish.name,
-        price: newDish.price,
-        categoryId: newDish.categoryId,
-        picture: newDish.picture,
-        description: newDish.description
+        name: name,
+        price: price,
+        categoryId: categoryId,
+        picture: picture,
+        description: description,
+        kosher: kosher
     });
 
     if (newDish.webServiceId) {
@@ -48,6 +49,7 @@ const updateDish = async (newDish) => {
     dish.categoryId = newDish.categoryId;
     dish.picture = newDish.picture;
     dish.description = newDish.description;
+    dish.kosher = newDish.kosher;
 
     if (newDish.webServiceId) {
         dish.webServiceId = newDish.webServiceId;
@@ -61,11 +63,49 @@ const getByCategory = async (categoryId) => {
     return await Dish.find({categoryId});
 }
 
+const isKosher = async (categoryId, dishes) =>
+{
+    console.log(categoryId);
+    return dishes.filter((dish) => {
+        return dish.kosher && dish.categoryId == categoryId;
+    });
+}
+
+const maxPrice = async (dishes, priceInp, categoryId) =>
+{
+    const parsedPrice = parseInt(priceInp);
+    console.log(categoryId);
+
+    return dishes.filter((dish) => {
+        return dish.price <= parsedPrice && dish.categoryId == categoryId;;
+    });
+}
+
+const HighLowSort = async () =>
+{
+    return await Dish.find({}).sort({
+        price: -1
+    });
+}
+
+const LowHighSort = async () =>
+{
+    console.log("hi");
+    return await Dish.find({}).sort({
+        price: 1
+    });
+}
+
+
 module.exports = {
     getAll,
     create: createDish,
     delete: deleteDish,
     update: updateDish,
     search: searchDish,
-    getByCategory
+    getByCategory,
+    isKosher,
+    maxPrice,
+    HighLowSort,
+    LowHighSort
 }

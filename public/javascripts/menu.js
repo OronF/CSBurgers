@@ -99,6 +99,8 @@ $(document).ready(async function() {
         });
     }
 
+    let categoryIdForFilter;
+
     const appendCategoryLi = (category) => {
         const newElement = $(`<li id="${category._id}" class="li-category" type="button">
             <a class="nameOfCategory" id="${category._id}" data-category-id="${category._id}" data-category-categorytype="${category.categorytype}" href="/menu#${category.name}">${category.name}</a>
@@ -108,6 +110,9 @@ $(document).ready(async function() {
             const btn = $(this);
             const id = btn.attr('data-category-id');
             const categorytype = btn.attr('data-category-categorytype');
+            categoryIdForFilter = id;
+
+            filterDishes();
 
             if (categorytype === "meal") {
                 if (mealsSection.hasClass('hide')) {
@@ -217,4 +222,78 @@ $(document).ready(async function() {
             console.log(error);
         }
     });
+
+const kosherCheck = $("#kosher-check");
+const maxPriceCheck = $("#maxprice-check");
+const sortCheck = $(".sortby-check");
+const priceInp = $("#priceInp");
+const sortSelect = $("#sort-select");
+
+kosherCheck.on('change', filterDishes);
+maxPriceCheck.on('change', filterDishes);
+sortCheck.on('change', filterDishes);
+sortSelect.on('change', filterDishes);
+priceInp.keyup(filterDishes);
+
+    function filterDishes()
+    {
+        if((sortCheck.is(':checked') == true && (sortSelect.val() === "מהמחיר הנמוך לגבוה" || sortSelect.val() === "מהמחיר הגבוה לנמוך")) || kosherCheck.is(":checked") == true ||  (maxPriceCheck.is(":checked") == true && priceInp.val() !== "")){
+                    console.log("in");
+                console.log(kosherCheck.is("checked"));
+                $.ajax({
+                url: "/api/dish",
+                method: "GET",
+                dataType: "json",
+                contentType: 'application/json',
+                data: {
+                    categoryId: categoryIdForFilter,
+                    kosher: kosherCheck.is(":checked"),
+                    sort: sortSelect.val(),
+                    price: priceInp.val()
+                },
+                success: function(dishes)
+                {
+                    dishesList.empty();
+                    console.log(dishes);
+                    dishes.forEach(dish => {
+                        appendDishesLi(dish);
+                    });
+                },
+                error: function(error) {
+                    console.error("Error finding data:", error);
+                }
+            });
+    }
+    else
+    {
+        $.ajax({
+        url: "/api/dish",
+        method: "GET",
+        dataType: "json",
+        contentType: 'application/json',
+        data: {
+            categoryId: categoryIdForFilter,
+        },
+        success: function(dishes)
+        {
+            dishesList.empty();
+            console.log(dishes);
+            dishes.forEach(dish => {
+                appendDishesLi(dish);
+            });
+        },
+        error: function(error) {
+            console.error("Error finding data:", error);
+        }
+    });
+    }
+    }
 });
+
+
+ function restrictInputToNumbers(event) {
+    const input = event.target;
+    const inputValue = input.value;
+    const sanitizedValue = inputValue.replace(/[^\d]/g, ''); // Remove non-digit characters
+    input.value = sanitizedValue;
+  }

@@ -29,7 +29,8 @@ const createMeal = async (req, res) => {
             dishes: req.body.dishes,
             categoryId: req.body.categoryId,
             picture: req.body.picture,
-            description: req.body.description
+            description: req.body.description,
+            kosher: req.body.kosher
         }
 
         if (req.body.webServiceId) {
@@ -78,6 +79,10 @@ const updateMeal = async (req, res) => {
         res.status(400).json({message:'The new description to the meal is required'});
     }
 
+    if (!req.body.kosher) {
+        res.status(400).json({message:'The new kosher to the meal is required'});
+    }
+
     const newMeal = {
         id: req.params.id,
         name: req.body.name,
@@ -85,7 +90,8 @@ const updateMeal = async (req, res) => {
         dishes: req.body.dishes,
         categoryId: req.body.categoryId,
         picture: req.body.picture,
-        description: req.body.description
+        description: req.body.description, 
+        kosher: req.body.kosher
     }
 
     if (req.body.webServiceId) {

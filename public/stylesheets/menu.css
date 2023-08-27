@@ -119,6 +119,25 @@ body {
 {
     font-size: 1vw;
 }
+
+.filters
+{
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;   
+}
+
+.maxPriceInp
+{
+    width: 4vw;
+    outline:none;
+    height: 3.45vh;
+}
+
+.form-check-input
+{
+    transition: all 0.4s;
+}
+
 .btn-back {
     font-size: 1.5vw;
     position: fixed;
@@ -129,5 +148,4 @@ body {
     font-family: 'Lato', sans-serif;
     font-family: 'Noto Sans Hebrew', sans-serif;
     transition: all 0.4s;
-
 }
