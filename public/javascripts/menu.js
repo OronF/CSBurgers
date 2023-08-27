@@ -203,6 +203,8 @@ const sortCheck = $(".sortby-check");
 const priceInp = $("#priceInp");
 const sortSelect = $("#sort-select");
 
+kosherCheck
+
 kosherCheck.on('change', filterDishes);
 maxPriceCheck.on('change', filterDishes);
 sortCheck.on('change', filterDishes);
@@ -211,7 +213,7 @@ sortCheck.on('change', filterDishes);
     {
         if((sortCheck.is(':checked') == true && (sortSelect.val() === "מהמחיר הנמוך לגבוה" || sortSelect.val() === "מהמחיר הגבוה לנמוך")) || kosherCheck.is(":checked") == true ||  (maxPriceCheck.is(":checked") == true && priceInp.val() !== "")){
                     console.log("in");
-
+                console.log(kosherCheck.is("checked"));
                 $.ajax({
                 url: "/api/dish",
                 method: "GET",
