@@ -66,6 +66,14 @@ function admin (req, res, next) {
     }
   }
 
+  else if (req.url.indexOf('/manager/posttopage') >= 0) { 
+    if(req.cookies.admin) {
+      next();
+    } else {
+      res.render('error');
+    }
+  }
+
   else {
     next();
   }
