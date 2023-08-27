@@ -58,14 +58,21 @@ $(document).ready(function() {
         if (passwordApproveVal !== passwordVal) {
             return;
         }
-        /*$.ajax({
+        $.ajax({
             url: "/api/user",
-            method: "POST",
-            success: function(response)
-                array.forEach(element => {
-                    
+            method: "GET",
+            success: function(data)
+            {
+                data.forEach(user => {
+                    if(user.phoneNumberVal === phoneNumberVal)
+                        console.log("phoneNumber alreay used");
+
                 });
-        })*/
+            },
+            error: function(error) {
+                console.error("Error finding data",error);
+            }
+        })
         $.ajax({
             url:"/api/user",
             method: "POST",
