@@ -78,6 +78,8 @@ $(document).ready(async function() {
         });
     }
 
+    let categoryIdForFilter;
+
     const appendCategoryLi = (category) => {
         const newElement = $(`<li id="${category._id}" class="li-category" type="button">
             <a class="nameOfCategory" data-category-id="${category._id}" data-category-categorytype="${category.categorytype}" href="/menu#${category.name}">${category.name}</a>
@@ -87,6 +89,7 @@ $(document).ready(async function() {
             const btn = $(this);
             const id = btn.attr('data-category-id');
             const categorytype = btn.attr('data-category-categorytype');
+            categoryIdForFilter = id;
 
             if (categorytype === "meal") {
                 if (mealsSection.hasClass('hide')) {
@@ -218,11 +221,10 @@ sortCheck.on('change', filterDishes);
                 dataType: "json",
                 contentType: 'application/json',
                 data: {
+                    categoryId: categoryIdForFilter,
                     kosher: kosherCheck.is(":checked"),
                     sort: sortSelect.val(),
-                    price: priceInp.val(),
-                    priceValidation:  maxPriceCheck.is(":checked"),
-                    sortIsValid: sortCheck.is(':checked')
+                    price: priceInp.val()
                 },
                 success: function(dishes)
                 {

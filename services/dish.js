@@ -57,17 +57,19 @@ const getByCategory = async (categoryId) => {
 
 const isKosher = async (categoryId, dishes) =>
 {
+    console.log(categoryId);
     return dishes.filter((dish) => {
-        return dish.kosher;
+        return dish.kosher && dish.categoryId == categoryId;
     });
 }
 
-const maxPrice = async (dishes, priceInp) =>
+const maxPrice = async (dishes, priceInp, categoryId) =>
 {
     const parsedPrice = parseInt(priceInp);
+    console.log(categoryId);
 
     return dishes.filter((dish) => {
-        return dish.price <= parsedPrice;
+        return dish.price <= parsedPrice && dish.categoryId == categoryId;;
     });
 }
 

@@ -2,14 +2,15 @@ const DishService = require('../services/dish');
 
 const getAllDishes = async (req,res) => {
     try {
-        console.log("in1");
-
         let dishes;
 
         if (req.query.categoryId) {
             dishes = await DishService.getByCategory(req.query.categoryId);
-            res.json(dishes);
-            return;
+            
+            if (!req.query.price && !req.query.kosher && !req.query.sort) {
+                res.json(dishes);
+                return;
+            }
         } 
             
         dishes = await DishService.getAll();
@@ -25,41 +26,30 @@ const getAllDishes = async (req,res) => {
 
                 console.log("1");
 
-                if(req.query.sort === "מהמחיר הגבוה לנמוך")
+                if(req.query.sort == "מהמחיר הגבוה לנמוך")
+                {
                     dishes = await DishService.LowHighSort();
+                }
 
-                if(req.query.sort === "מהמחיר הנמוך לגבוה") 
+                if(req.query.sort == "מהמחיר הנמוך לגבוה") 
+                {
                     dishes = await DishService.HighLowSort();
+                }
 
-            dishes = await DishService.maxPrice(dishes, req.query.price);
+            dishes = await DishService.maxPrice(dishes, req.query.price, req.query.categoryId);
             dishes = await DishService.isKosher(req.query.categoryId, dishes);
 
         }
-
-        if(!req.query.price && req.query.kosher && req.query.sort) // kosher, sort
-        {
-            console.log("2");
-
-            if(req.query.sort === "מהמחיר הנמוך לגבוה")
-                dishes = await DishService.LowHighSort();
-
-
-            if(req.query.sort === "מהמחיר הגבוה לנמוך")
-                dishes = await DishService.HighLowSort();
-
-            dishes = await DishService.isKosher(req.query.categoryId, dishes);
-        }
-
 
         if(req.query.price && req.query.kosher && !req.query.sort) // kosher, price
         {
             console.log("3");
 
-            dishes = await DishService.maxPrice(dishes, req.query.price);
+            dishes = await DishService.maxPrice(dishes, req.query.price, req.query.categoryId);
             dishes = await DishService.isKosher(req.query.categoryId, dishes);
         }
 
-        if(!req.query.price && req.query.kosher && req.query.sort) // price, sort
+        if(req.query.price && !req.query.kosher && req.query.sort) // price, sort
         {
             console.log("4");
 
@@ -70,7 +60,21 @@ const getAllDishes = async (req,res) => {
             if(req.query.sort === "מהמחיר הגבוה לנמוך")
                 dishes = await DishService.HighLowSort();
 
-            dishes = await DishService.maxPrice(dishes, req.query.price);
+            dishes = await DishService.maxPrice(dishes, req.query.price, req.query.categoryId);
+        }
+
+        if(!req.query.price && req.query.kosher && req.query.sort) // kosher, sort
+        {
+            console.log("4");
+
+            if(req.query.sort === "מהמחיר הנמוך לגבוה")
+                dishes = await DishService.LowHighSort();
+
+
+            if(req.query.sort === "מהמחיר הגבוה לנמוך")
+                dishes = await DishService.HighLowSort();
+
+                dishes = await DishService.isKosher(req.query.categoryId, dishes);
         }
 
 
@@ -80,13 +84,20 @@ const getAllDishes = async (req,res) => {
 
 
             console.log(dishes);
-            console.log("in3");
             if(req.query.sort === "מהמחיר הנמוך לגבוה")
+            {
+                console.log("in1");
+
                 dishes = await DishService.LowHighSort();
+            }
 
 
             if(req.query.sort === "מהמחיר הגבוה לנמוך")
+            {
+                console.log("in2");
+
                 dishes = await DishService.HighLowSort();
+            }
 
             console.log(dishes);
         }
@@ -102,7 +113,7 @@ const getAllDishes = async (req,res) => {
         {
             console.log("7");
 
-            dishes = await DishService.maxPrice(dishes, req.query.price);
+            dishes = await DishService.maxPrice(dishes, req.query.price, req.query.categoryId);
         }
 
         res.json(dishes);
