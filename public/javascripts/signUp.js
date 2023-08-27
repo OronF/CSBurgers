@@ -93,8 +93,6 @@ $(document).ready(function() {
             if(passwordApproveVal !== passwordVal)
             approvePasswordError.html("שדה אישור הסיסמה אינו זהה לסיסמה")
 
-
-
             $.ajax({
                 url:"/api/user",
                 method: "POST",
