@@ -104,8 +104,14 @@
 .link{
     color:black;
 }
+
 .input
 {
     direction: rtl;
     margin-bottom: 0.5vw;
+}
+
+.form-control
+{
+    text-align: right;
 }

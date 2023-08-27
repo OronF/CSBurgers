@@ -40,6 +40,21 @@ function nameValidation(name, error)
     
 }
 
+const approve = $('#approveBtn');
+const fname = document.getElementById('fname');
+const lname = document.getElementById('lname');
+const phoneNumber = document.getElementById('phone-number');
+const passowrdInput = document.getElementById('passowrdInput');
+const confirmPassowrdInput = document.getElementById('confirmPassowrdInput');
+
+fname,lname,phoneNumber,passowrdInput,confirmPassowrdInput.addEventListener("keyup", e => {
+    e.preventDefault();
+    if (e.key === "Enter") {
+        approve.click();
+    }
+  });
+
+
 $(document).ready(function() {
 
     const approve = $('#approveBtn');
@@ -93,8 +108,6 @@ $(document).ready(function() {
             if(passwordApproveVal !== passwordVal)
             approvePasswordError.html("שדה אישור הסיסמה אינו זהה לסיסמה")
 
-
-
             $.ajax({
                 url:"/api/user",
                 method: "POST",
@@ -115,6 +128,7 @@ $(document).ready(function() {
                     // Read the 'signUpCookie' value
                     const phoneNumberCookie = getCookie('signUpCookie');
                     console.log('Phone number from cookie:', phoneNumberCookie);
+                    $('#exampleModal').modal('show');
                 },
                 error: function(error) {
                     console.error("Error saving data:", error);

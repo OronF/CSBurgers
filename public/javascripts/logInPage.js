@@ -33,13 +33,15 @@ $(document).ready(function() {
 
     btnSubmit.on('click', function() {
         const fnameTxt = $('#fname');
+        const phoneNumberTxt = $('#phone-number')
         const passwordTxt = $('#form3Example4cg');
         const Error = $('#error');
         
         const fnameVal = fnameTxt.val();
+        const phoneNumberVal = phoneNumberTxt.val();
         const passwordVal = passwordTxt.val();
 
-        if (!fnameVal && !passwordVal) {
+        if (!fnameVal || !passwordVal || !phoneNumberVal) {
             Error.html('לא הזנת את כל כל הנתונים');
             if (Error.hasClass('hide')) {
                 Error.removeClass('hide');
@@ -52,6 +54,7 @@ $(document).ready(function() {
                 contentType: 'application/json',
                 data: {
                     fname: fnameVal,
+                    phoneNumber: phoneNumberVal,
                     password: passwordVal
                 },
                 success: async function(response) {
@@ -64,7 +67,7 @@ $(document).ready(function() {
                 },
                 error: function(error) {
                     console.error("Error saving data:", error);
-                    Error.html('יש לך טעות בשם או בסיסמה אנא תקן כדי להתחבר');
+                    Error.html('יש לך טעות באחד מפרטיך אנא תקן כדי להתחבר');
                     if (Error.hasClass('hide')) {
                         Error.removeClass('hide');
                     }
