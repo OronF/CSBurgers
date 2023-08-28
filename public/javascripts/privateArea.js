@@ -303,7 +303,6 @@ $(document).ready(async function() {
 
     function filterOrdersOfUser () {
         if (numOfProductVal || priceSelectVal || frameworkVal) {
-            console.log('fgfhgh');
             $.ajax({
                 url: "/api/order",
                 method: "GET",

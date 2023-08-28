@@ -6,8 +6,43 @@ const getAllMeals = async (req, res) => {
 
         if (req.query.categoryId) {
             meals = await MealService.getByCategory(req.query.categoryId);
-        } else {
-            meals = await MealService.getAll();
+            
+            if (!req.query.price && !req.query.kosher) {
+                if (req.query.sort) {
+                    if (req.query.sort === "מהמחיר הגבוה לנמוך") {
+                        meals = await MealService.HighLowSort(req.query.kosher, req.query.price, req.query.categoryId);
+                    } else if (req.query.sort === "מהמחיר הנמוך לגבוה") {
+                        meals = await MealService.LowHighSort(req.query.kosher, req.query.price, req.query.categoryId);
+                    }
+                }
+                res.json(meals);
+                return;
+            }
+        } 
+            
+        meals = await MealService.getAll();
+        
+        if (!meals) {
+            throw new Error('Non existing meals');
+        }
+
+        if (req.query.price || req.query.kosher) {
+            let MealsFilter = await MealService.filterMeal(req.query.price, req.query.kosher, req.query.categoryId, meals);
+            
+            if (req.query.sort === "מהמחיר הגבוה לנמוך") {
+                MealsFilter = await MealService.HighLowSort(req.query.kosher, req.query.price, req.query.categoryId);
+            } else if (req.query.sort === "מהמחיר הנמוך לגבוה") {
+                MealsFilter = await MealService.LowHighSort(req.query.kosher, req.query.price, req.query.categoryId);
+            }
+
+            res.json(MealsFilter);
+            return;
+        }
+
+        if (req.query.sort === "מהמחיר הגבוה לנמוך") {
+            meals = await MealService.HighLowSort(req.query.kosher, req.query.price, req.query.categoryId);
+        } else if (req.query.sort === "מהמחיר הנמוך לגבוה") {
+            meals = await MealService.LowHighSort(req.query.kosher, req.query.price, req.query.categoryId);
         }
 
         res.json(meals);

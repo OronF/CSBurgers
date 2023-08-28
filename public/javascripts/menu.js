@@ -15,7 +15,7 @@ $(document).ready(async function() {
         element.removeClass('hide').addClass('nohide');
     }
 
-    const appendDishesLi = (dish) => {
+    const appendDishesLi = (dish, list) => {
         const newElement = $(`<li id="${dish._id} class="nohide" data-dish-categoryId="${dish.categoryId}">
             <div class="card">
             <div class="row">
@@ -48,7 +48,7 @@ $(document).ready(async function() {
             });
         }
 
-        dishesList.append(newElement);
+        list.append(newElement);
     }
 
     const appendMealsLi = (meal) => {
@@ -87,11 +87,11 @@ $(document).ready(async function() {
         mealsList.append(newElement);
     }
 
-    /*const renderDishes = (data) => {
+    const renderDishes = (data) => {
         data.forEach(dish => {
-            appendDishesLi(dish);
+            appendDishesLi(dish, mealsList);
         });
-    }*/
+    }
 
     const renderMeals = (data) => {
         data.forEach(dish => {
@@ -171,7 +171,7 @@ $(document).ready(async function() {
                 });
     
                 dishes.forEach(dish => {
-                    appendDishesLi(dish);
+                    appendDishesLi(dish, dishesList);
                 });
             }
         });
@@ -196,25 +196,9 @@ $(document).ready(async function() {
         }
     });
 
-    /*$.ajax({
-        url:"/api/dish",
-        method: "GET",
-        success: (data) => {
-            renderDishes(data);
-        },
-        error: (error) => {
-            console.log(error);
-        }
-    });*/
-
-    $.ajax({
+    await $.ajax({
         url:"/api/meal",
         method: "GET",
-        dataType: "json",
-        contentType: 'application/json',
-        data: {
-            categoryId: "64d0f4bcfdf8c926feae7c11"
-        },
         success: (data) => {
             renderMeals(data);
         },
@@ -223,7 +207,18 @@ $(document).ready(async function() {
         }
     });
 
-const kosherCheck = $("#kosher-check");
+    $.ajax({
+        url:"/api/dish",
+        method: "GET",
+        success: (data) => {
+            renderDishes(data);
+        },
+        error: (error) => {
+            console.log(error);
+        }
+    });
+
+    const kosherCheck = $("#kosher-check");
 const maxPriceCheck = $("#maxprice-check");
 const sortCheck = $(".sortby-check");
 const priceInp = $("#priceInp");

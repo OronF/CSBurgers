@@ -4,15 +4,15 @@ const getAll = async() => {
     return await Meal.find({});
 }
 
-const createMeal = async (name, price, dishes, categoryId, picture, description, kosher) => {
+const createMeal = async (newMeal) => {
     const meal = new Meal({
-        name: name,
-        price: price,
-        dishes: dishes,
-        categoryId: categoryId,
-        picture: picture,
-        description: description,
-        kosher: kosher
+        name: newMeal.name,
+        price: newMeal.price,
+        dishes: newMeal.dishes,
+        categoryId: newMeal.categoryId,
+        picture: newMeal.picture,
+        description: newMeal.description,
+        kosher: newMeal.kosher
     });
 
     if (newMeal.webServiceId) {
@@ -51,7 +51,7 @@ const updateMeal = async (newMeal) => {
     meal.categoryId = newMeal.categoryId;
     meal.picture = newMeal.picture;
     meal.description = newMeal.description;
-    meal.koser = newMeal.kosher;
+    meal.kosher = newMeal.kosher;
 
     if (newMeal.webServiceId) {
         meal.webServiceId = newMeal.webServiceId;
@@ -65,11 +65,158 @@ const getByCategory = async (categoryId) => {
     return await Meal.find({categoryId});
 }
 
+const filterMeal = async (price, kosher, categoryId, meals) => {
+    const parsedPrice = parseInt(price);
+
+    if (kosher && !price && !categoryId) {
+        return await meals.filter((meal) => {
+            return meal.kosher;
+        });
+    }
+    
+    else if (!kosher && price && !categoryId) {
+        return await meals.filter((meal) => {
+            return meal.price <= parsedPrice;
+        });
+    }
+    
+    else if (kosher && price && !categoryId) {
+        return await meals.filter((meal) => {
+            return meal.kosher && meal.price <= parsedPrice;
+        });
+    }
+
+    else if (kosher && !price && categoryId) {
+        return await meals.filter((meal) => {
+            return meal.kosher && meal.categoryId == categoryId;
+        });
+    }
+    
+    else if (!kosher && price && categoryId) {
+        return await meals.filter((meal) => {
+            return meal.price <= parsedPrice && meal.categoryId == categoryId;
+        });
+    }
+
+    else if (kosher && price && categoryId) {
+        return await meals.filter((meal) => {
+            return meal.kosher && meal.price <= parsedPrice && meal.categoryId == categoryId;
+        });
+    }
+}
+
+const HighLowSort = async (kosher, price, categoryId) =>
+{
+    if (!kosher && !price && !categoryId) {
+        return await Meal.find({}).sort({
+            price: -1
+        });
+    }
+
+    else if (kosher && !price && !categoryId) {
+        return await Meal.find({kosher}).sort({
+            price: -1
+        });
+    } 
+    
+    else if (!kosher && price && !categoryId) {
+        return await Meal.find({price: { $lte: price }}).sort({
+            price: -1
+        });
+    }
+
+    else if (!kosher && !price && categoryId) {
+        return await Meal.find({categoryId}).sort({
+            price: -1
+        });
+    }
+
+    else if (kosher && price && !categoryId) {
+        return await Meal.find({kosher, price: { $lte: price }}).sort({
+            price: -1
+        });
+    }
+
+    
+    else if (kosher && !price && categoryId) {
+        return await Meal.find({kosher, categoryId}).sort({
+            price: -1
+        });
+    }
+
+    else if (!kosher && price && categoryId) {
+        return await Meal.find({price: { $lte: price }, categoryId}).sort({
+            price: -1
+        });
+    }
+
+    else if (kosher && price && categoryId) {
+        return await Meal.find({kosher, price: { $lte: price }, categoryId}).sort({
+            price: -1
+        });
+    }
+}
+
+const LowHighSort = async (kosher, price, categoryId) =>
+{
+    if (!kosher && !price && !categoryId) {
+        return await Meal.find({}).sort({
+            price: 1
+        });
+    } 
+
+    else if (kosher && !price && !categoryId) {
+        return await Meal.find({kosher}).sort({
+            price: 1
+        });
+    } 
+    
+    else if (!kosher && price && !categoryId) {
+        return await Meal.find({price: { $lte: price }}).sort({
+            price: 1
+        });
+    }
+
+    else if (!kosher && !price && categoryId) {
+        return await Meal.find({categoryId}).sort({
+            price: 1
+        });
+    }
+
+    else if (kosher && price && !categoryId) {
+        return await Meal.find({kosher, price: { $lte: price }}).sort({
+            price: 1
+        });
+    }
+
+    
+    else if (kosher && !price && categoryId) {
+        return await Meal.find({kosher, categoryId}).sort({
+            price: 1
+        });
+    }
+
+    else if (!kosher && price && categoryId) {
+        return await Meal.find({price: { $lte: price }, categoryId}).sort({
+            price: 1
+        });
+    }
+
+    else if (kosher && price && categoryId) {
+        return await Meal.find({kosher, price: { $lte: price }, categoryId}).sort({
+            price: 1
+        });
+    }
+}
+
 module.exports = {
     getAll,
     create: createMeal,
     delete: deleteMeal,
     update: updateMeal,
     search: searchMeal,
-    getByCategory
+    getByCategory,
+    filterMeal,
+    LowHighSort,
+    HighLowSort
 }

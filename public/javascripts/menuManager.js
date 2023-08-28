@@ -15,7 +15,7 @@ $(document).ready(async function() {
         element.removeClass('hide').addClass('nohide');
     }
 
-    const appendDishesLi = (dish) => {
+    const appendDishesLi = (dish, list) => {
         const newElement = $(`<li id="${dish._id}" class="nohide" data-dish-categoryId="${dish.categoryId}">
             <div class="card">
             <div class="row">
@@ -133,7 +133,7 @@ $(document).ready(async function() {
             }
         });
 
-        dishesList.append(newElement);
+        list.append(newElement);
     }
 
     const appendMealsLi = (meal) => {
@@ -261,7 +261,7 @@ $(document).ready(async function() {
 
     const renderDishes = (data) => {
         data.forEach(dish => {
-            appendDishesLi(dish);
+            appendDishesLi(dish, mealsList);
         });
     }
 
@@ -413,7 +413,7 @@ $(document).ready(async function() {
                 });
     
                 dishes.forEach(dish => {
-                    appendDishesLi(dish);
+                    appendDishesLi(dish, dishesList);
                 });
             }
         });
@@ -439,10 +439,11 @@ $(document).ready(async function() {
     });
 
     $.ajax({
-        url:"/api/dish",
+        url:"/api/meal",
         method: "GET",
+        dataType: "json",
         success: (data) => {
-            renderDishes(data);
+            renderMeals(data);
         },
         error: (error) => {
             console.log(error);
@@ -450,15 +451,10 @@ $(document).ready(async function() {
     });
 
     $.ajax({
-        url:"/api/meal",
+        url:"/api/dish",
         method: "GET",
-        dataType: "json",
-        contentType: 'application/json',
-        data: {
-            categoryId: "64d0f4bcfdf8c926feae7c11"
-        },
         success: (data) => {
-            renderMeals(data);
+            renderDishes(data);
         },
         error: (error) => {
             console.log(error);
