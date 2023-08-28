@@ -1,3 +1,9 @@
+header {
+    color: white;
+    padding: 0.7vw;
+    text-align: right;
+}
+
 body {
     font-family: 'Lato', sans-serif;
     font-family: 'Noto Sans Hebrew', sans-serif;
@@ -18,10 +24,18 @@ body {
 }
 
 .title {
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;
     background-color: rgb(154, 13, 13);
     color: white;
     padding: 0.8vw;
     text-align: center;
+    font-size: 3vw;
+}
+
+.img
+{
+    width: 4vw;
 }
 
 .card-title{
