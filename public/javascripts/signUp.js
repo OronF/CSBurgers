@@ -40,14 +40,9 @@ function nameValidation(name, error)
     
 }
 
-const approve = $('#approveBtn');
-const fname = document.getElementById('fname');
-const lname = document.getElementById('lname');
-const phoneNumber = document.getElementById('phone-number');
-const passowrdInput = document.getElementById('passowrdInput');
-const confirmPassowrdInput = document.getElementById('confirmPassowrdInput');
-
 var flagCreatUser = 1;
+
+const approve = $('#approveBtn');
 
 window.addEventListener("keyup", e => {
     e.preventDefault();
