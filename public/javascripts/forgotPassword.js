@@ -1,3 +1,4 @@
+
 function checkIfEmpty(inp, Error)
 {
     if(inp === "")
@@ -15,21 +16,27 @@ $(document).ready(function() {
         const lnameTxt = $('#lname');
         const passwordTxt = $('#password');
         const passwordApproveTxt = $('#passwordApprov');
+        const PhoneNumberTxt = $('PhoneNumber');
 
         const fnameVal = fnameTxt.val();
         const lnameVal = lnameTxt.val();
         const passwordVal = passwordTxt.val();
         const passwordApproveVal = passwordApproveTxt.val();
+        const PhoneNumberVal = PhoneNumberTxt.val();
 
         const fnameError = $('#fnameError');
         const lnameError = $('#lnameError');
         const passwordError = $('#passwordError');
         const approvePasswordError = $('#approvePasswordError');
+        const phoneNumberError = $('#PhoneNumberError');
+
         checkIfEmpty(fnameVal, fnameError);
         checkIfEmpty(lnameVal, lnameError);
         checkIfEmpty(passwordVal, passwordError);
         checkIfEmpty(passwordApproveVal, approvePasswordError);
+        checkIfEmpty(PhoneNumberVal,phoneNumberError);
 
+        var flagChangePassword = 1;
 
         var user;
 
@@ -41,10 +48,11 @@ $(document).ready(function() {
             data: {
                 fname: fnameVal,
                 lname: lnameVal,
-                phoneNumber: 1 // for now no phoneNumber
+                phoneNumber: PhoneNumberVal
             },
             success: function(data) {
                 user = data;
+                console.log(data);
             },
             error: function(error) {
                 console.error("Error saving data:", error);
@@ -68,11 +76,6 @@ $(document).ready(function() {
             lnameError.html("הזנת שם משפחה ארוך מדי");
             flagChangePassword = 0;
         } 
-        
-        //if (!checkIfPhoneNumberIsValid(phoneNumberVal)){
-        //    phoneNumberError.html("הזנת מספר טלפון לא חוקי");
-        //    flagChangePassword = 0;
-        //}
 
 
         if(passwordApproveVal !== passwordVal){
@@ -100,17 +103,17 @@ $(document).ready(function() {
 
         if(flagChangePassword != 0){
             $.ajax({
-                url:`/api/user/${user[0]._id}`,
+                url:`/api/user/${user._id}`,
                 method: "PUT",
                 dataType: "json",
                 contentType: 'application/json',
                 data: JSON.stringify({
-                    fname: user[0].fname,
-                    lname: user[0].lname,
-                    orders: user[0].orders,
-                    phoneNumber: user[0].phoneNumber,
+                    fname: user.fname,
+                    lname: user.lname,
+                    orders: user.orders,
+                    phoneNumber: user.phoneNumber,
                     password: passwordVal,
-                    is_Manager: user[0].is_Manager
+                    is_Manager: user.is_Manager
                 }),
                 success: function(response) {
                     console.log("Data saved successfully:", response);
