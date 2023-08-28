@@ -1,0 +1,58 @@
+.register-container
+{
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;
+}
+
+.form-control
+{
+    text-align: right;
+}
+
+.sign-up-title
+{
+    color: rgb(154, 13, 13);
+    text-align: center;
+    font-size: 3.3vw;
+}
+
+.approve
+{
+    font-size: xx-large;
+}
+
+.name {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.error
+{
+    color:rgb(216, 12, 12);
+    font-size: 1vw;
+    text-align: right;
+}
+
+#termsError
+{
+    text-align: center;
+}
+
+
+.checkBox
+{
+    direction: rtl;
+}
+
+.pop-title
+{
+    font-size: 2.7vw;
+    color: rgb(154, 13, 13);
+    text-align: center;
+    margin-top: 2vw;
+}
+
+.link {
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;
+}

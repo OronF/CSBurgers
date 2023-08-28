@@ -1,55 +1,93 @@
-var express = require('express'); // Loads express
-const categoryModule = require('../modules/category'); // Loads the module
-var router = express.Router(); // concting the file to express
+const CatrgoryService = require('../services/category');
 
-/* GET Categories listing. */
-router.get('/', function(req, res, next) {
-    let Categories;
-    const id = req.query.id; // takes the value from a query
-    const name = req.query.name; // takes the value from a query
+const getAllCategories = async (req, res) => {
+    try {
 
-    if (id || name) {
-        Categories = categoryModule.search(id, name); // if there was a query
-    } else {
-        Categories = categoryModule.getAll(); // returning the array
+        let Catrgories;
+
+        if(req.query.categorytype) {
+            Catrgories = await CatrgoryService.searchCatrgoryByType(req.query.categorytype);
+        } else {
+            Catrgories = await CatrgoryService.getAll();
+        }
+
+        if(!Catrgories) {
+            throw new Error('Non existing categories');
+        }
+
+        res.json(Catrgories);
     }
 
-    res.end(JSON.stringify(categories)); // printing the array
-});
-
-/* POST - create category */
-router.post('/', function(req, res, next) {
-    // gets a json object and takes the value of the name from it
-    const category = { 
-        name:  req.body.name
+    catch (error) {
+        res.status(400).json({
+            error: "Getting all the categories - Error",
+            message: error.message
+        });
     }
-   
-    const id = categoryModule.create(category); // creating the object in the array
+}
 
-    res.end(JSON.stringify(id));
-});
-
-/*PUT - update category*/
-router.put('/', function(req, res, next) {
-    // gets a json object and takes the value of the id and the name from it
-    const category = {
-        id: req.body.id,
-        name: req.body.name
+const createCategory = async (req, res) => {
+    try {
+        const newCatrgory = await CatrgoryService.create(req.body.name, req.body.categorytype);
+        res.json(newCatrgory);
     }
 
-    categoryModule.update(category); // updating the object with the same id
+    catch (error) {
+        res.status(400).json({
+            error: "Creating new category - Error",
+            message: error.message
+        });
+    }
+}
 
-    res.end();
-});
+const updateCategory = async (req, res) => {
+    if (!req.body.name) {
+        res.status(400).json({message:'The new name to the category is required'});
+    }
 
-/*DELETE - delete category*/
-router.delete('/', function(req, res, next) {
-    // gets a json object and takes the value of id from it
-    const id = req.body.id;
+    if (!req.body.categorytype) {
+        res.status(400).json({message:'The new categorytype to the category is required'});
+    }
 
-    categoryModule.delete(id); // deleting the object with the same id
+    const newCatrgory = {
+        id: req.params.id,
+        name: req.body.name,
+        categorytype: req.body.categorytype
+    }
 
-    res.end();
-});
+    const category = await CatrgoryService.update(newCatrgory);
+    if (!category) {
+        return res.status(404).json({errors:['Category not found']});
+    }
 
-module.exports = router;
+    res.json(category);
+};
+
+
+const deleteCategory = async (req, res) => {
+    const category = await CatrgoryService.delete(req.params.id);
+    
+    if (!category) {
+        return res.status(404).json({errors:['Category not found']});
+    }
+
+    res.send();
+}
+
+const searchCategory = async (req, res) => {
+    const category = await CatrgoryService.search(req.params.id);
+    
+    if (!category) {
+      return res.status(404).json({errors:['Category not found']});
+    }
+
+    res.json(category);
+}
+
+module.exports = {
+    getAllCategories,
+    createCategory,
+    updateCategory,
+    deleteCategory,
+    searchCategory
+}

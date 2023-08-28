@@ -1,0 +1,151 @@
+body {
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;   
+    direction: rtl;
+    /* background-image: url("https://st2.depositphotos.com/3740491/8238/v/950/depositphotos_82386728-stock-illustration-seamless-pattern-with-sketched-burger.jpg"); */
+}
+
+.hide {
+    display: none;
+}
+
+.card-text
+{
+    font-size: 1.2vw;
+}
+
+.page-title {
+    text-align: center;
+     font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;
+    color: rgb(154, 13, 13);
+    padding:0.vw;
+    font-size: 4.5vw;
+    background-color: white;
+}
+
+.card-body
+{
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;    direction: rtl;
+}
+
+.categories-aside {
+    background-color: transparent;
+    float: right;
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;
+}
+
+.nameOfCategory {
+    text-decoration: none;
+    color: white;
+}
+
+.categories {
+    list-style: none;
+}
+
+.dishes-list {
+    list-style: none;
+}
+
+.meals-list {
+    list-style: none;
+}
+
+.li-category {
+    background-color: rgb(154, 13, 13);
+    border: none;
+    margin-top:0.6vw;
+    font-size: 1.5vw;
+    padding: 0.5vw;
+    transition: all 0.4s;
+    padding-left: 2vw;
+    padding-right: 2vw;
+}
+
+.li-category:hover{
+    transform: scale(1.15);
+    background-color: rgb(129, 19, 19);
+}
+
+.card-title
+{
+    font-size: 2vw;
+    color: rgb(154, 13, 13);
+}
+
+.card
+{
+    height: 8vh;
+    width: 40vw;
+    margin-top: 2vh;
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;    
+    
+    
+}
+
+.order-btn
+{
+    text-decoration: none;
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;   
+    background-color: rgb(154, 13, 13);
+    color:white;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    font-size: 1.3vw;
+    text-align: left;;
+}
+
+.order-btn:hover
+{
+    background-color: rgb(129, 19, 19);
+}
+
+.order-btn
+{
+    outline: color;
+}
+
+.container
+{
+    align-items: center;
+}
+
+.card-info
+{
+    font-size: 1vw;
+}
+
+.filters
+{
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;   
+}
+
+.maxPriceInp
+{
+    width: 4vw;
+    outline:none;
+    height: 3.45vh;
+}
+
+.form-check-input
+{
+    transition: all 0.4s;
+}
+
+.btn-back {
+    font-size: 1.5vw;
+    position: fixed;
+    right: 3vw;
+    top: 1vw;
+    color:rgb(154, 13, 13);
+    text-decoration: none;
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;
+    transition: all 0.4s;
+}

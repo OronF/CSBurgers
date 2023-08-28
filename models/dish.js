@@ -1,12 +1,42 @@
-class Dish {
-    constructor(dishId, name, price, categoryId) {
-        this.dishId = dishId;
-        this.name = name;
-        this.price = price;
-        this.categoryId = categoryId;
-    }
-}
+const mongoose = require('mongoose');
 
-exports = {
-    Dish
-}
+const DishSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true
+    },
+
+    price: {
+        type: Number,
+        required: true
+    },
+
+    categoryId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true
+    },
+    
+    picture: {
+        type: String,
+        required: true
+    }, 
+
+    description: {
+        type: String,
+        required: true
+    },
+
+    kosher:
+    {
+        type: Boolean,
+        required: true
+    },
+                                       
+    webServiceId: {
+        type: String
+    }
+});
+
+const Dish = mongoose.model("dishes", DishSchema);
+
+module.exports = Dish;
