@@ -16,6 +16,11 @@
     transition: all 0.4s;
 }
 
+.btn-back:hover
+{
+    transform: scale(1.05);
+}
+
 .form-control
 {
     text-align: right;
