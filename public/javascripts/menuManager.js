@@ -7,6 +7,8 @@ $(document).ready(async function() {
     const dishesSection = $('#dishesSection');
     const mealsSection = $('#mealsSection');
 
+    let categoryIdForFilter;
+
     const putHideOnElement = (element) => {
         element.removeClass('nohide').addClass('hide');
     }
@@ -355,6 +357,7 @@ $(document).ready(async function() {
             const btn = $(this);
             const id = btn.attr('data-category-id');
             const categorytype = btn.attr('data-category-categorytype');
+            categoryIdForFilter = id;
 
             if (categorytype === "meal") {
                 if (mealsSection.hasClass('hide')) {
@@ -584,9 +587,9 @@ $(document).ready(async function() {
 
     const moveBtn = $('.moveBtn');
 
-    moveBtn.on('click', function() {
+    moveBtn.on('click', async function() {
         if(nameDish.val() && priceDish.val() && descriptionDish.val() && pictureDish.val() && dishcategories.find(":selected").attr('data-category-id')) {
-            $.ajax({
+            await $.ajax({
                 url: "/api/dish",
                 method: "POST",
                 dataType: "json",
@@ -596,16 +599,29 @@ $(document).ready(async function() {
                     price: priceDish.val(),
                     categoryId: dishcategories.find(":selected").attr('data-category-id'),
                     picture: pictureDish.val(),
-                    description: descriptionDish.val()
+                    description: descriptionDish.val(),
+                    kosher: true
                 }),
                 success: function(data) {
                     nameDish.val("");
                     priceDish.val("");
                     descriptionDish.val("");
                     pictureDish.val("");
-                    moveBtn.remove();
+                    moveBtn.hide();
                     const newElement = $(`<button type="button" class="closebtn" data-bs-dismiss="modal" aria-label="Close"><i class="bi bi-check2"></i></button>`);
+
+                    newElement.on('click', function() {
+                        moveBtn.show();
+                        newElement.remove();
+                    });
+
                     $('.modal-buttons-dish').append(newElement);
+
+                    if (categoryIdForFilter == data.categoryId) {
+                        appendDishesLi(data, dishesList);
+                    } else if (!categoryIdForFilter) {
+                        appendDishesLi(data, mealsList)
+                    }
                 },
                 error: function(error) {
                     console.error(error);
@@ -627,7 +643,7 @@ $(document).ready(async function() {
                 error: function(error) {
                     console.error(error);
                 }
-            })
+            });
         }
     });
 
@@ -728,7 +744,7 @@ $(document).ready(async function() {
         }
     });  
 
-    $('.moveBtn-meal').on('click', function() {
+    $('.moveBtn-meal').on('click', async function() {
         console.log(32432432);
         console.log(nameMeal.val() );
         console.log(priceMeal.val() );
@@ -740,7 +756,7 @@ $(document).ready(async function() {
         console.log(mealdrink.find(":selected").attr('data-drink-id') );
         if(nameMeal.val() && priceMeal.val() && descriptionMeal.val() && pictureMeal.val() && mealcategories.find(":selected").attr('data-category-id') && mealdrink.find(":selected").attr('data-drink-id')  && mealdish.find(":selected").attr('data-dish-id') && mealextra.find(":selected").attr('data-extra-id')) {
             console.log(31324);
-            $.ajax({
+            await $.ajax({
                 url: "/api/meal",
                 method: "POST",
                 dataType: "json",
@@ -753,16 +769,30 @@ $(document).ready(async function() {
                     mealdrink.find(":selected").attr('data-drink-id')],
                     categoryId: mealcategories.find(":selected").attr('data-category-id'),
                     picture: pictureMeal.val(),
-                    description: descriptionMeal.val()
+                    description: descriptionMeal.val(),
+                    kosher: true
                 }),
                 success: function(data) {
                     nameDish.val("");
                     priceDish.val("");
                     descriptionDish.val("");
                     pictureDish.val("");
-                    $('.moveBtn-meal').remove();
-                    const newElement = $(`<button type="button" class="closebtn" data-bs-dismiss="modal" aria-label="Close"><i class="bi bi-check2"></i></button>`);
+
+                    $('.moveBtn-meal').hide();
+
+                    const newElement = $(`<button type="button" class="closebtn-meal" data-bs-dismiss="modal" aria-label="Close"><i class="bi bi-check2"></i></button>`);
                     $('.modal-buttons-meal').append(newElement);
+
+                    newElement.on('click', function() {
+                        $('.moveBtn-meal').show();
+                        newElement.remove();
+                    });
+
+                    $('.modal-buttons-meal').append(newElement);
+
+                    if (!categoryIdForFilter || categoryIdForFilter == data.categoryId) {
+                        appendMealsLi(data);
+                    }
                 },
                 error: function(error) {
                     console.error(error);
