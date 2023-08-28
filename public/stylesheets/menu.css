@@ -151,3 +151,8 @@ body {
     font-family: 'Noto Sans Hebrew', sans-serif;
     transition: all 0.4s;
 }
+
+.btn-back:hover
+{
+    transform: scale(1.05);
+}

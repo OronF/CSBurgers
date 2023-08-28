@@ -14,6 +14,15 @@ body {
     transition: all 0.4s;
 }
 
+.btn-back:hover
+{
+    transform: scale(1.05);
+}
+
+.card {
+    display: flex;
+}
+
 .vidCon
 {
     margin-top: 5.5rem;

@@ -28,3 +28,12 @@ $(document).ready(function() {
         }
     });
 });
+
+const approveBtn = $('#approve-btn');
+
+window.addEventListener("keyup", e => {
+    e.preventDefault();
+    if (e.key === "Enter") {
+        approveBtn.click();
+    }
+});
