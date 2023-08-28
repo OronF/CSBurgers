@@ -33,7 +33,7 @@
 
 }
 
-.delivery-btn, .pick-up-btn
+.delivery-btn, .pick-up-btn, .deleteLastOrder, .recreateLastOrder
 {
     font-family: 'Lato', sans-serif;
     font-family: 'Noto Sans Hebrew', sans-serif;
@@ -47,7 +47,7 @@
     margin-top:0.5vw;
 }
 
-.delivery-btn:hover, .pick-up-btn:hover
+.delivery-btn:hover, .pick-up-btn:hover, .deleteLastOrder:hover, .recreateLastOrder:hover
 {
     background-color: rgb(120, 16, 16);
     transform: scale(1.05);
@@ -104,8 +104,14 @@
 .link{
     color:black;
 }
+
 .input
 {
     direction: rtl;
     margin-bottom: 0.5vw;
+}
+
+.form-control
+{
+    text-align: right;
 }

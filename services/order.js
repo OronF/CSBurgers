@@ -11,7 +11,9 @@ const createOrder = async (newOrder) => {
         location: newOrder.location,
         totalprice: newOrder.totalprice,
         meals: newOrder.meals,
-        dishes: newOrder.dishes
+        dishes: newOrder.dishes,
+        branch: newOrder.branch,
+        closed: newOrder.closed
     });
 
     if (newOrder.customerId) {
@@ -50,6 +52,8 @@ const updateOrder = async (newOrder) => {
     order.totalprice = newOrder.totalprice;
     order.meals = newOrder.meals;
     order.dishes = newOrder.dishes;
+    order.branch = newOrder.branch;
+    order.closed = newOrder.closed;
 
     if (newOrder.customerId) {
         order.customerId = newOrder.customerId;
@@ -89,6 +93,70 @@ const groupByDishes = async (order) => {
     return dishes;
 }
 
+const groupByBranches = async () => {
+    const branches = await Order.aggregate([
+        {
+            $group: {
+                _id: '$branch',
+                count: { $sum: 1 }
+            }
+        }
+    ]);
+
+    return branches;
+}
+
+const searchClosedOrders = async (closed) => {
+    return Order.find({closed});
+}
+
+const filterOrders = async (NumOfProducts, branch, price, userId, orders) => {
+    const parsedPrice = parseInt(price);
+    const paresNumOfProducts = parseInt(NumOfProducts);
+
+    if(NumOfProducts && !branch && !price) {
+        return await orders.filter((order) => {
+            return (order.dishes.length + order.meals.length) >= paresNumOfProducts && userId == order.customerId && order.closed;
+        });
+    }
+
+    else if (branch && !NumOfProducts && !price) {
+        return await orders.filter((order) => {
+            return order.branch == branch && userId == order.customerId && order.closed;
+        });
+    }
+
+    else if (price && !NumOfProducts && !branch) {
+        return await orders.filter((order) => {
+            return order.totalprice >= parsedPrice && userId == order.customerId && order.closed;
+        });
+    }
+
+    else if (NumOfProducts && branch && !price) {
+        return await orders.filter((order) => {
+            return (order.dishes.length + order.meals.length) >= paresNumOfProducts && order.branch == branch && userId == order.customerId && order.closed;
+        });
+    }
+
+    else if (NumOfProducts && price && !branch) {
+        return await orders.filter((order) => {
+            return (order.dishes.length + order.meals.length) >= paresNumOfProducts && order.totalprice >= parsedPrice && userId == order.customerId && order.closed;
+        });
+    }
+
+    else if (price && branch && !NumOfProducts) {
+        return await orders.filter((order) => {
+            return order.totalprice >= parsedPrice && order.branch == branch && userId == order.customerId && order.closed;
+        });
+    }
+
+    else if (price && NumOfProducts && branch) {
+        return await orders.filter((order) => {
+            return (order.dishes.length + order.meals.length) >= paresNumOfProducts && order.totalprice >= parsedPrice && order.branch == branch && userId == order.customerId && order.closed;
+        });
+    }
+}
+
 module.exports = {
     getAll,
     create: createOrder,
@@ -96,5 +164,8 @@ module.exports = {
     update: updateOrder,
     search: searchOrder,
     groupByMeals,
-    groupByDishes
+    groupByDishes,
+    groupByBranches,
+    searchClosedOrders,
+    filterOrders
 }

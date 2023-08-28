@@ -12,7 +12,7 @@
 }
 
 /* the button's font, size, placing, and animation transition time*/
-.btn-about, .btn-accessibility, .btn-contact, .btn-guest, .btn-ig, .btn-menu, .btn-ToOrder {
+.btn-about, .btn-accessibility, .btn-contact, .btn-guest, .btn-ig, .btn-menu, .btn-ToOrder, .btn-logout {
     transition: all 0.4s;
     border: none;
     background: transparent;
@@ -53,65 +53,6 @@
     align-items: center;
 }
 
-/* -----------------------  log-in CSS -----------------------------*/
-
-/* fonts */
-.details-container
-{
-    font-family: 'Lato', sans-serif;
-    font-family: 'Noto Sans Hebrew', sans-serif;
-}
-
-.sign-in-title
-{
-    font-size: 2.7vw;
-    color: rgb(154, 13, 13);
-    text-align: center;
-    margin-top: 2vw;
-}
-
-.submit-btn
-{
-    color:  rgb(154, 13, 13);
-    border:none;
-    border-width: 0.113vw;
-    background: transparent;
-    font-size: x-large;
-    transition: all 0.4s;
-}
-
-.submit-btn:hover 
-{
-    transform: scale(1.1);
-}
-
-.link
-{
-    color:rgb(0, 0, 0);
-}
-
-.link:hover{
-    color:rgb(154, 13, 13);
-}
-
-.register-link
-{
-    font-size: medium;
-    margin-top: 0.5vw;
-}
-
-.forgot-password
-{
-    font-size:medium;
-    margin-top: 0.5vw;
-}
-
-/* placing of the placeholders in the input boxes*/
-.form-control
-{
-    text-align: right;
-}
-
 .hide {
     display: none;
 }
@@ -129,11 +70,6 @@
 .cart {
     color: black;
     margin-right: 2vw;
-}
-
-#container {
-    display: flex;
-    flex-direction: column;
 }
 
 .social-links-nav {

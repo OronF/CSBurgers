@@ -6,8 +6,43 @@ const getAllMeals = async (req, res) => {
 
         if (req.query.categoryId) {
             meals = await MealService.getByCategory(req.query.categoryId);
-        } else {
-            meals = await MealService.getAll();
+            
+            if (!req.query.price && !req.query.kosher) {
+                if (req.query.sort) {
+                    if (req.query.sort === "מהמחיר הגבוה לנמוך") {
+                        meals = await MealService.HighLowSort(req.query.kosher, req.query.price, req.query.categoryId);
+                    } else if (req.query.sort === "מהמחיר הנמוך לגבוה") {
+                        meals = await MealService.LowHighSort(req.query.kosher, req.query.price, req.query.categoryId);
+                    }
+                }
+                res.json(meals);
+                return;
+            }
+        } 
+            
+        meals = await MealService.getAll();
+        
+        if (!meals) {
+            throw new Error('Non existing meals');
+        }
+
+        if (req.query.price || req.query.kosher) {
+            let MealsFilter = await MealService.filterMeal(req.query.price, req.query.kosher, req.query.categoryId, meals);
+            
+            if (req.query.sort === "מהמחיר הגבוה לנמוך") {
+                MealsFilter = await MealService.HighLowSort(req.query.kosher, req.query.price, req.query.categoryId);
+            } else if (req.query.sort === "מהמחיר הנמוך לגבוה") {
+                MealsFilter = await MealService.LowHighSort(req.query.kosher, req.query.price, req.query.categoryId);
+            }
+
+            res.json(MealsFilter);
+            return;
+        }
+
+        if (req.query.sort === "מהמחיר הגבוה לנמוך") {
+            meals = await MealService.HighLowSort(req.query.kosher, req.query.price, req.query.categoryId);
+        } else if (req.query.sort === "מהמחיר הנמוך לגבוה") {
+            meals = await MealService.LowHighSort(req.query.kosher, req.query.price, req.query.categoryId);
         }
 
         res.json(meals);
@@ -23,7 +58,26 @@ const getAllMeals = async (req, res) => {
 
 const createMeal = async (req, res) => {
     try {
-        const newMeal = await MealService.create(req.body.name, req.body.price, req.body.dishes, req.body.categoryId, req.body.picture, req.body.description);
+        const tmp = {
+            name: req.body.name,
+            price: req.body.price,
+            dishes: req.body.dishes,
+            categoryId: req.body.categoryId,
+            picture: req.body.picture,
+            description: req.body.description,
+            kosher: req.body.kosher
+        }
+
+        if (req.body.webServiceId) {
+            tmp.webServiceId = req.body.webServiceId;
+        }
+
+        const newMeal = await MealService.create(tmp);
+
+        if (!newMeal) {
+            throw new Error("couldn't create new meal");
+        }
+
         res.json(newMeal);
     }
     
@@ -60,6 +114,10 @@ const updateMeal = async (req, res) => {
         res.status(400).json({message:'The new description to the meal is required'});
     }
 
+    if (!req.body.kosher) {
+        res.status(400).json({message:'The new kosher to the meal is required'});
+    }
+
     const newMeal = {
         id: req.params.id,
         name: req.body.name,
@@ -67,10 +125,16 @@ const updateMeal = async (req, res) => {
         dishes: req.body.dishes,
         categoryId: req.body.categoryId,
         picture: req.body.picture,
-        description: req.body.description
+        description: req.body.description, 
+        kosher: req.body.kosher
+    }
+
+    if (req.body.webServiceId) {
+        newMeal.webServiceId = req.body.webServiceId;
     }
 
     const meal = await MealService.update(newMeal);
+    
     if (!meal) {
         return res.status(404).json({errors:['Meal not found']});
     }

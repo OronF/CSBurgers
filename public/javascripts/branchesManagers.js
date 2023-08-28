@@ -21,6 +21,10 @@ $(document).ready(function() {
                 <div type="button" class="plus-icon" data-branch-id="${branch._id}">
                     <i class="bi bi-plus-circle-fill" id="iconToClick-${branch._id}"></i>
                 </div>
+
+                <div type="button" class="update-icon" data-branch-id="${branch._id}" data-bs-toggle="modal" data-bs-target="#updateBranchModal">
+                    <i class="bi bi-pencil-fill" id="iconToClick-${branch._id}"></i>
+                </div>
             </div>
             
             </div>
@@ -31,7 +35,7 @@ $(document).ready(function() {
             const id = btn.attr('data-branch-id');
 
             $.ajax({
-                url: `/api/branches/${id}`,
+                url: `/api/branch/${id}`,
                 method: "DELETE",
                 success: function() {
                     $(`#${id}`).remove();
@@ -49,7 +53,7 @@ $(document).ready(function() {
 
             if(icon.hasClass('bi bi-plus-circle-fill')) {
                 $.ajax({
-                    url: `/api/branches/${id}`,
+                    url: `/api/branch/${id}`,
                     method: "GET"
                 }).done(function(data) {
                     const li = $(`#${id}`);
@@ -100,6 +104,122 @@ $(document).ready(function() {
             }
         });
 
+        newElement.find('.update-icon').on('click', async function() {
+            const btn = $(this);
+            const id = btn.attr('data-branch-id');
+
+            await $.ajax({
+                url:"/api/user",
+                method: "GET",
+                dataType: "json",
+                contentType: 'application/json',
+                data: {
+                    is_Manager: true
+                },
+                success: function(data) {
+                    users = data;
+                },
+                error: function(error) {
+                    console.error("Error finding data:", error);
+                }
+            });
+    
+            const managers = $('#managers-update');
+    
+            managers.append(`<option disabled selected class="text-blue-600/100">שם מנהל</option>`);
+    
+            let index = 1;
+    
+            users.forEach(manager => {
+                managers.append(`<option value="${index}" data-manager-id="${manager._id}" data-phone-number="${manager.phoneNumber}">${manager.fname}</option>`);
+                index++;
+            });
+    
+            const branchName = $("#branchName-update");
+            const address = $("#address-update");
+            const Activity = $("#Activity-update");
+            const x = $("#x-update");
+            const y = $("#y-update");
+
+            let updatebranch;
+
+            await $.ajax({
+                url: `/api/branch/${id}`,
+                method: "GET",
+                success: (data) => {
+                    updatebranch = data;
+                },
+                error: (error) => {
+                    console.log(error);
+                }   
+            });
+
+            branchName.val(updatebranch.name);
+            address.val(updatebranch.address);
+            Activity.val(updatebranch.activityTime);
+            x.val(updatebranch.coordinateX);
+            y.val(updatebranch.coordinateY);
+    
+            const saveBtn = $('.saveBtn-update');
+    
+            const modalbuttons = $('.modal-buttons-update');
+
+            const areaupdate = $('#area-update');
+    
+            saveBtn.on('click', async function() {
+                if (branchName.val() && address.val() && Activity.val() && x.val() && y.val()) {
+                    const selectedManager = managers.find(":selected");
+                    const selectedarea = areaupdate.find(":selected");
+                    if (selectedManager.length && selectedarea.length) {
+                        const managerId = selectedManager.attr('data-manager-id');
+                        const phoneNumber = selectedManager.attr('data-phone-number');
+                        const Area = selectedarea.attr('data-area');
+                        
+                        await $.ajax({
+                            url: `/api/branch/${id}`,
+                            method: "PUT",
+                            dataType: "json",
+                            contentType: 'application/json',
+                            data: JSON.stringify({
+                                name: branchName.val(),
+                                address: address.val(),
+                                phoneNumber: phoneNumber,
+                                activityTime: Activity.val(),
+                                manager: managerId,
+                                coordinateX: x.val(),
+                                coordinateY: y.val(),
+                                area: Area
+                            }),
+                            success: function(newData) {
+                                console.log("saving data:", error);
+                            },
+                            error: function(error) {
+                                console.error("Error saving data:", error);
+                            }
+                        });
+    
+                        branchName.val("");
+                        address.val("");
+                        Activity.val("");
+                        x.val("");
+                        y.val("");
+                        managers.find(":selected").val(""); 
+    
+                        const newElement = $(`<button type="button" class="closebtn-update" data-bs-dismiss="modal" aria-label="Close"><i class="bi bi-check2"></i></button>`);
+    
+                        newElement.on('click', function() {
+                            saveBtn.show();
+                            newElement.remove();
+                        });
+    
+                        modalbuttons.append(newElement);
+    
+                        saveBtn.hide();
+                    }
+                }
+            });
+        });
+        
         branchList.append(newElement);
     }
 
@@ -155,31 +275,29 @@ $(document).ready(function() {
         const x = $("#x");
         const y = $("#y");
 
-        const closeBtn = $('.closeBtn');
-
-        closeBtn.on('click', function() { 
-            hide.removeClass('nohide').addClass('hide');
-            nohide.removeClass('hide').addClass('nohide');
-
-            branchName.val("");
-            address.val("");
-            Activity.val("");
-            x.val("");
-            y.val("");
-            managers.find(":selected").val("");
-        });
-
         const saveBtn = $('.saveBtn');
 
+        const area = $('#area');
+
+        const modalbuttons = $('.modal-buttons');
+        const btnclose = $('.btn-close');
+
+        btnclose.on('click', function() {
+            nohide.removeClass('hide').addClass('nohide');
+        });
+
         saveBtn.on('click', async function() {
+            console.log(32134);
             if (branchName.val() && address.val() && Activity.val() && x.val() && y.val()) {
                 const selectedManager = managers.find(":selected");
-                if (selectedManager.length) {
+                const selectedarea = area.find(":selected");
+                if (selectedManager.length && selectedarea.length) {
                     const managerId = selectedManager.attr('data-manager-id');
                     const phoneNumber = selectedManager.attr('data-phone-number');
+                    const Area = selectedarea.attr('data-area');
                     
                     await $.ajax({
-                        url: "/api/branches",
+                        url: "/api/branch",
                         method: "POST",
                         dataType: "json",
                         contentType: 'application/json',
@@ -190,12 +308,10 @@ $(document).ready(function() {
                             activityTime: Activity.val(),
                             manager: managerId,
                             coordinateX: x.val(),
-                            coordinateY: y.val()
+                            coordinateY: y.val(),
+                            area: Area
                         }),
                         success: function(newData) {
-                            hide.removeClass('nohide').addClass('hide');
-                            nohide.removeClass('hide').addClass('nohide');
-
                             data.push(newData);
                             appendBranchLi(newData);
                         },
@@ -210,11 +326,25 @@ $(document).ready(function() {
                     x.val("");
                     y.val("");
                     managers.find(":selected").val("");
+
+                    nohide.removeClass('hide').addClass('nohide');
+
+                    const newElement = $(`<button type="button" class="closebtn" data-bs-dismiss="modal" aria-label="Close"><i class="bi bi-check2"></i></button>`);
+
+                    newElement.on('click', function() {
+                        saveBtn.show();
+                        newElement.remove();
+                    });
+
+                    modalbuttons.append(newElement);
+
+                    saveBtn.hide();
                 }
             }
         });
 
-        
+
+
         const searchTxt = $('#searchTxt');
 
         searchTxt.on('input', function() {
@@ -229,8 +359,44 @@ $(document).ready(function() {
         });
     }   
 
+    const searcharea = $('#search-area');
+
+    searcharea.on('change', function() {
+        branchList.empty();
+
+        const selectsearcharea = searcharea.find(':selected').attr('data-area');
+        if (selectsearcharea === "everyone") {
+            $.ajax({
+                url:"/api/branch",
+                method: "GET",
+                success: (data) => {
+                    render(data);
+                },
+                error: (error) => {
+                    console.log(error);
+                }
+            });
+        } else {
+            $.ajax({
+                url:"/api/branch",
+                method: "GET",
+                dataType: "json",
+                contentType: 'application/json',
+                data: {
+                    area: selectsearcharea
+                },
+                success: (data) => {
+                    render(data);
+                },
+                error: (error) => {
+                    console.log(error);
+                }
+            });
+        }
+    });
+
     $.ajax({
-        url:"/api/branches",
+        url:"/api/branch",
         method: "GET",
         success: (data) => {
             render(data);

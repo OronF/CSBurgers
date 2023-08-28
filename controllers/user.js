@@ -4,33 +4,32 @@ const getAllUsers = async (req, res) => {
     try {
         let Users;
 
-        let flag = 1;
-
         if (req.query.is_Manager) {
             Users = await UserService.getAllManagers(req.query.is_Manager);
-            flag = 2;
+
+            res.json(Users);
+            return;
         }
         
-        if (!req.query.phoneNumber && flag === 1){
-            if (!req.query.fname || !req.query.lname || !req.query.password) {
-                throw new Error('You have not entered all the details');
-            } else {
-                Users = await UserService.searchForLogIn(req.query.fname, req.query.lname, req.query.password);
+        if (req.query.fname && req.query.password && req.query.phoneNumber) {
+            Users = await UserService.searchForLogIn(req.query.fname, req.query.password, req.query.phoneNumber);
+
+            if(!Users) {
+                throw new Error('Non existing users');
             }
-        } else if (flag === 1) {
-            if (req.query.fname || req.query.lname || req.query.phoneNumber)
-            {
-                if (!req.query.fname || !req.query.lname || !req.query.phoneNumber) {
-                    throw new Error('You have not entered all the details');
-                } else {
-                    Users = await UserService.searchForPassward(req.query.fname, req.query.lname);
-                }
-            } else {
-                Users = await UserService.getAll();
-            }
+
+            const twentyMinutesToSeconds = 20 * 60; 
+            const twentyMinutesToMilliseconds = twentyMinutesToSeconds * 1000; 
+            res.cookie(Users.is_Manager ? 'admin' : 'user', Users._id, { maxAge: twentyMinutesToMilliseconds});
+            console.log(res.cookies);
+
+            res.json(Users);
+            return;
         }
+
+        Users = await UserService.getAll();
         
-        if(!Users || Users.length === 0) {
+        if(!Users) {
             throw new Error('Non existing users');
         }
 
@@ -91,10 +90,6 @@ const updateUser = async (req, res) => {
 
     if (!req.body.password) {
         res.status(400).json({message:'The new password to the user is required'});
-    }
-
-    if (!req.body.is_Manager) {
-        res.status(400).json({message:'The new is_Manager to the user is required'});
     }
 
     const newUser = {

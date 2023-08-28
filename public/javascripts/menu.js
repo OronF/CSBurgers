@@ -15,7 +15,7 @@ $(document).ready(async function() {
         element.removeClass('hide').addClass('nohide');
     }
 
-    const appendDishesLi = (dish) => {
+    const appendDishesLi = (dish, list) => {
         const newElement = $(`<li id="${dish._id} class="nohide" data-dish-categoryId="${dish.categoryId}">
             <div class="card">
             <div class="row">
@@ -27,36 +27,28 @@ $(document).ready(async function() {
                         <h5 class="card-title">${dish.name}</h5>
                         <p class="card-text"> ${dish.price}₪</p>
                         <p class="card-info"> ${dish.description}</p>
-
                     </div>
                 </div>
             </div>
-            <a href="/delivery" type="button" class="order-btn" data-dish-id="${dish._id}">הוספה להזמנה</a>
 
         </div>
     
         </li>`);
 
-        newElement.find('.nameOfCategory').on('click', async function() {
-            const btn = $(this);
-            const id = btn.attr('data-dish-id');
-            
+        if (dish.webServiceId) {
             $.ajax({
-                url: '/delivery',
-                method: 'GET',
-                dataType: "json",
-                contentType: 'application/json',
-                data: JSON.stringify({ id }),
+                url: `https://world.openfoodfacts.org/api/v0/product/${dish.webServiceId}`,
+                method: "GET",
                 success: function(response) {
-                    console.log("Data saved successfully:", response);
+                    newElement.find('.card-body').append(`<p>ערך תזונתי: ${response.product.nutriments.energy_value} קלוריות</p>`);
                 },
                 error: function(error) {
-                    console.error("Error saving data:", error);
+                    console.error("Error finding data:", error);
                 }
             });
-        });
+        }
 
-        dishesList.append(newElement);
+        list.append(newElement);
     }
 
     const appendMealsLi = (meal) => {
@@ -72,48 +64,42 @@ $(document).ready(async function() {
                     <h5 class="card-title title-color">${meal.name}</h5>
                     <p class="card-text"> ${meal.price}₪</p>
                     <p class="card-info"> ${meal.description}</p>
-
                 </div>
             </div>
-            <a href="/delivery" type="button" class="order-btn" data-meal-id="${meal._id}">הוספה להזמנה</a>
 
         </div>
 
         </li>`);
 
-        newElement.find('.nameOfCategory').on('click', async function() {
-            const btn = $(this);
-            const id = btn.attr('data-meal-id');
-            
+        if (meal.webServiceId) {
             $.ajax({
-                url: '/delivery',
-                method: 'GET',
-                dataType: "json",
-                contentType: 'application/json',
-                data: JSON.stringify({ id }),
+                url: `https://world.openfoodfacts.org/api/v0/product/${meal.webServiceId}`,
+                method: "GET",
                 success: function(response) {
-                    console.log("Data saved successfully:", response);
+                    newElement.find('.card-body').append(`<p>ערך תזונתי: ${response.product.nutriments.energy_value} קלוריות</p>`);
                 },
                 error: function(error) {
-                    console.error("Error saving data:", error);
+                    console.error("Error finding data:", error);
                 }
             });
-        });
+        }
 
         mealsList.append(newElement);
     }
 
-    /*const renderDishes = (data) => {
+    const renderDishes = (data) => {
         data.forEach(dish => {
-            appendDishesLi(dish);
+            appendDishesLi(dish, mealsList);
         });
-    }*/
+    }
 
     const renderMeals = (data) => {
         data.forEach(dish => {
             appendMealsLi(dish);
         });
     }
+
+    let categoryIdForFilter;
 
     const appendCategoryLi = (category) => {
         const newElement = $(`<li id="${category._id}" class="li-category" type="button">
@@ -124,6 +110,9 @@ $(document).ready(async function() {
             const btn = $(this);
             const id = btn.attr('data-category-id');
             const categorytype = btn.attr('data-category-categorytype');
+            categoryIdForFilter = id;
+
+            filterDishes();
 
             if (categorytype === "meal") {
                 if (mealsSection.hasClass('hide')) {
@@ -182,7 +171,7 @@ $(document).ready(async function() {
                 });
     
                 dishes.forEach(dish => {
-                    appendDishesLi(dish);
+                    appendDishesLi(dish, dishesList);
                 });
             }
         });
@@ -207,7 +196,18 @@ $(document).ready(async function() {
         }
     });
 
-    /*$.ajax({
+    await $.ajax({
+        url:"/api/meal",
+        method: "GET",
+        success: (data) => {
+            renderMeals(data);
+        },
+        error: (error) => {
+            console.log(error);
+        }
+    });
+
+    $.ajax({
         url:"/api/dish",
         method: "GET",
         success: (data) => {
@@ -216,21 +216,79 @@ $(document).ready(async function() {
         error: (error) => {
             console.log(error);
         }
-    });*/
+    });
 
-    $.ajax({
-        url:"/api/meal",
+    const kosherCheck = $("#kosher-check");
+const maxPriceCheck = $("#maxprice-check");
+const sortCheck = $(".sortby-check");
+const priceInp = $("#priceInp");
+const sortSelect = $("#sort-select");
+
+kosherCheck.on('change', filterDishes);
+maxPriceCheck.on('change', filterDishes);
+sortCheck.on('change', filterDishes);
+sortSelect.on('change', filterDishes);
+priceInp.keyup(filterDishes);
+
+    function filterDishes()
+    {
+        if((sortCheck.is(':checked') == true && (sortSelect.val() === "מהמחיר הנמוך לגבוה" || sortSelect.val() === "מהמחיר הגבוה לנמוך")) || kosherCheck.is(":checked") == true ||  (maxPriceCheck.is(":checked") == true && priceInp.val() !== "")){
+                    console.log("in");
+                console.log(kosherCheck.is("checked"));
+                $.ajax({
+                url: "/api/dish",
+                method: "GET",
+                dataType: "json",
+                contentType: 'application/json',
+                data: {
+                    categoryId: categoryIdForFilter,
+                    kosher: kosherCheck.is(":checked"),
+                    sort: sortSelect.val(),
+                    price: priceInp.val()
+                },
+                success: function(dishes)
+                {
+                    dishesList.empty();
+                    console.log(dishes);
+                    dishes.forEach(dish => {
+                        appendDishesLi(dish);
+                    });
+                },
+                error: function(error) {
+                    console.error("Error finding data:", error);
+                }
+            });
+    }
+    else
+    {
+        $.ajax({
+        url: "/api/dish",
         method: "GET",
         dataType: "json",
         contentType: 'application/json',
         data: {
-            categoryId: "64d0f4bcfdf8c926feae7c11"
+            categoryId: categoryIdForFilter,
         },
-        success: (data) => {
-            renderMeals(data);
+        success: function(dishes)
+        {
+            dishesList.empty();
+            console.log(dishes);
+            dishes.forEach(dish => {
+                appendDishesLi(dish);
+            });
         },
-        error: (error) => {
-            console.log(error);
+        error: function(error) {
+            console.error("Error finding data:", error);
         }
     });
+    }
+    }
 });
+
+
+ function restrictInputToNumbers(event) {
+    const input = event.target;
+    const inputValue = input.value;
+    const sanitizedValue = inputValue.replace(/[^\d]/g, ''); // Remove non-digit characters
+    input.value = sanitizedValue;
+  }

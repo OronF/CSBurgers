@@ -1,3 +1,60 @@
+function checkIfPhoneNumberIsValid(inp)
+{
+    for(let i = 0; i<inp.length; i++)
+    {
+        if(isNaN(inp[i]))
+        return false;
+    }
+    
+    return true;
+}
+
+function checkIfEmpty(inp, Error)
+{
+    if(inp === "")
+    {
+        Error.html("שדה ריק אינו חוקי");
+        return;
+    }
+}
+
+function nameValidation(name, error)
+{
+    if(name.length < 2)
+    {
+        error.html("על השדה להכיל לפחות 2 תווים בעברית");
+    }
+    
+    for (let i = 0; i < name.length; i++) {
+        const charCode = name.charCodeAt(i);
+        
+        // Check if the character is a valid Hebrew letter
+        if (charCode < 1488 || charCode > 1514) {
+            error.html("על השדה להכיל תווים בעברית בלבד");
+            if(name.length<2)
+            error.html("על השדה להכיל תווים בעברית בלבד ולפחות 2 תווים")
+
+        }
+    }
+
+    
+}
+
+const approve = $('#approveBtn');
+const fname = document.getElementById('fname');
+const lname = document.getElementById('lname');
+const phoneNumber = document.getElementById('phone-number');
+const passowrdInput = document.getElementById('passowrdInput');
+const confirmPassowrdInput = document.getElementById('confirmPassowrdInput');
+
+fname,lname,phoneNumber,passowrdInput,confirmPassowrdInput.addEventListener("keyup", e => {
+    e.preventDefault();
+    if (e.key === "Enter") {
+        approve.click();
+    }
+  });
+
+
 $(document).ready(function() {
 
     const approve = $('#approveBtn');
@@ -6,78 +63,149 @@ $(document).ready(function() {
         const fnameTxt = $('#fname');
         const lnameTxt = $('#lname');
         const phoneNumberTxt = $('#phone-number');
-        const passwordTxt = $('#form3Example4cg');
-        const passwordApproveTxt = $('#form3Example4cdg');
+        const passwordTxt = $('#passowrdInput');
+        const passwordApproveTxt = $('#confirmPassowrdInput');
+
+        const fnameError = $('#fnameError');
+        const lnameError = $('#lnameError');
+        const passwordError = $('#passwordError');
+        const approvePasswordError = $('#approvePasswordError');
+        const phoneNumberError = $('#phoneNumberError');
+        const termsCheckBox = $('#form2Example32')
+        const termsError = $('#termsError')
 
         const fnameVal = fnameTxt.val();
         const lnameVal = lnameTxt.val();
         const phoneNumberVal = phoneNumberTxt.val();
         const passwordVal = passwordTxt.val();
         const passwordApproveVal = passwordApproveTxt.val();
+        checkIfEmpty(passwordApproveVal, approvePasswordError);
 
-        if (fnameVal.length <= 12) {
-            for (let i = 0; i< fnameVal; i++) {
-                if (fnameVal[i] > 'z' || fnameVal[i] < 'A') {
-                    return;
+        nameValidation(fnameVal, fnameError);
+        nameValidation(lnameVal, lnameError);
+
+        if(!termsCheckBox.prop('checked'))
+            termsError.html("חובה להסכים לתנאי השימוש")
+
+            if (fnameVal.length > 10) {
+                fnameError.html( "הזנת שם פרטי ארוך מדי");
+            } 
+            
+            if (lnameVal.length > 10){
+                lnameError.html("הזנת שם משפחה ארוך מדי");
+            } 
+            
+            if (!checkIfPhoneNumberIsValid(phoneNumberVal)){
+                phoneNumberError.html("הזנת מספר טלפון לא חוקי");
+            }
+
+
+            if(passwordVal.length < 8)
+            {
+                passwordError.html("על הסיסמה להכיל לפחות 8 תווים");
+            }
+
+            if(passwordApproveVal !== passwordVal)
+            approvePasswordError.html("שדה אישור הסיסמה אינו זהה לסיסמה")
+
+            $.ajax({
+                url:"/api/user",
+                method: "POST",
+                dataType: "json",
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    fname: fnameVal,
+                    lname: lnameVal,
+                    orders: [],
+                    phoneNumber: phoneNumberVal,
+                    password: passwordVal,
+                    approvePassword: passwordApproveVal,
+                    is_Manager: false
+                }),
+                success: function(response) {
+                    console.log("Data saved successfully:", response);
+
+                    // Read the 'signUpCookie' value
+                    const phoneNumberCookie = getCookie('signUpCookie');
+                    console.log('Phone number from cookie:', phoneNumberCookie);
+                    $('#exampleModal').modal('show');
+                },
+                error: function(error) {
+                    console.error("Error saving data:", error);
+                }
+            });
+
+            
+            function getCookie(name) {
+                const value = "; " + document.cookie;
+                const parts = value.split("; " + name + "=");
+                if (parts.length === 2) {
+                  return parts.pop().split(";").shift();
                 }
             }
-        } else {
-            return;
-        }
-
-        if (lnameVal.length <= 12) {
-            for (let i = 0; i< lnameVal; i++) {
-                if (lnameVal[i] > 'z' || lnameVal[i] < 'A') {
-                    return;
-                }
-            }
-        } else {
-            return;
-        }
-
-        if (phoneNumberVal.length != 13 && phoneNumberVal.length != 14) {
-            return;
-        }
-
-        if (passwordVal.length > 8) {
-            let counter = 0;
-
-            for (let i = 0; i < passwordVal.length; i++) {
-                if (passwordVal[i] <= 'z' && passwordVal[i] >= 'A') {
-                    counter++;
-                }
-            }
-
-            if (counter === 0) {
-                return;
-            }
-        } else {
-            return;
-        }
-
-        if (passwordApproveVal !== passwordVal) {
-            return;
-        }
-
-        $.ajax({
-            url:"/api/user",
-            method: "POST",
-            dataType: "json",
-            contentType: 'application/json',
-            data: JSON.stringify({
-                fname: fnameVal,
-                lname: lnameVal,
-                orders: [],
-                phoneNumber: phoneNumberVal,
-                password: passwordVal,
-                is_Manager: false
-            }),
-            success: function(response) {
-                console.log("Data saved successfully:", response);
-            },
-            error: function(error) {
-                console.error("Error saving data:", error);
-            }
-        });
     });
 });
+
+/************************************** phone number formator **************************************/
+const phoneNumberField = document.getElementById("phone-number");
+
+
+phoneNumberField.addEventListener("select", function(event) {
+    event.preventDefault(); // Prevent text selection
+ });
+ 
+
+    // Disable arrow keys and text selection
+    phoneNumberField.addEventListener('keydown', function(event) {
+      if (event.key === 'ArrowLeft' || event.key === 'ArrowRight' || event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+        event.preventDefault();
+      }
+    });
+
+    phoneNumberField.addEventListener("select", function(event) {
+        event.preventDefault(); // Prevent text selection
+      });
+
+phoneNumberField.addEventListener("click", function() {
+    if (phoneNumberField.value.length === 0) {
+        phoneNumberField.value = "05";
+    }
+});
+
+phoneNumberField.addEventListener("keydown", function(event) {
+    if ((event.key === "Backspace" || event.key === "Delete") && phoneNumberField.value.length === 2) {
+        event.preventDefault();
+    }
+});
+
+document.addEventListener("click", function(event) {
+    if (event.target !== phoneNumberField && phoneNumberField.value.length === 2) {
+        phoneNumberField.value = "";
+    }
+});
+
+
+function phoneNumberFormatter()
+{
+    const phoneNumberField = document.getElementById("phone-number");
+    const formattedInputVal = formatPhoneNumber(phoneNumberField.value);
+    phoneNumberField.value = formattedInputVal;
+    
+}
+function formatPhoneNumber(value)
+{
+    if(!value) return value;
+    
+    const phoneNumber = value.replace(/[^\d]/g, '');
+    const phoneNumberLength = phoneNumber.length;
+    
+    if(phoneNumberLength < 4) return phoneNumber;
+    if(phoneNumberLength < 7){
+        return `(${phoneNumber.slice(0,3)}) ${phoneNumber.slice(3)}`;
+    }
+    return `(${phoneNumber.slice(0,3)}) ${phoneNumber.slice(
+        3,
+        6,
+        )}-${phoneNumber.slice(6,9)
+        }`;
+}
