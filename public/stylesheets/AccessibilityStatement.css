@@ -1,7 +1,6 @@
 body {
     font-family: 'Lato', sans-serif;
     font-family: 'Noto Sans Hebrew', sans-serif;
-    margin: 0;
     direction:rtl;
   }
   
@@ -10,12 +9,24 @@ body {
   }
   
   .AccessibilityStatement-section {
-    padding: 50px;
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;
     text-align: center;
-    background-color: #474e5d;
-    color: white;
+    color: rgb(79, 79, 79);
   }
   
-  .title {
-    color: grey;
+  .mini-title {
+    color: rgb(154, 13, 13);
+    font-size: 1.5rem;
+  }
+
+
+  #acTitle
+  {
+    color: white;
+    text-align: center;
+    background-color:rgb(154, 13, 13);
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;
+    padding: 1.5vw;
   }

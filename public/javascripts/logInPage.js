@@ -31,6 +31,13 @@ $(document).ready(function() {
 
     const btnSubmit = $('.submit-btn');
 
+    window.addEventListener("keyup", e => {
+        e.preventDefault();
+        if (e.key === "Enter") {
+            btnSubmit.click();
+        }
+    });
+
     btnSubmit.on('click', function() {
         const fnameTxt = $('#fname');
         const phoneNumberTxt = $('#phone-number')

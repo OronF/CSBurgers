@@ -191,7 +191,7 @@ $(document).ready(function() {
                                 area: Area
                             }),
                             success: function(newData) {
-                                console.log("saving data:", error);
+                                console.log("saving data:", newData);
                             },
                             error: function(error) {
                                 console.error("Error saving data:", error);
