@@ -6,12 +6,43 @@ const getAllDishes = async (req, res) => {
 
         if (req.query.categoryId) {
             dishes = await DishService.getByCategory(req.query.categoryId);
-        } else {
-            dishes = await DishService.getAll();
-        }
-
+            
+            if (!req.query.price && !req.query.kosher) {
+                if (req.query.sort) {
+                    if (req.query.sort === "מהמחיר הגבוה לנמוך") {
+                        dishes = await DishService.HighLowSort(req.query.kosher, req.query.price, req.query.categoryId);
+                    } else if (req.query.sort === "מהמחיר הנמוך לגבוה") {
+                        dishes = await DishService.LowHighSort(req.query.kosher, req.query.price, req.query.categoryId);
+                    }
+                }
+                res.json(dishes);
+                return;
+            }
+        } 
+            
+        dishes = await DishService.getAll();
+        
         if (!dishes) {
             throw new Error('Non existing dishes');
+        }
+
+        if (req.query.price || req.query.kosher) {
+            let DishesFilter = await DishService.filterDishes(req.query.price, req.query.kosher, req.query.categoryId, dishes);
+            
+            if (req.query.sort === "מהמחיר הגבוה לנמוך") {
+                DishesFilter = await DishService.HighLowSort(req.query.kosher, req.query.price, req.query.categoryId);
+            } else if (req.query.sort === "מהמחיר הנמוך לגבוה") {
+                DishesFilter = await DishService.LowHighSort(req.query.kosher, req.query.price, req.query.categoryId);
+            }
+
+            res.json(DishesFilter);
+            return;
+        }
+
+        if (req.query.sort === "מהמחיר הגבוה לנמוך") {
+            dishes = await DishService.HighLowSort(req.query.kosher, req.query.price, req.query.categoryId);
+        } else if (req.query.sort === "מהמחיר הנמוך לגבוה") {
+            dishes = await DishService.LowHighSort(req.query.kosher, req.query.price, req.query.categoryId);
         }
 
         res.json(dishes);
@@ -27,12 +58,14 @@ const getAllDishes = async (req, res) => {
 
 const createDish = async (req, res) => {
     try {
+
         const tmp = {
             name: req.body.name,
             price: req.body.price,
             categoryId: req.body.categoryId,
             picture: req.body.picture,
-            description: req.body.description
+            description: req.body.description,
+            kosher: req.body.kosher
         }
 
         if (req.body.webServiceId) {
@@ -77,13 +110,18 @@ const updateDish = async (req, res) => {
         res.status(400).json({message:'The new description to the dish is required'});
     }
 
+    if (!req.body.kosher) {
+        res.status(400).json({message:'The new kosher to the dish is required'});
+    }
+
     const newDish = {
         id: req.params.id,
         name: req.body.name,
         price: req.body.price,
         categoryId: req.body.categoryId,
         picture: req.body.picture,
-        description: req.body.description
+        description: req.body.description, 
+        kosher: req.body.kosher
     }
 
     if (req.body.webServiceId) {

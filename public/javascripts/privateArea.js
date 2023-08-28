@@ -2,6 +2,7 @@ $(document).ready(async function() {
     const cookieValue = document.cookie;
     const decodedValue = decodeURIComponent(cookieValue);
 
+    const errors = $('.errors');
     const matches = decodedValue.match(/"([^"]+)"/);
     const extractedContent = matches ? matches[1] : null;
 
@@ -209,44 +210,124 @@ $(document).ready(async function() {
             $(`.info`).append(`<div class="inputs">
                 <input value="${userData.fname}" class="form-control" id="fname-${extractedContent}">
                 <input value="${userData.lname}" class="form-control" id="lname-${extractedContent}">
-                <input value="${userData.phoneNumber}" class="form-control" id="phoneNuber-${extractedContent}">
+                <input value="${userData.phoneNumber}" class="form-control" id="phoneNumber-${extractedContent}">
             </div>`);  
         } else {
             const fname = $(`#fname-${extractedContent}`).val();
             const lname = $(`#lname-${extractedContent}`).val();
-            const phoneNumber = $(`#phoneNuber-${extractedContent}`).val();
+            const phoneNumber = $(`#phoneNumber-${extractedContent}`).val();
 
-            await $.ajax({
-                url:`/api/user/${extractedContent}`,
-                method: "PUT",
-                dataType: "json",
-                contentType: 'application/json',
-                data: JSON.stringify({
-                    fname: fname,
-                    lname: lname,
-                    orders: userData.orders,
-                    phoneNumber: phoneNumber,
-                    password: userData.password,
-                    is_Manager: userData.is_Manager
-                }),
-                success: function(data) {
-                    console.log("Data saved successfully:", data);
-                    userData = data;
-                },
-                error: function(error) {
-                    console.error("Error saving data:", error);
+            if(fname && lname && phoneNumber) {
+
+                if (fname.length > 12) {
+                    errors.html('שם פרטי ארוך מידי');
+                    errors.show();
+                    return;
+                } else {
+                    for (let i = 0; i< fname.length; i++) {
+                        const charCode = fname.charCodeAt(i);
+        
+                        if (charCode < 1488 || charCode > 1514) { 
+                            errors.html('שם פרטי מכיל תווים לא בעברית');
+                            errors.show();
+                            return;
+                        }
+                    }
                 }
-            });
 
-            $(`.inputs`).remove();
+                if (lname.length > 12) {
+                    errors.html('שם משפחה ארוך מידי');
+                    errors.show();
+                    return;
+                } else {
+                    for (let i = 0; i< lname.length; i++) {
+                        const charCode = lname.charCodeAt(i);
+        
+                        if (charCode < 1488 || charCode > 1514) { 
+                            errors.html('שם משפחה מכיל תווים לא באנגלית');
+                            errors.show();
+                            return;
+                        }
+                    }
+                }
 
-            $(`.info`).append(`
-                <p class="SomeInfo" id = "fname">שם פרטי: ${fname}</p>
-                <p class="SomeInfo" id = "lname">שם משפחה: ${lname}</p>
-                <p class="SomeInfo" id = "phoneNumber">מספר טלפון: ${phoneNumber}</p>
-            `);
+                if (phoneNumber.length !== 14) {
+                    errors.html('אורך לא חוקי של מספר');
+                    errors.show();
+                    return;
+                } else {
+                    for (let i = 0; i< phoneNumber.length; i++) {
+                        if (phoneNumber[i] < '0' && phoneNumber[i] > '9' && phoneNumber[i] != " " && phoneNumber[i] != "-" && phoneNumber[i] != "(" && phoneNumber[i] != ")") { 
+                            errors.html('הזנת מספר לא חוקי');
+                            errors.show();
+                            return;
+                        }
+                    }
 
-            $(`#update-icon`).removeClass('bi bi-check-lg').addClass('bi bi-pencil-fill');
+                    let flag = 1;
+
+                    await $.ajax({
+                        url: "/api/user",
+                        method: "GET",
+                        success: function(data)
+                        {
+                            data.forEach(user => {
+                                if (user._id != extractedContent) {
+                                    if(user.phoneNumber === phoneNumber) {
+                                        errors.show();
+                                        errors.html("מספר טלפון זה כבר בשימוש במשתמש אחר");
+                                        flag = 2;
+                                    }
+                                }
+                            });
+                        },
+                        error: function(error) {
+                            console.error("Error finding data",error);
+                        }
+                    });
+
+                    if (flag === 2) {
+                        flag = 1;
+                        return;
+                    }
+                }
+
+                await $.ajax({
+                    url:`/api/user/${extractedContent}`,
+                    method: "PUT",
+                    dataType: "json",
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        fname: fname,
+                        lname: lname,
+                        orders: userData.orders,
+                        phoneNumber: phoneNumber,
+                        password: userData.password,
+                        is_Manager: userData.is_Manager
+                    }),
+                    success: function(data) {
+                        errors.hide();
+                        console.log("Data saved successfully:", data);
+                        userData = data;
+                    },
+                    error: function(error) {
+                        console.error("Error saving data:", error);
+                    }
+                });
+    
+                $(`.inputs`).remove();
+    
+                $(`.info`).append(`
+                    <p class="SomeInfo" id = "fname">שם פרטי: ${fname}</p>
+                    <p class="SomeInfo" id = "lname">שם משפחה: ${lname}</p>
+                    <p class="SomeInfo" id = "phoneNumber">מספר טלפון: ${phoneNumber}</p>
+                `);
+    
+                $(`#update-icon`).removeClass('bi bi-check-lg').addClass('bi bi-pencil-fill');
+            } else {
+                errors.show();
+                errors.html('לא הזנת את כל הפרטים');
+            }
         }
     
     });
@@ -303,7 +384,6 @@ $(document).ready(async function() {
 
     function filterOrdersOfUser () {
         if (numOfProductVal || priceSelectVal || frameworkVal) {
-            console.log('fgfhgh');
             $.ajax({
                 url: "/api/order",
                 method: "GET",

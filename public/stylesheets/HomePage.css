@@ -85,25 +85,50 @@
 .link {
     font-family: 'Lato', sans-serif;
     font-family: 'Noto Sans Hebrew', sans-serif;
-    margin-right: 2vw;
 }
 
 .footer-links{
+    border: none;
+    background: transparent;
     color:black;
-    font-size: 1.5vw;
+    text-decoration: none;
+    border: none;
+    outline: none;
+    font-size: 1.3rem;
+    transition: all 0.4s;
+    
 }
 
+.footer-links:hover, .footer-social-links:hover
+{
+    border: none;
+    background: transparent;
+    color: rgb(154, 13, 13);
+    text-decoration: none;
+    border: none;
+    outline: none;
+}
+
+.links-nav{
+    gap:1vw;
+
+}
+
+.social-links-nav
+{
+    gap: 1.4vw;
+}
 .footer-social-links{
     color:black;
-    font-size: 2vw;
+    font-size: 1.5rem;
+    transition: all 0.4s;
 }
 
-.cs-logo{
-    display: flex;
-    justify-content: center;
-}
-
-.csBurger-logo{
-    width: 20vw;
-    margin-top: 2vw;
+.separator
+{
+    
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;
+    font-size: 1.2rem;
+    color:black;
 }

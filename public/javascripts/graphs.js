@@ -10,7 +10,8 @@ $(document).ready(async function() {
             closed: true
         },
         success: function(data) {
-            ordersData = parseData1(data);
+            ordersData = getParsedArray(parseData1(data));
+            console.log('orders data',ordersData);
             drawChart1(ordersData);
         },
         error: function(error) {
@@ -23,11 +24,34 @@ $(document).ready(async function() {
         data.forEach(order => {
             arr.push({
                 date: new Date(order.orderDate),
-                value: order.totalprice
+                value: parseFloat(order.totalprice)
             });
         });
 
         return arr;
+    }
+
+    function getParsedArray(data) {
+        const parsedArray = [
+            { month: 1, sales: 0 },
+            { month: 2, sales: 0 },
+            { month: 3, sales: 0 },
+            { month: 4, sales: 0 },
+            { month: 5, sales: 0 },
+            { month: 6, sales: 0 },
+            { month: 7, sales: 0 },
+            { month: 8, sales: 0 },
+            { month: 9, sales: 0 },
+            { month: 10, sales: 0 },
+            { month: 11, sales: 0 },
+            { month: 12, sales: 0 }
+          ];
+
+          data.forEach((item) => {
+            parsedArray[item.date.getMonth()].sales += item.value;
+          });
+
+          return parsedArray;
     }
 
     function drawChart1(data) {
@@ -38,12 +62,12 @@ $(document).ready(async function() {
         const marginBottom = 30;
         const marginLeft = 40;
 
-        const x = d3.scaleUtc()
-            .domain(d3.extent(data, d => d.date))
+        const x = d3.scaleLinear()
+            .domain([1, 12])
             .range([marginLeft, width - marginRight]);
 
         const y = d3.scaleLinear()
-            .domain([0, d3.max(data, d => d.value)])
+            .domain([0, d3.max(data, d => d.sales)])
             .range([height - marginBottom, marginTop]);
 
         const svg = d3.select('.line-chart-1')
@@ -66,11 +90,11 @@ $(document).ready(async function() {
                 .attr("y", 10)
                 .attr("fill", "currentColor")
                 .attr("text-anchor", "start")
-                .text("↑ Daily close ($)"));
+                .text("↑ Month close ($)"));
 
         const line = d3.line()
-            .x(d => x(d.date))
-            .y(d => y(d.value));
+            .x(d => x(d.month))
+            .y(d => y(d.sales));
 
         svg.append("path")
             .attr("fill", "none")
@@ -104,7 +128,7 @@ $(document).ready(async function() {
         // Fetch branch details for each branch
         for (const branch of branchData) {
             await $.ajax({
-                url: `/api/branch/${branch._id}`,
+                url: `/api/branch/${branch._id.branch}`,
                 method: "GET",
                 success: function(data) {
                     branch._id = data.name;
