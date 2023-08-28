@@ -191,7 +191,7 @@ $(document).ready(function() {
                                 area: Area
                             }),
                             success: function(newData) {
-                                console.log("saving data:", error);
+                                console.log("saving data:", newData);
                             },
                             error: function(error) {
                                 console.error("Error saving data:", error);
@@ -207,14 +207,14 @@ $(document).ready(function() {
     
                         const newElement = $(`<button type="button" class="closebtn-update" data-bs-dismiss="modal" aria-label="Close"><i class="bi bi-check2"></i></button>`);
     
-                        newElement.find('.clodebtn-update').on('click', function() {
-                            modalbuttons.append(saveBtn);
-                            newElement.find('.clodebtn-update').remove();
+                        newElement.on('click', function() {
+                            saveBtn.show();
+                            newElement.remove();
                         });
     
                         modalbuttons.append(newElement);
     
-                        saveBtn.remove();
+                        saveBtn.hide();
                     }
                 }
             });
@@ -287,6 +287,7 @@ $(document).ready(function() {
         });
 
         saveBtn.on('click', async function() {
+            console.log(32134);
             if (branchName.val() && address.val() && Activity.val() && x.val() && y.val()) {
                 const selectedManager = managers.find(":selected");
                 const selectedarea = area.find(":selected");
@@ -330,14 +331,14 @@ $(document).ready(function() {
 
                     const newElement = $(`<button type="button" class="closebtn" data-bs-dismiss="modal" aria-label="Close"><i class="bi bi-check2"></i></button>`);
 
-                    newElement.find('.clodebtn').on('click', function() {
-                        modalbuttons.append(saveBtn);
-                        newElement.find('.clodebtn').remove();
+                    newElement.on('click', function() {
+                        saveBtn.show();
+                        newElement.remove();
                     });
 
                     modalbuttons.append(newElement);
 
-                    saveBtn.remove();
+                    saveBtn.hide();
                 }
             }
         });
