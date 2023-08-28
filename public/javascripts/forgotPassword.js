@@ -1,4 +1,3 @@
-
 function checkIfEmpty(inp, Error)
 {
     if(inp === "")
@@ -7,6 +6,16 @@ function checkIfEmpty(inp, Error)
         return true;
     }
 }
+
+const approve = $('#approveBtn');
+
+window.addEventListener("keyup", e => {
+    e.preventDefault();
+    if (e.key === "Enter") {
+        approve.click();
+    }
+  });
+
 $(document).ready(function() {
 
     const approve = $('#approveBtn');
@@ -64,7 +73,7 @@ $(document).ready(function() {
             return;
         }
         if (passwordApproveVal !== passwordVal) {
-            approvePasswordError.html("סיסמאות לא שוות")
+            approvePasswordError.html("שדה אישור הסיסמה אינו זהה לסיסמה")
             flagChangePassword = 0;
         }
         if (fnameVal.length > 10) {
