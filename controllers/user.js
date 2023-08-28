@@ -26,6 +26,16 @@ const getAllUsers = async (req, res) => {
             res.json(Users);
             return;
         }
+        if (req.query.fname && req.query.lname && req.query.phoneNumber) {
+            Users = await UserService.searchForFixingPassward(req.query.fname, req.query.lname, req.query.phoneNumber);
+
+            if(!Users) {
+                throw new Error('Non existing users');
+            }
+
+            res.json(Users);
+            return;
+        }
 
         Users = await UserService.getAll();
         
