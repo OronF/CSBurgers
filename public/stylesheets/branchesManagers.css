@@ -155,14 +155,18 @@ li {
 }
 
 #info {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
+    align-items: center;
+    direction: rtl;
+}
+
+.info-input 
+{
 }
 
 .inputs {
     display: flex;
     flex-direction: column;
+
 }
 
 .modal-header {
@@ -171,5 +175,60 @@ li {
 }
 
 .modal-body {
-    height: 20vw;
+    height: 32rem;
 }
+
+
+#search-area
+{
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;
+    text-align: right;
+
+}
+.updateBranchTitle
+{
+    color:rgb(154, 13, 13);
+}
+.inputs{
+}
+
+.row
+{
+    align-items: center;
+    justify-content: center;
+}
+
+.updateSelect
+{
+}
+
+.inp-title
+{
+    text-align: right;
+color:grey;
+        margin-right: 1rem;
+        margin-top:0.5rem;
+        margin-bottom:0.2rem;
+}
+
+.addB
+{
+    justify-content: center;
+}
+
+#addNewBranch
+{
+}
+/* 
+.saveBtn-update{
+    color:  rgb(154, 13, 13);
+    border:none;
+    border-width: 0.113vw;
+    background: transparent;
+    font-size: x-large;
+    transition: all 0.4s;
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;
+} */
+

@@ -16,6 +16,11 @@
     transition: all 0.4s;
 }
 
+.btn-back:hover
+{
+    transform: scale(1.05);
+}
+
 .form-control
 {
     text-align: right;
@@ -31,4 +36,23 @@
 .approve
 {
     font-size: xx-large;
+}
+
+.link
+{
+    color:rgb(0, 0, 0);
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;
+}
+
+.link:hover{
+    color:rgb(154, 13, 13);
+}
+
+.pop-title
+{
+    font-size: 2.7vw;
+    color: rgb(154, 13, 13);
+    text-align: center;
+    margin-top: 2vw;
 }
