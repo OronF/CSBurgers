@@ -13,10 +13,6 @@ const createDish = async (name, price, categoryId, picture, description, kosher)
         description: description,
         kosher: kosher
     });
-
-    if (newDish.webServiceId) {
-        dish.webServiceId = newDish.webServiceId;
-    }
     
     return await dish.save();
 }
@@ -51,21 +47,16 @@ const updateDish = async (newDish) => {
     dish.description = newDish.description;
     dish.kosher = newDish.kosher;
 
-    if (newDish.webServiceId) {
-        dish.webServiceId = newDish.webServiceId;
-    }
-
     await dish.save();
     return dish;
 }
 
 const getByCategory = async (categoryId) => {
-    return await Dish.find({categoryId});
+    return  Dish.find({categoryId});
 }
 
 const isKosher = async (categoryId, dishes) =>
 {
-    console.log(categoryId);
     return dishes.filter((dish) => {
         return dish.kosher && dish.categoryId == categoryId;
     });
@@ -81,16 +72,15 @@ const maxPrice = async (dishes, priceInp, categoryId) =>
     });
 }
 
-const HighLowSort = async () =>
+const HighLowSort = async (categoryId) =>
 {
     return await Dish.find({}).sort({
         price: -1
     });
 }
 
-const LowHighSort = async () =>
+const LowHighSort = async (categoryId) =>
 {
-    console.log("hi");
     return await Dish.find({}).sort({
         price: 1
     });

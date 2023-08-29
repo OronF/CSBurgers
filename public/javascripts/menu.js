@@ -27,62 +27,41 @@ $(document).ready(async function() {
                         <h5 class="card-title">${dish.name}</h5>
                         <p class="card-text"> ${dish.price}₪</p>
                         <p class="card-info"> ${dish.description}</p>
+
                     </div>
                 </div>
             </div>
+            <a href="#" type="button" class="order-btn">הוספה להזמנה</a>
 
         </div>
     
         </li>`);
 
-        if (dish.webServiceId) {
-            $.ajax({
-                url: `https://world.openfoodfacts.org/api/v0/product/${dish.webServiceId}`,
-                method: "GET",
-                success: function(response) {
-                    newElement.find('.card-body').append(`<p>ערך תזונתי: ${response.product.nutriments.energy_value} קלוריות</p>`);
-                },
-                error: function(error) {
-                    console.error("Error finding data:", error);
-                }
-            });
-        }
-
         dishesList.append(newElement);
     }
 
-    const appendMealsLi = (meal) => {
-        const newElement = $(`<li id="${meal._id} class="nohide">
+    const appendMealsLi = (dish) => {
+        const newElement = $(`<li id="${dish._id} class="nohide">
 
                 <div class="card">
             <div class="row">
             
             <div class="col-md-4">
-            <img src="${meal.picture}" class="card-img-top" alt="${meal.name}" id="picture">
+            <img src="${dish.picture}" class="card-img-top" alt="${dish.name}" id="picture">
         </div>
                 <div class="col-md-8">
-                    <h5 class="card-title title-color">${meal.name}</h5>
-                    <p class="card-text"> ${meal.price}₪</p>
-                    <p class="card-info"> ${meal.description}</p>
+                    <h5 class="card-title title-color">${dish.name}</h5>
+                    <p class="card-text"> ${dish.price}₪</p>
+                    <p class="card-info"> ${dish.description}</p>
+
                 </div>
             </div>
+            <a href="#" type="button" class="order-btn">הוספה להזמנה</a>
 
         </div>
 
+    
         </li>`);
-
-        if (meal.webServiceId) {
-            $.ajax({
-                url: `https://world.openfoodfacts.org/api/v0/product/${meal.webServiceId}`,
-                method: "GET",
-                success: function(response) {
-                    newElement.find('.card-body').append(`<p>ערך תזונתי: ${response.product.nutriments.energy_value} קלוריות</p>`);
-                },
-                error: function(error) {
-                    console.error("Error finding data:", error);
-                }
-            });
-        }
 
         mealsList.append(newElement);
     }
@@ -103,7 +82,7 @@ $(document).ready(async function() {
 
     const appendCategoryLi = (category) => {
         const newElement = $(`<li id="${category._id}" class="li-category" type="button">
-            <a class="nameOfCategory" id="${category._id}" data-category-id="${category._id}" data-category-categorytype="${category.categorytype}" href="/menu#${category.name}">${category.name}</a>
+            <a class="nameOfCategory" data-category-id="${category._id}" data-category-categorytype="${category.categorytype}" href="/menu#${category.name}">${category.name}</a>
         </li>`);
 
         newElement.find('.nameOfCategory').on('click', async function() {
@@ -154,25 +133,25 @@ $(document).ready(async function() {
 
                 let dishes;
     
-                await $.ajax({
-                    url:"/api/dish",
-                    method: "GET",
-                    dataType: "json",
-                    contentType: 'application/json',
-                    data: {
-                        categoryId: id
-                    },
-                    success: function(data) {
-                        dishes = data;
-                    },
-                    error: function(error) {
-                        console.error("Error finding data:", error);
-                    }
-                });
+                // await $.ajax({
+                //     url:"/api/dish",
+                //     method: "GET",
+                //     dataType: "json",
+                //     contentType: 'application/json',
+                //     data: {
+                //         categoryId: id
+                //     },
+                //     success: function(data) {
+                //         dishes = data;
+                //     },
+                //     error: function(error) {
+                //         console.error("Error finding data:", error);
+                //     }
+                // });
     
-                dishes.forEach(dish => {
-                    appendDishesLi(dish);
-                });
+                // dishes.forEach(dish => {
+                //     appendDishesLi(dish);
+                // });
             }
         });
 
@@ -232,9 +211,20 @@ const sortSelect = $("#sort-select");
 kosherCheck.on('change', filterDishes);
 maxPriceCheck.on('change', filterDishes);
 sortCheck.on('change', filterDishes);
-sortSelect.on('change', filterDishes);
-priceInp.keyup(filterDishes);
+sortSelect.on('change', checkSelect);
+priceInp.keyup(checkPriceInp);
 
+function checkSelect(){
+    if(sortCheck.is(":checked"))
+    filterDishes();
+
+}
+
+function checkPriceInp()
+{
+    if(maxPriceCheck.is(":checked"))
+    filterDishes();
+}
     function filterDishes()
     {
         if((sortCheck.is(':checked') == true && (sortSelect.val() === "מהמחיר הנמוך לגבוה" || sortSelect.val() === "מהמחיר הגבוה לנמוך")) || kosherCheck.is(":checked") == true ||  (maxPriceCheck.is(":checked") == true && priceInp.val() !== "")){
@@ -249,7 +239,9 @@ priceInp.keyup(filterDishes);
                     categoryId: categoryIdForFilter,
                     kosher: kosherCheck.is(":checked"),
                     sort: sortSelect.val(),
-                    price: priceInp.val()
+                    price: priceInp.val(),
+                    priceB: maxPriceCheck.is(":checked"),
+                    sortB: sortCheck.is(':checked')
                 },
                 success: function(dishes)
                 {
