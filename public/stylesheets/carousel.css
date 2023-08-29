@@ -2,8 +2,9 @@
 
 /* Slideshow container */
 .slideshow-container {
-  max-width: 86%;
+  max-width: 87.59%;
   position: relative;
+  margin-top: 2vh;
 }
 .mySlides{
   padding-top: 50;
@@ -35,11 +36,11 @@
   position: absolute;
   top: 50%;
   width: auto;
-  margin-top: -22px;
-  padding: 16px;
+  margin-top: -1vw;
+  padding: 1vw;
   color: rgb(117, 117, 117);
   font-weight: bold;
-  font-size: 30px;
+  font-size: 2vw;
   transition: 0.6s ease;
   border-radius: 0 3px 3px 0;
   user-select: none;
