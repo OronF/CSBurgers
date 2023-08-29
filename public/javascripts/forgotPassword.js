@@ -145,7 +145,6 @@ $(document).ready(function() {
             flagChangePassword = 0;
         }
 
-
         if (passwordVal.length >= 8) {
             let counter = 0;
 
