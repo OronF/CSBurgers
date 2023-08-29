@@ -11,6 +11,12 @@
 
 }
 
+.modal-body
+{
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;
+}
+
 .deliveryPageTitle
 {
     font-family: 'Lato', sans-serif;
@@ -104,14 +110,8 @@
 .link{
     color:black;
 }
-
 .input
 {
     direction: rtl;
     margin-bottom: 0.5vw;
-}
-
-.form-control
-{
-    text-align: right;
 }

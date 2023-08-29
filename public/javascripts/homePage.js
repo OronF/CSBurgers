@@ -22,7 +22,7 @@ $(document).ready(async function() {
         });
 
         const user = $('.user');
-        user.html(`שלום: ${userName}`);
+        user.html(`שלום, ${userName}`);
 
         const btnGuest = $('.btn-guest');
         btnGuest.remove();

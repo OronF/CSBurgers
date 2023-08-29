@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us</title>
+    <title>אודות</title>
     <link rel="stylesheet" href="./stylesheets/aboutUs.css">
+    <link rel="stylesheet" href="./stylesheets/HomePage.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <!-- icon-->
     <link rel="icon" href="burger.png">
@@ -18,30 +19,57 @@
     <link href="https://fonts.googleapis.com/css2?family=Lato&family=Noto+Sans+Hebrew:wght@500;900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <a href="/" class="btn-back"> 
-        <i class="bi bi-arrow-bar-right"></i> לחזרה לעמוד הבית </a>
+    <!-- <a href="/" class="btn-back">  -->
+        <!-- <i class="bi bi-arrow-bar-right"></i> לחזרה לעמוד הבית </a> -->
 
-    <section class="vh-100 bg-image"
-    style="background-image: url('./images/pagesImgs/CSBurgers.png');">
-    <div class="mask d-flex align-items-center h-100 gradient-custom-3 register-container">
-      <div class="container h-100">
-          <div class="row d-flex justify-content-center align-items-center h-100">
-              <div class="col-12 col-md-9 col-lg-7 col-xl-6">
-                  <div class="card" style="border-radius: 15px;">
-                      <div class="card-body p-5">
-                        <h2 class="aboutUs-title text-center">עלינו</h2>
-                        <h10 class="aboutUs-info text-center">המבורגר אנגוס, המבורגר אסאדו וכריך אנטריקוט הם רק חלק ממבחר הארוחות האטרקטיביות שלנו כשכל ארוחה כוללת תוספת ושתייה אישית לבחירה. לא מעוניינים בארוחה שלמה? אצלנו במסעדה תוכלו להזמין מוצרים בודדים וארוחות ילדים. עוד בתפריט תמצאו מבחר תוספות קריספיות וכמובן קינוחים מתוקים לסיום ארוחה משביעה וטעימה.</h10>
-                      </div>
-                      <div class="video-container">
-                        <video controls width="300">
-                            <source src="./images/burgerVideo/burger.mp4" type="video/mp4">
-                        </video>
-                    </div>
-                  </div>
+
+        <div class="row ">
+          <div class="col-md-6 mb-4">
+              <div class="form-outline aboutUsBox">
+               <span> <h2 class="aboutUs-title">עלינו</h2></span>
+                <h10 class="aboutUs-info">
+                  מסעדת המבורגרים "CS Burger" היא דוגמה מרשימה וייחודית לחיבור בין הטכנולוגיה החדשנית והגאסטרונומיה המסורתית. המסעדה מציעה חווית אוכל מהסוג שלא ניתן למצוא במקומות אחרים, החוברת בצורה ייחודית בין עולם הטעמים ובין עולם הטכנולוגיה המתקדמת.
+
+                  במרכז פעילות המסעדה נמצא צוות טכנולוגי מיומן, המנצל את הכלים החדישים ביותר על מנת ליצור מנות מבורגר איכותיות וייחודיות. השילוב בין טכנולוגיה תלת-ממדית ובין רוח האיכות המסורתית בעיצוב ובהכנת המזון הוא מהלכים שמבטאים חשיבה חדשנית ופריצת דרך בתחום הקולינריה.
+
+                  התהליך המרתק שבו המבורגרים נוצרים מתחיל ביצירת תבניות דיגיטליות שמכילות את הרכבי המנה השונים. הטכנולוגים מתמקדים בכל פרט ופרט, באופן שמתאים לצרכי הלקוח. לאחר השלמת התבניות, הן נשלחות למדפסת תלת-ממד מתקדמת שבעזרתה המבורגרים מתייצרים במראה מדויק וברמת איכות גבוהה.
+
+                  היכולת להכין מנות מותאמות אישית באמצעות טכנולוגיה תלת-ממדית מצוינת היא פורמט חדשני ומרשים בתחום הקולינריה. "CS Burger" מצליחה לשלב בין היכולות היצירתיות של השף ובין היכולות המדויקות של הטכנולוגיה, ובכך מספקת ללקוחותיה חוויה חדשה, מעוררת וייחודית שמשלבת בתוכה את הטוב ביותר משני העולמות. עם סניפים בכל רחבי הארץ, לא תשארו רעבים- הבשר שמודפס על ידי המכונה כשר וטבעוני. בתיאבון :)
+              </h10>
+
               </div>
           </div>
+      
+          <div class="col-md-6 mb-4">
+            <div class="embed-responsive embed-responsive-16by9embed-responsive embed-responsive-16by9">
+              <div class="vidCon">
+                <video autoplay loop muted width="900rem">
+                  <source src="./images/burgerVideo/burgerCsVid.mp4" type="video/mp4">
+              </video>
+              </div>
+            </div>
+        </div>
       </div>
-    </div>
-  </section>
+
+        <footer class="bd-footer py-4 py-md-5 mt-5 bg-body-tertiary" id="footer">
+          <div class="container py-4 py-md-5 px-4 px-md-3 text-body-secondary" id="container">
+              <span>
+                <nav class="links-nav">
+                  <span class="link mb-2"><a class="footer-links" href="/">לעמוד הבית</a></span>
+                  <span class="separator">|</span>
+                  <span class="link mb-2"><a class="footer-links" href="/AccessibilityStatement">הצהרת נגישות</a></span>
+                  <span class="separator">|</span>
+                  <span class="link mb-2"><a class="footer-links" href="/termsPage">תקנון ותנאי שימוש באתר</a></span>
+                  
+                </nav>
+        
+                  <nav class="social-links-nav">
+                    <span class="link mb-2"><a class="footer-social-links" href="#"><i class="bi bi-facebook"></i></a></span>
+                    <span class="link mb-2"><a class="footer-social-links" href="https://instagram.com/csburgersofficial?igshid=MzRlODBiNWFlZA=="><i class="bi bi-instagram"></i></a></span>
+                  </nav>
+              </span>
+            </div>
+          </div>
+        </footer>
 </body>
 </html>

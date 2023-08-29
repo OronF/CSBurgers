@@ -97,7 +97,10 @@ const groupByBranches = async () => {
     const branches = await Order.aggregate([
         {
             $group: {
-                _id: '$branch',
+                _id: {
+                    branch: '$branch',
+                    closed: '$closed'
+                },
                 count: { $sum: 1 }
             }
         }

@@ -65,145 +65,134 @@ const getByCategory = async (categoryId) => {
     return await Meal.find({categoryId});
 }
 
-const filterMeal = async (price, kosher, categoryId, meals) => {
-    const parsedPrice = parseInt(price);
-
-    if (kosher && !price && !categoryId) {
-        return await meals.filter((meal) => {
+const isKosher = async (categoryId, meals) =>
+{
+    if (!categoryId) {
+        return meals.filter((meal) => {
             return meal.kosher;
         });
-    }
-    
-    else if (!kosher && price && !categoryId) {
-        return await meals.filter((meal) => {
+    } 
+
+    return meals.filter((meal) => {
+        return meal.kosher && meal.categoryId == categoryId;
+    });
+}
+
+const maxPrice = async (meals, priceInp, categoryId) =>
+{
+    const parsedPrice = parseInt(priceInp);
+    console.log(categoryId);
+
+    if (!categoryId) {
+        return meals.filter((meal) => {
             return meal.price <= parsedPrice;
         });
     }
-    
-    else if (kosher && price && !categoryId) {
-        return await meals.filter((meal) => {
-            return meal.kosher && meal.price <= parsedPrice;
-        });
-    }
 
-    else if (kosher && !price && categoryId) {
-        return await meals.filter((meal) => {
-            return meal.kosher && meal.categoryId == categoryId;
-        });
-    }
-    
-    else if (!kosher && price && categoryId) {
-        return await meals.filter((meal) => {
-            return meal.price <= parsedPrice && meal.categoryId == categoryId;
-        });
-    }
-
-    else if (kosher && price && categoryId) {
-        return await meals.filter((meal) => {
-            return meal.kosher && meal.price <= parsedPrice && meal.categoryId == categoryId;
-        });
-    }
+    return meals.filter((meal) => {
+        return meal.price <= parsedPrice && meal.categoryId == categoryId;
+    });
 }
 
-const HighLowSort = async (kosher, price, categoryId) =>
+const HighLowSort = async (kosherCheck, price, categoryId) =>
 {
-    if (!kosher && !price && !categoryId) {
+    if (kosherCheck === 2 && !price && !categoryId) {
         return await Meal.find({}).sort({
             price: -1
         });
     }
 
-    else if (kosher && !price && !categoryId) {
-        return await Meal.find({kosher}).sort({
+    else if (kosherCheck === 3 && !price && !categoryId) {
+        return await Meal.find({kosher: true}).sort({
             price: -1
         });
     } 
     
-    else if (!kosher && price && !categoryId) {
+    else if (kosherCheck === 2 && price && !categoryId) {
         return await Meal.find({price: { $lte: price }}).sort({
             price: -1
         });
     }
 
-    else if (!kosher && !price && categoryId) {
+    else if (kosherCheck === 2 && !price && categoryId) {
         return await Meal.find({categoryId}).sort({
             price: -1
         });
     }
 
-    else if (kosher && price && !categoryId) {
-        return await Meal.find({kosher, price: { $lte: price }}).sort({
+    else if (kosherCheck === 3 && price && !categoryId) {
+        return await Meal.find({kosher: true, price: { $lte: price }}).sort({
             price: -1
         });
     }
 
     
-    else if (kosher && !price && categoryId) {
-        return await Meal.find({kosher, categoryId}).sort({
+    else if (kosherCheck === 3 && !price && categoryId) {
+        return await Meal.find({kosher: true, categoryId}).sort({
             price: -1
         });
     }
 
-    else if (!kosher && price && categoryId) {
+    else if (kosherCheck === 2 && price && categoryId) {
         return await Meal.find({price: { $lte: price }, categoryId}).sort({
             price: -1
         });
     }
 
-    else if (kosher && price && categoryId) {
-        return await Meal.find({kosher, price: { $lte: price }, categoryId}).sort({
+    else if (kosherCheck === 3 && price && categoryId) {
+        return await Meal.find({kosher: true, price: { $lte: price }, categoryId}).sort({
             price: -1
         });
     }
 }
 
-const LowHighSort = async (kosher, price, categoryId) =>
+const LowHighSort = async (kosherCheck, price, categoryId) =>
 {
-    if (!kosher && !price && !categoryId) {
+    if (kosherCheck === 2 && !price && !categoryId) {
         return await Meal.find({}).sort({
             price: 1
         });
-    } 
+    }
 
-    else if (kosher && !price && !categoryId) {
-        return await Meal.find({kosher}).sort({
+    else if (kosherCheck === 3 && !price && !categoryId) {
+        return await Meal.find({kosher: true}).sort({
             price: 1
         });
     } 
     
-    else if (!kosher && price && !categoryId) {
+    else if (kosherCheck === 2 && price && !categoryId) {
         return await Meal.find({price: { $lte: price }}).sort({
             price: 1
         });
     }
 
-    else if (!kosher && !price && categoryId) {
+    else if (kosherCheck === 2 && !price && categoryId) {
         return await Meal.find({categoryId}).sort({
             price: 1
         });
     }
 
-    else if (kosher && price && !categoryId) {
-        return await Meal.find({kosher, price: { $lte: price }}).sort({
+    else if (kosherCheck === 3 && price && !categoryId) {
+        return await Meal.find({kosher: true, price: { $lte: price }}).sort({
             price: 1
         });
     }
 
     
-    else if (kosher && !price && categoryId) {
-        return await Meal.find({kosher, categoryId}).sort({
+    else if (kosherCheck === 3 && !price && categoryId) {
+        return await Meal.find({kosher: true, categoryId}).sort({
             price: 1
         });
     }
 
-    else if (!kosher && price && categoryId) {
+    else if (kosherCheck === 2 && price && categoryId) {
         return await Meal.find({price: { $lte: price }, categoryId}).sort({
             price: 1
         });
     }
 
-    else if (kosher && price && categoryId) {
-        return await Meal.find({kosher, price: { $lte: price }, categoryId}).sort({
+    else if (kosherCheck === 3 && price && categoryId) {
+        return await Meal.find({kosher: true, price: { $lte: price }, categoryId}).sort({
             price: 1
         });
     }
@@ -216,7 +205,8 @@ module.exports = {
     update: updateMeal,
     search: searchMeal,
     getByCategory,
-    filterMeal,
+    isKosher,
+    maxPrice,
     LowHighSort,
     HighLowSort
 }

@@ -1,6 +1,8 @@
 $(document).ready(function() {
 
     const branchList =  $('.branches-list');
+    const errorsUp = $('.update-errors');
+    const errorsCr = $('.create-errors');
 
     const appendBranchLi = (branch) => {
         const newElement = $(`<li id="${branch._id}">
@@ -168,6 +170,82 @@ $(document).ready(function() {
     
             saveBtn.on('click', async function() {
                 if (branchName.val() && address.val() && Activity.val() && x.val() && y.val()) {
+                    if (branchName.val().length > 14) {
+                        errorsUp.html('שם הסניף ארוך מידי');
+                        errorsUp.show();
+                        return;
+                    } else {
+                        for (let i = 0; i< branchName.val().length; i++) {
+                            const charCode = branchName.val().charCodeAt(i);
+            
+                            if (charCode < 1488 || charCode > 1514) { 
+                                errorsUp.html('שם הסניף מכיל תווים לא בעברית');
+                                errorsUp.show();
+                                return;
+                            }
+                        }
+                    }
+
+                    if (address.val().length > 14) {
+                        errorsUp.html('שם הכתובת ארוך מידי');
+                        errorsUp.show();
+                        return;
+                    } else {
+                        for (let i = 0; i< address.val().length; i++) {
+                            const charCode = address.val().charCodeAt(i);
+            
+                            if (charCode < 1488 || charCode > 1514) { 
+                                errorsUp.html('שם הכתובת מכיל תווים לא בעברית');
+                                errorsUp.show();
+                                return;
+                            }
+                        }
+                    }
+
+                    if (Activity.val().length > 14) {
+                        errorsUp.html('שעות הפעילות ארוך מידי');
+                        errorsUp.show();
+                        return;
+                    } else {
+                        for (let i = 0; i< Activity.val().length; i++) {
+                            const charCode = Activity.val().charCodeAt(i);
+            
+                            if (charCode < 1488 || charCode > 1514) { 
+                                errorsUp.html('שעות הפעילות מכיל תווים לא בעברית');
+                                errorsUp.show();
+                                return;
+                            }
+                        }
+                    }
+
+                    if (y.val().length > 10) {
+                        errorsUp.html('הקורדינטה ארוכה מידי');
+                        errorsUp.show();
+                        return;
+                    } else {
+                        for (let i = 0; i < y.val().length; i++) {
+                            if (y.val()[i] < '0' || y.val()[i] > '9' || y.val()[i] !== ' ') { 
+                                errorsUp.html('הקורדינטה מכילה תווים שהם לא ספרות');
+                                errorsUp.show();
+                                return;
+                            }
+                        }
+                    }
+
+                    if (x.val().length > 10) {
+                        errorsUp.html('הקורדינטה ארוכה מידי');
+                        errorsUp.show();
+                        return;
+                    } else {
+                        for (let i = 0; i < x.val().length; i++) {
+                            if (x.val()[i] < '0' || x.val()[i] > '9' || x.val()[i] !== ' ') { 
+                                errorsUp.html('הקורדינטה מכילה תווים שהם לא ספרות');
+                                errorsUp.show();
+                                return;
+                            }
+                        }
+                    }
+
                     const selectedManager = managers.find(":selected");
                     const selectedarea = areaupdate.find(":selected");
                     if (selectedManager.length && selectedarea.length) {
@@ -191,7 +269,8 @@ $(document).ready(function() {
                                 area: Area
                             }),
                             success: function(newData) {
-                                console.log("saving data:", error);
+                                errorsUp.hide();
+                                console.log("saving data:", newData);
                             },
                             error: function(error) {
                                 console.error("Error saving data:", error);
@@ -216,6 +295,9 @@ $(document).ready(function() {
     
                         saveBtn.hide();
                     }
+                } else {
+                    errorsUp.html('לא הזנת את כל הפרטים');
+                    errorsUp.show();
                 }
             });
         });
@@ -289,6 +371,83 @@ $(document).ready(function() {
         saveBtn.on('click', async function() {
             console.log(32134);
             if (branchName.val() && address.val() && Activity.val() && x.val() && y.val()) {
+
+                if (branchName.val().length > 14) {
+                    errorsCr.html('שם הסניף ארוך מידי');
+                    errorsCr.show();
+                    return;
+                } else {
+                    for (let i = 0; i< branchName.val().length; i++) {
+                        const charCode = branchName.val().charCodeAt(i);
+        
+                        if (charCode < 1488 || charCode > 1514) { 
+                            errorsCr.html('שם הסניף מכיל תווים לא בעברית');
+                            errorsCr.show();
+                            return;
+                        }
+                    }
+                }
+
+                if (address.val().length > 14) {
+                    errorsCr.html('שם הכתובת ארוך מידי');
+                    errorsCr.show();
+                    return;
+                } else {
+                    for (let i = 0; i< address.val().length; i++) {
+                        const charCode = address.val().charCodeAt(i);
+        
+                        if (charCode < 1488 || charCode > 1514) { 
+                            errorsCr.html('שם הכתובת מכיל תווים לא בעברית');
+                            errorsCr.show();
+                            return;
+                        }
+                    }
+                }
+
+                if (Activity.val().length > 14) {
+                    errorsCr.html('שעות הפעילות ארוך מידי');
+                    errorsCr.show();
+                    return;
+                } else {
+                    for (let i = 0; i< Activity.val().length; i++) {
+                        const charCode = Activity.val().charCodeAt(i);
+        
+                        if (charCode < 1488 || charCode > 1514) { 
+                            errorsCr.html('שעות הפעילות מכיל תווים לא בעברית');
+                            errorsCr.show();
+                            return;
+                        }
+                    }
+                }
+
+                if (y.val().length > 10) {
+                    errorsCr.html('הקורדינטה ארוכה מידי');
+                    errorsCr.show();
+                    return;
+                } else {
+                    for (let i = 0; i < y.val().length; i++) {
+                        if (y.val()[i] < '0' || y.val()[i] > '9' || y.val()[i] !== ' ') { 
+                            errorsCr.html('הקורדינטה מכילה תווים שהם לא ספרות');
+                            errorsCr.show();
+                            return;
+                        }
+                    }
+                }
+
+                if (x.val().length > 10) {
+                    errorsCr.html('הקורדינטה ארוכה מידי');
+                    errorsCr.show();
+                    return;
+                } else {
+                    for (let i = 0; i < x.val().length; i++) {
+                        if (x.val()[i] < '0' || x.val()[i] > '9' || x.val()[i] !== ' ') { 
+                            errorsCr.html('הקורדינטה מכילה תווים שהם לא ספרות');
+                            errorsCr.show();
+                            return;
+                        }
+                    }
+                }
+
                 const selectedManager = managers.find(":selected");
                 const selectedarea = area.find(":selected");
                 if (selectedManager.length && selectedarea.length) {
@@ -312,6 +471,7 @@ $(document).ready(function() {
                             area: Area
                         }),
                         success: function(newData) {
+                            errorsCr.hide();
                             data.push(newData);
                             appendBranchLi(newData);
                         },
@@ -340,6 +500,9 @@ $(document).ready(function() {
 
                     saveBtn.hide();
                 }
+            } else {
+                errorsCr.html('לא הזנת את כל הפרטים');
+                errorsCr.show();
             }
         });
 
