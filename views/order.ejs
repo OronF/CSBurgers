@@ -111,30 +111,27 @@
                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
+                          <div class="errors"></div>
+
                           <div class="form-outline mb-4">
                             <input placeholder="שם בעל הכרטיס" class="form-control" id="creditCardOwnerName" />
-                            <div class="error" id="NameCreditCardOwnerError"></div>
                           </div>
                           <div class="form-outline mb-4">
-                            <input placeholder="מספר כרטיס  " class="form-control" id="creditCardOwnerName" />
-                            <div class="error" id="CreditCardNumberError"></div>
+                            <input type="number" placeholder="מספר כרטיס  " class="form-control" id="creditCardNumber" />
                           </div>
                           <div class="form-outline mb-4">
-                            <input placeholder="  תוקף כרטיס" class="form-control" id="creditCardOwnerName" />
-                            <div class="error" id="validityCreditCardError"></div>
+                            <input type="date" placeholder="  תוקף כרטיס" class="form-control" id="creditCardPag" />
                           </div>
                           <div class="form-outline mb-4">
-                            <input placeholder="תעודת זהות  " class="form-control" id="creditCardOwnerName" />
-                            <div class="error" id="IDError"></div>
+                            <input type="number" placeholder="תעודת זהות  " class="form-control" id="id" />
                           </div>
                           <div class="form-outline mb-4">
-                            <input placeholder="שלוש ספרות בגב הכרטיס  " class="form-control" id="creditCardOwnerName" />
-                            <div class="error" id="ThreeNumberBackOfTheCardError"></div>
+                            <input type="number" placeholder="עד ארבע ספרות בגב הכרטיס  " class="form-control" id="creditCardback" />
                           </div>
                         </div>
                         <div class="modal-footer">
                           <button class="btn btn-primary" data-bs-target="#PayingSelectModal" data-bs-toggle="modal" data-bs-dismiss="modal">בחזרה לבחירת אמצעי תשלום</button>
-                          <button class="btn btn-primary" data-bs-target="#FinishPayModal" data-bs-toggle="modal" data-bs-dismiss="modal">אישור הקנייה</button>
+                          <button class="btn btn-primary" id="Confirmation-of-purchase1">אישור הקנייה</button>
                         </div>
                       </div>
                     </div>
@@ -149,7 +146,7 @@
                         </div>
                         <div class="modal-footer">
                           <button class="btn btn-primary" data-bs-target="#PayingSelectModal" data-bs-toggle="modal" data-bs-dismiss="modal">בחזרה לבחירת אמצעי תשלום</button>
-                          <button class="btn btn-primary" data-bs-target="#FinishPayModal" id="Confirmation-of-purchase" data-bs-toggle="modal" data-bs-dismiss="modal">אישור הקנייה</button>
+                          <button class="btn btn-primary" id="Confirmation-of-purchase" data-bs-target="#FinishPayModal" data-bs-toggle="modal">אישור הקנייה</button>
                         </div>
                         <span>
                         </span>

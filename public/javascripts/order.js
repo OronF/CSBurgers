@@ -904,6 +904,29 @@ $(document).ready(async function() {
     });
 
     Confirmationofpurchase.on('click', async function() {
+                await $.ajax({
+                    url: `/api/user/${user._id}`,
+                    method: "PUT",
+                    dataType: "json",
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        fname: user.fname,
+                        lname: user.lname,
+                        orders: user.orders,
+                        phoneNumber: user.phoneNumber,
+                        password: user.password,
+                        is_Manager: user.is_Manager,
+                        currentOrder: undefined
+                    }),
+                    success: function(data) {
+                        console.log('data is saved', data);
+                    },
+                    error: function(error) {
+                        console.error("Error saving data:", error);
+                    }
+                });
+
+
         await $.ajax({
             url: `/api/order/${orderID}`,
             method: "PUT",
@@ -920,37 +943,135 @@ $(document).ready(async function() {
                 closed: true,
                 customerId: order.customerId
             }),
-            success: function(data) {
+            success: async function(data) {
+                order = data;
                 console.log('data is saved', data);
+                user.orders.push(order._id);
+
+                await $.ajax({
+                    url: `/api/user/${user._id}`,
+                    method: "PUT",
+                    dataType: "json",
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        fname: user.fname,
+                        lname: user.lname,
+                        orders: user.orders,
+                        phoneNumber: user.phoneNumber,
+                        password: user.password,
+                        is_Manager: user.is_Manager,
+                        currentOrder: user.currentOrder
+                    }),
+                    success: function(data) {
+                        console.log('data is saved', data);
+                    },
+                     error: function(error) {
+                        console.error("Error saving data:", error);
+                    }
+                });
             },
             error: function(error) {
                 console.error("Error saving data:", error);
             }
         });
+    });
+    const errors = $('.errors');
 
-        user.orders.push(order._id);
+    $('#Confirmation-of-purchase1').on('click', async function() {
+        if ($('#creditCardOwnerName').val() && $('#creditCardNumber').val() && $('#creditCardPag').val() && $('#id').val() && $('#creditCardback').val()) {
 
-        await $.ajax({
-            url: `/api/user/${user._id}`,
-            method: "PUT",
-            dataType: "json",
-            contentType: 'application/json',
-            data: JSON.stringify({
-                fname: user.fname,
-                lname: user.lname,
-                orders: user.orders,
-                phoneNumber: user.phoneNumber,
-                password: user.password,
-                is_Manager: user.is_Manager,
-                currentOrder: undefined
-            }),
-            success: function(data) {
-                console.log('data is saved', data);
-            },
-            error: function(error) {
-                console.error("Error saving data:", error);
+            if ($('#id').val().length !== 9) {
+                errors.html('תעודת זהות לא חוקית');
+                errors.show();
+                return;
             }
-        });
+
+            if ($('#creditCardNumber').val().length !== 16) {
+                errors.html('מספר כרטיס לא חוקי');
+                errors.show();
+                return;
+            }
+
+            if ($('#creditCardback').val().length !== 4) {
+                errors.html('הזנת כמות לא מתאימה של ספרות');
+                errors.show();
+                return;
+            }
+
+            if ($('#creditCardOwnerName').val().length > 8) {
+                errors.html('שם ארוך מידי');
+                errors.show();
+                return;
+            } else {
+                for (let i = 0; i< $('#creditCardOwnerName').val().length; i++) {
+                    const charCode = $('#creditCardOwnerName').val().charCodeAt(i);
+    
+                    if (charCode < 1488 || charCode > 1514) { 
+                        errors.html('שם מכיל תווים לא בעברית');
+                        errors.show();
+                        return;
+                    }
+                }
+            }
+
+            await $.ajax({
+                url: `/api/order/${orderID}`,
+                method: "PUT",
+                dataType: "json",
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    orderNumber: order.orderNumber,
+                    orderDate: order.orderDate,
+                    location: order.location, 
+                    totalprice: order.totalprice,
+                    meals: order.meals,
+                    dishes: order.dishes,
+                    branch: order.branch,
+                    closed: true,
+                    customerId: order.customerId
+                }),
+                success: function(data) {
+                    order = data;
+                    console.log('data is saved', data);
+                },
+                error: function(error) {
+                    console.error("Error saving data:", error);
+                }
+            });
+    
+            user.orders.push(order._id);
+    
+            await $.ajax({
+                url: `/api/user/${user._id}`,
+                method: "PUT",
+                dataType: "json",
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    fname: user.fname,
+                    lname: user.lname,
+                    orders: user.orders,
+                    phoneNumber: user.phoneNumber,
+                    password: user.password,
+                    is_Manager: user.is_Manager,
+                    currentOrder: user.currentOrder
+                }),
+                success: function(data) {
+                    console.log('data is saved', data);
+                    errors.hide();
+                    $('#FinishPayModal').modal('show');
+                },
+                error: function(error) {
+                    console.error("Error saving data:", error);
+                }
+            });
+        } else {
+            errors.html('לא הזנת את כל הפרטים');
+            errors.show();
+        }
+    });
+
+    $('#FinishPayModal').on('hide.bs.modal', function() {
+        window.location.href = "/";
     });
     
     delivery.html(`משלוח ל: ${order.location}`);

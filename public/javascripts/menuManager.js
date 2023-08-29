@@ -628,6 +628,10 @@ $(document).ready(async function() {
 
     categories.append(newCategoryBtn);
 
+    $('#newCategoryModal').on('hide.bs.modal', function() {
+        categories.append(newCategoryBtn);
+    });
+
     let index = 1;
 
     const dishcategories = $('#dish-categories');
