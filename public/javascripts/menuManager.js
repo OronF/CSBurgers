@@ -141,22 +141,6 @@ $(document).ready(async function() {
                             }
                         }
                     }
-        
-                    if (description.length > 125) {
-                        updatedisherrors.html('התיאור ארוך מידי');
-                        updatedisherrors.show();
-                        return;
-                    } else {
-                        for (let i = 0; i< description.length; i++) {
-                            const charCode = description.charCodeAt(i);
-            
-                            if (charCode < 1488 || charCode > 1514) { 
-                                updatedisherrors.html('תיאור הארוחה מכיל תווים לא בעברית');
-                                updatedisherrors.show();
-                                return;
-                            }
-                        }
-                    }
 
                     await $.ajax({
                         url:`/api/dish/${id}`,
@@ -317,22 +301,6 @@ $(document).ready(async function() {
                             }
                         }
                     }
-        
-                    if (description.length > 125) {
-                        mealupdateerrors.html('התיאור ארוך מידי');
-                        mealupdateerrors.show();
-                        return;
-                    } else {
-                        for (let i = 0; i< description.length; i++) {
-                            const charCode = description.charCodeAt(i);
-            
-                            if (charCode < 1488 || charCode > 1514) { 
-                                mealupdateerrors.html('תיאור הארוחה מכיל תווים לא בעברית');
-                                mealupdateerrors.show();
-                                return;
-                            }
-                        }
-                    }
     
                     await $.ajax({
                         url:`/api/meal/${id}`,
@@ -448,15 +416,15 @@ $(document).ready(async function() {
 
                 if (name) {
                     if (name.length > 14) {
-                        updatecategoryerrors.html('שם הרחוב ארוך מידי');
+                        updatecategoryerrors.html('שם הקטגוריה ארוך מידי');
                         updatecategoryerrors.show();
                         return;
                     } else {
                         for (let i = 0; i< name.length; i++) {
                             const charCode = name.charCodeAt(i);
             
-                            if (charCode < 1488 || charCode > 1514) { 
-                                updatecategoryerrors.html('שם הרחוב מכיל תווים לא בעברית');
+                            if ((charCode < 1488 || charCode > 1514) && name[i] !== ' ') { 
+                                updatecategoryerrors.html('שם הקטגוריה מכיל תווים לא בעברית');
                                 updatecategoryerrors.show();
                                 return;
                             }
@@ -506,6 +474,7 @@ $(document).ready(async function() {
                     removeHideOnElement(mealsSection);
                     putHideOnElement(dishesSection);
                 }
+                filterDishes();
             } else if (categorytype === "dish") {
                 categorytypeFilter = 'dish';
 
@@ -513,6 +482,7 @@ $(document).ready(async function() {
                     removeHideOnElement(dishesSection);
                     putHideOnElement(mealsSection);
                 }
+                filterDishes();
             }
         });
 
@@ -559,16 +529,10 @@ $(document).ready(async function() {
         }
     });
 
-    const newCategoryBtn = $(`<li class="newCategoryBtn" type="button" data-bs-toggle="modal" data-bs-target="#newCategoryModal"><i class="bi bi-plus-circle" id="addIcon"></i></li>`)
-
     const saveBtn = $('.saveBtn');
     const categoryName = $('#categoryName');
     const Categorytype = $('#Categorytype');
     const modalbuttons = $('.modal-buttons')
-
-    newCategoryBtn.on('click', function() {
-        newCategoryBtn.remove();
-    });
 
     saveBtn.on('click', function() {
         const CategorytypeVal = Categorytype.find(':selected').attr('data-Categorytype');
@@ -584,7 +548,7 @@ $(document).ready(async function() {
                 for (let i = 0; i< categoryNameVal.length; i++) {
                     const charCode = categoryNameVal.charCodeAt(i);
     
-                    if (charCode < 1488 || charCode > 1514) { 
+                    if ((charCode < 1488 || charCode > 1514) && categoryNameVal[i] !== ' ') { 
                         errorscategory.html('שם הקטגוריה מכיל תווים לא בעברית');
                         errorscategory.show();
                         return;
@@ -604,11 +568,16 @@ $(document).ready(async function() {
                 success: function(data) {
                     errorscategory.hide()
                     appendCategoryLi(data);
-                    categories.append(newCategoryBtn);
-                    saveBtn.remove();
+
+                    saveBtn.hide();
                     const newElement = $(`<button type="button" class="closebtn" data-bs-dismiss="modal" aria-label="Close"><i class="bi bi-check2"></i></button>`);
                     categoryName.val("");
                     modalbuttons.append(newElement);
+
+                    newElement.on('click', function() {
+                        saveBtn.show();
+                        newElement.remove();
+                    });
                 },
                 error: function(error) {
                     console.error(error);
@@ -619,17 +588,6 @@ $(document).ready(async function() {
             errorscategory.show();
             errorscategory.html('לא הזנת את כל הפרטים');
         }
-    });
-
-    $('.clodebtn').on('click', function() {
-        modalbuttons.append(saveBtn);
-        newElement.find('.clodebtn').remove();
-    });
-
-    categories.append(newCategoryBtn);
-
-    $('#newCategoryModal').on('hide.bs.modal', function() {
-        categories.append(newCategoryBtn);
     });
 
     let index = 1;
@@ -718,7 +676,7 @@ $(document).ready(async function() {
                 for (let i = 0; i< nameDish.val().length; i++) {
                     const charCode = nameDish.val().charCodeAt(i);
     
-                    if (charCode < 1488 || charCode > 1514) { 
+                    if ((charCode < 1488 || charCode > 1514) && nameDish[i] === ' ') { 
                         errorsdish.html('שם הארוחה מכיל תווים לא בעברית');
                         errorsdish.show();
                         return;
@@ -734,22 +692,6 @@ $(document).ready(async function() {
                 for (let i = 0; i < priceDish.val().length; i++) {
                     if (priceDish.val()[i] < '0' || priceDish.val()[i] > '9') { 
                         errorsdish.html('המחיר מכיל תווים שהם לא מספרים');
-                        errorsdish.show();
-                        return;
-                    }
-                }
-            }
-
-            if (descriptionDish.val().length > 125) {
-                errorsdish.html('התיאור ארוך מידי');
-                errorsdish.show();
-                return;
-            } else {
-                for (let i = 0; i< descriptionDish.val().length; i++) {
-                    const charCode = descriptionDish.val().charCodeAt(i);
-    
-                    if (charCode < 1488 || charCode > 1514) { 
-                        errorsdish.html('תיאור הארוחה מכיל תווים לא בעברית');
                         errorsdish.show();
                         return;
                     }
@@ -926,7 +868,7 @@ $(document).ready(async function() {
                 for (let i = 0; i< nameMeal.val().length; i++) {
                     const charCode = nameMeal.val().charCodeAt(i);
     
-                    if (charCode < 1488 || charCode > 1514) { 
+                    if ((charCode < 1488 || charCode > 1514) && nameMeal.val() === ' ') { 
                         errorsmeal.html('שם הארוחה מכיל תווים לא בעברית');
                         errorsmeal.show();
                         return;
@@ -942,22 +884,6 @@ $(document).ready(async function() {
                 for (let i = 0; i < priceMeal.val().length; i++) {
                     if (priceMeal.val()[i] < '0' || priceMeal.val()[i] > '9') { 
                         errorsmeal.html('המחיר מכיל תווים שהם לא מספרים');
-                        errorsmeal.show();
-                        return;
-                    }
-                }
-            }
-
-            if (descriptionMeal.val().length > 125) {
-                errorsmeal.html('התיאור ארוך מידי');
-                errorsmeal.show();
-                return;
-            } else {
-                for (let i = 0; i< descriptionMeal.val().length; i++) {
-                    const charCode = descriptionMeal.val().charCodeAt(i);
-    
-                    if (charCode < 1488 || charCode > 1514) { 
-                        errorsmeal.html('תיאור הארוחה מכיל תווים לא בעברית');
                         errorsmeal.show();
                         return;
                     }

@@ -114,8 +114,6 @@ $(document).ready(async function() {
             const categorytype = btn.attr('data-category-categorytype');
             categoryIdForFilter = id;
 
-            filterDishes();
-
             if (categorytype === "meal") {
                 categorytypeFilter = 'meal';
                 console.log('categorytypeFilter1',categorytypeFilter);
@@ -124,6 +122,7 @@ $(document).ready(async function() {
                     removeHideOnElement(mealsSection);
                     putHideOnElement(dishesSection);
                 }
+                filterDishes();
             } else if (categorytype === "dish") {
                 categorytypeFilter = 'dish';
 
@@ -131,6 +130,7 @@ $(document).ready(async function() {
                     removeHideOnElement(dishesSection);
                     putHideOnElement(mealsSection);
                 }
+                filterDishes();
             }
         });
 
