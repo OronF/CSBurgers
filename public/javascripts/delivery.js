@@ -6,6 +6,8 @@ $(document).ready(async function() {
     deleteOrderBtn.hide();
     returnOrderBtn.hide();
 
+    const errors = $('.errors');
+
     const cookieValue = document.cookie;
     const decodedValue = decodeURIComponent(cookieValue);
 
@@ -52,6 +54,52 @@ $(document).ready(async function() {
         const framework = $('#framework').find(":selected").attr('data-branch-id');
 
         if (city && street && houseNum && framework) {
+            if (city.length > 14) {
+                errors.html('שם העיר ארוך מידי');
+                errors.show();
+                return;
+            } else {
+                for (let i = 0; i< city.length; i++) {
+                    const charCode = city.charCodeAt(i);
+    
+                    if (charCode < 1488 || charCode > 1514) { 
+                        errors.html('שם העיר מכיל תווים לא בעברית');
+                        errors.show();
+                        return;
+                    }
+                }
+            }
+
+            if (street.length > 14) {
+                errors.html('שם הרחוב ארוך מידי');
+                errors.show();
+                return;
+            } else {
+                for (let i = 0; i< street.length; i++) {
+                    const charCode = street.charCodeAt(i);
+    
+                    if (charCode < 1488 || charCode > 1514) { 
+                        errors.html('שם הרחוב מכיל תווים לא בעברית');
+                        errors.show();
+                        return;
+                    }
+                }
+            }
+
+            if (houseNum.length > 3) {
+                errors.html('מספר הדירה ארוך מידי');
+                errors.show();
+                return;
+            } else {
+                for (let i = 0; i < houseNum.length; i++) {
+                    if (houseNum[i] < '0' || houseNum[i] > '9') { 
+                        errors.html('מספר הדירה מכיל תווים שהם לא מספרים');
+                        errors.show();
+                        return;
+                    }
+                }
+            }
+
             await $.ajax({
                 url: "/api/order",
                 method: "POST",
@@ -91,12 +139,16 @@ $(document).ready(async function() {
                     currentOrder: order._id
                 }),
                 success: function(data) {
+                    errors.hide();
                     window.location.href = `orders/${order._id}`;
                 },
                 error: function(error) {
                     console.error("Error saving data:", error);
                 }
             }); 
+        } else {
+            errors.show();
+            errors.html('לא הזנת את כל הפרטים');
         }
     });
 

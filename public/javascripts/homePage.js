@@ -40,25 +40,24 @@ $(document).ready(async function() {
         appendLogOutBtn();
 
         if (cookieName === 'admin') {
-            const cartAndUser = $('.cartAndUser');
+            const cartAndUser = $('.btns-aside');
 
 
             const appendManagerPages = function() {
                 const newElement = $(`<div class="managerPages row">
                 <div class="graphs">
                     <a class="graphs" href="/manager/graphs">
-                        <i class="bi bi-graph-up-arrow"></i>
+                        גרפים<i class="bi bi-graph-up-arrow"></i>
                     </a>
+                </div>
 
-                    <a class="ordersAndUsers" href="/manager/cartForManager">הזמנות ומשתמשים</a>
+                <div class="ordersAndUserspage">
+                    <a class="ordersAndUsers" href="/manager/cartForManager">משתמשים</a>
                 </div>
 
                 <div class="Messages">
-                    <a class="ManagerMessages" href="/manager/ManagerMessages">
-                    <i class="bi bi-chat-left-text"></i>
-                    </a>
 
-                    <a class="Messages" href="/manager/ManagerMessages">הודעות</a>
+                    <a class="Messages" href="/manager/ManagerMessages"><i class="bi bi-chat-left-text"></i>הודעות</a>
                     </div>
                 </div>
                 `);

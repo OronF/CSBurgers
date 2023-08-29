@@ -159,10 +159,6 @@ li {
     direction: rtl;
 }
 
-.info-input 
-{
-}
-
 .inputs {
     display: flex;
     flex-direction: column;
@@ -190,17 +186,12 @@ li {
 {
     color:rgb(154, 13, 13);
 }
-.inputs{
-}
+
 
 .row
 {
     align-items: center;
     justify-content: center;
-}
-
-.updateSelect
-{
 }
 
 .inp-title
@@ -217,9 +208,6 @@ color:grey;
     justify-content: center;
 }
 
-#addNewBranch
-{
-}
 /* 
 .saveBtn-update{
     color:  rgb(154, 13, 13);
