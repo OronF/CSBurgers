@@ -11,6 +11,8 @@ $(document).ready(async function() {
     errorsmeal.hide();
     errorsdish.hide();
 
+    let categorytypeFilter;
+
     const dishesSection = $('#dishesSection');
     const mealsSection = $('#mealsSection');
 
@@ -499,64 +501,18 @@ $(document).ready(async function() {
             categoryIdForFilter = id;
 
             if (categorytype === "meal") {
+                categorytypeFilter = 'meal';
                 if (mealsSection.hasClass('hide')) {
                     removeHideOnElement(mealsSection);
                     putHideOnElement(dishesSection);
                 }
-
-                mealsList.empty();
-
-                let meals;
-    
-                await $.ajax({
-                    url:"/api/meal",
-                    method: "GET",
-                    dataType: "json",
-                    contentType: 'application/json',
-                    data: {
-                        categoryId: id
-                    },
-                    success: function(data) {
-                        meals = data;
-                    },
-                    error: function(error) {
-                        console.error("Error finding data:", error);
-                    }
-                });
-    
-                meals.forEach(meal => {
-                    appendMealsLi(meal);
-                });
             } else if (categorytype === "dish") {
+                categorytypeFilter = 'dish';
 
                 if (dishesSection.hasClass('hide')) {
                     removeHideOnElement(dishesSection);
                     putHideOnElement(mealsSection);
                 }
-
-                dishesList.empty();
-
-                let dishes;
-    
-                await $.ajax({
-                    url:"/api/dish",
-                    method: "GET",
-                    dataType: "json",
-                    contentType: 'application/json',
-                    data: {
-                        categoryId: id
-                    },
-                    success: function(data) {
-                        dishes = data;
-                    },
-                    error: function(error) {
-                        console.error("Error finding data:", error);
-                    }
-                });
-    
-                dishes.forEach(dish => {
-                    appendDishesLi(dish, dishesList);
-                });
             }
         });
 
@@ -1069,4 +1025,239 @@ $(document).ready(async function() {
             errorsmeal.show();
         }
     });
+
+    const kosherCheck = $("#kosher-check");
+    const maxPriceCheck = $("#maxprice-check");
+    const sortCheck = $(".sortby-check");
+    const priceInp = $("#priceInp");
+    const sortSelect = $("#sort-select");
+    
+    kosherCheck.on('change', filterDishes);
+    maxPriceCheck.on('change', filterDishes);
+    sortCheck.on('change', filterDishes);
+    sortSelect.on('change', checkSelect);
+    priceInp.keyup(checkPriceInp);
+    
+    function checkSelect(){
+        if(sortCheck.is(":checked")) {
+            filterDishes();
+        }
+    }
+    
+    function checkPriceInp()
+    {
+        if(maxPriceCheck.is(":checked")) {
+            filterDishes();
+        }
+    }
+        async function filterDishes()
+        {
+            console.log('categorytypeFilter:' ,categorytypeFilter);
+            if(categorytypeFilter === 'dish' && ((sortCheck.is(':checked') == true && (sortSelect.val() === "מהמחיר הנמוך לגבוה" || sortSelect.val() === "מהמחיר הגבוה לנמוך")) || kosherCheck.is(":checked") == true ||  (maxPriceCheck.is(":checked") == true && priceInp.val() !== ""))){
+                        console.log("in");
+                    console.log(kosherCheck.is("checked"));
+                    $.ajax({
+                    url: "/api/dish",
+                    method: "GET",
+                    dataType: "json",
+                    contentType: 'application/json',
+                    data: {
+                        categoryId: categoryIdForFilter,
+                        kosher: kosherCheck.is(":checked"),
+                        sort: sortSelect.val(),
+                        price: priceInp.val(),
+                        priceB: maxPriceCheck.is(":checked"),
+                        sortB: sortCheck.is(':checked')
+                    },
+                    success: function(dishes)
+                    {
+                        dishesList.empty();
+                        console.log(dishes);
+                        dishes.forEach(dish => {
+                            appendDishesLi(dish, dishesList);
+                        });
+                    },
+                    error: function(error) {
+                        console.error("Error finding data:", error);
+                    }
+                });
+        }
+        else if (categorytypeFilter === 'dish')
+        {
+            $.ajax({
+            url: "/api/dish",
+            method: "GET",
+            dataType: "json",
+            contentType: 'application/json',
+            data: {
+                categoryId: categoryIdForFilter,
+            },
+            success: function(dishes)
+            {
+                dishesList.empty();
+                console.log(dishes);
+                dishes.forEach(dish => {
+                    appendDishesLi(dish, dishesList);
+                });
+            },
+            error: function(error) {
+                console.error("Error finding data:", error);
+            }
+        });
+        } else if(categorytypeFilter === 'meal' && ((sortCheck.is(':checked') == true && (sortSelect.val() === "מהמחיר הנמוך לגבוה" || sortSelect.val() === "מהמחיר הגבוה לנמוך")) || kosherCheck.is(":checked") == true ||  (maxPriceCheck.is(":checked") == true && priceInp.val() !== ""))){
+            console.log("infdhgfhgf");
+        console.log(kosherCheck.is("checked"));
+        $.ajax({
+        url: "/api/meal",
+        method: "GET",
+        dataType: "json",
+        contentType: 'application/json',
+        data: {
+            categoryId: categoryIdForFilter,
+            kosher: kosherCheck.is(":checked"),
+            sort: sortSelect.val(),
+            price: priceInp.val(),
+            priceB: maxPriceCheck.is(":checked"),
+            sortB: sortCheck.is(':checked')
+        },
+        success: function(meals)
+        {
+            mealsList.empty();
+            console.log(meals);
+            meals.forEach(meal => {
+                appendMealsLi(meal);
+            });
+        },
+        error: function(error) {
+            console.error("Error finding data:", error);
+        }
+    });
+    }
+    else if (categorytypeFilter === 'meal')
+    {
+        $.ajax({
+            url: "/api/meal",
+            method: "GET",
+            dataType: "json",
+            contentType: 'application/json',
+            data: {
+                categoryId: categoryIdForFilter,
+            },
+            success: function(meals)
+            {
+            mealsList.empty();
+            console.log(meals);
+                meals.forEach(meal => {
+                appendMealsLi(meal);
+            });
+            },
+            error: function(error) {
+            console.error("Error finding data:", error);
+            }
+            });
+            } else if(((sortCheck.is(':checked') == true && (sortSelect.val() === "מהמחיר הנמוך לגבוה" || sortSelect.val() === "מהמחיר הגבוה לנמוך")) || kosherCheck.is(":checked") == true ||  (maxPriceCheck.is(":checked") == true && priceInp.val() !== ""))){
+                await $.ajax({
+                    url: "/api/meal",
+                    method: "GET",
+                    dataType: "json",
+                    contentType: 'application/json',
+                    data: {
+                        kosher: kosherCheck.is(":checked"),
+                        sort: sortSelect.val(),
+                        price: priceInp.val(),
+                        priceB: maxPriceCheck.is(":checked"),
+                        sortB: sortCheck.is(':checked')
+                    },
+                    success: function(meals)
+                    {
+                        mealsList.empty();
+                        console.log(meals);
+                        meals.forEach(meal => {
+                            appendMealsLi(meal);
+                        });
+                    },
+                    error: function(error) {
+                        console.error("Error finding data:", error);
+                    }
+                });
+    
+                
+                    console.log("in");
+                console.log(kosherCheck.is("checked"));
+                $.ajax({
+                url: "/api/dish",
+                method: "GET",
+                dataType: "json",
+                contentType: 'application/json',
+                data: {
+                    kosher: kosherCheck.is(":checked"),
+                    sort: sortSelect.val(),
+                    price: priceInp.val(),
+                    priceB: maxPriceCheck.is(":checked"),
+                    sortB: sortCheck.is(':checked')
+                },
+                success: function(dishes)
+                {
+                    console.log(dishes);
+                    dishes.forEach(dish => {
+                        appendDishesLi(dish, mealsList);
+                    });
+                },
+                error: function(error) {
+                    console.error("Error finding data:", error);
+                }
+                });
+            } else {
+                await $.ajax({
+                    url: "/api/meal",
+                    method: "GET",
+                    dataType: "json",
+                    contentType: 'application/json',
+                    data: {
+                        categoryId: categoryIdForFilter,
+                    },
+                    success: function(meals)
+                    {
+                    mealsList.empty();
+                    console.log(meals);
+                        meals.forEach(meal => {
+                        appendMealsLi(meal);
+                    });
+                    },
+                    error: function(error) {
+                    console.error("Error finding data:", error);
+                    }
+                }); 
+    
+                $.ajax({
+                    url: "/api/dish",
+                    method: "GET",
+                    dataType: "json",
+                    contentType: 'application/json',
+                    data: {
+                        categoryId: categoryIdForFilter,
+                    },
+                    success: function(dishes)
+                    {
+                        console.log(dishes);
+                        dishes.forEach(dish => {
+                            appendDishesLi(dish, mealsList);
+                        });
+                    },
+                    error: function(error) {
+                        console.error("Error finding data:", error);
+                    }
+                });
+            }
+        } 
 });
+    
+    
+    
+    function restrictInputToNumbers(event) {
+        const input = event.target;
+        const inputValue = input.value;
+        const sanitizedValue = inputValue.replace(/[^\d]/g, ''); // Remove non-digit characters
+        input.value = sanitizedValue;
+    }
+
