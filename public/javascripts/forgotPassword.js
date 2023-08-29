@@ -15,6 +15,26 @@ $(document).ready(function() {
         return true;
     }
 
+    function nameValidation(name, error)
+    {
+        if(name.length < 2)
+        {
+            error.html("על השדה להכיל לפחות 2 תווים בעברית");
+        }
+        
+        for (let i = 0; i < name.length; i++) {
+            const charCode = name.charCodeAt(i);
+            
+            // Check if the character is a valid Hebrew letter
+            if (charCode < 1488 || charCode > 1514) {
+                error.html("על השדה להכיל תווים בעברית בלבד");
+                if(name.length<2)
+                error.html("על השדה להכיל תווים בעברית בלבד ולפחות 2 תווים")
+
+            }
+        }
+    }
+
     function checkIfEmpty(inp, Error)
     {
         if(inp === "")
@@ -60,6 +80,9 @@ $(document).ready(function() {
         checkIfEmpty(passwordVal, passwordError);
         checkIfEmpty(passwordApproveVal, approvePasswordError);
         checkIfEmpty(PhoneNumberVal,phoneNumberError);
+
+        nameValidation(fnameVal, fnameError);
+        nameValidation(lnameVal, lnameError);
 
         var flagChangePassword = 1;
 
