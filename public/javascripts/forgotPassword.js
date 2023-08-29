@@ -137,6 +137,15 @@ $(document).ready(function() {
             passwordError.html("שדה אישור הסיסמה אינו זהה לסיסמה")
             flagChangePassword = 0;
         }
+
+        var letterRegex = /[a-zA-Zא-ת]/;
+
+        if(!letterRegex.test(passwordVal)){
+            passwordError.html("הסיסמא חייבת להכיל לפחות תו אחד בעברית או אנגלית")
+            flagChangePassword = 0;
+        }
+
+
         if (passwordVal.length >= 8) {
             let counter = 0;
 
