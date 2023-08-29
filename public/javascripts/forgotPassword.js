@@ -1,22 +1,35 @@
-function checkIfEmpty(inp, Error)
-{
-    if(inp === "")
+$(document).ready(function() {
+
+    function checkIfPhoneNumberIsValid(inp)
     {
-        Error.html("שדה ריק אינו חוקי");
+        if (inp.length !== 14) {
+            return false;
+        } else {
+            for (let i = 0; i< inp.length; i++) {
+                if (inp[i] < '0' && inp[i] > '9' && inp[i] != " " && inp[i] != "-" && inp[i] != "(" && inp[i] != ")") { 
+                    return false;
+                }
+            }
+        }
+        
         return true;
     }
-}
 
-const approve = $('#approveBtn');
-
-window.addEventListener("keyup", e => {
-    e.preventDefault();
-    if (e.key === "Enter") {
-        approve.click();
+    function checkIfEmpty(inp, Error)
+    {
+        if(inp === "")
+        {
+            Error.html("שדה ריק אינו חוקי");
+            return true;
+        }
     }
-  });
 
-$(document).ready(function() {
+    window.addEventListener("keyup", e => {
+        e.preventDefault();
+        if (e.key === "Enter") {
+            approve.click();
+        }
+    });
 
     const approve = $('#approveBtn');
 
@@ -25,7 +38,7 @@ $(document).ready(function() {
         const lnameTxt = $('#lname');
         const passwordTxt = $('#password');
         const passwordApproveTxt = $('#passwordApprov');
-        const PhoneNumberTxt = $('phone-number');
+        const PhoneNumberTxt = $('#phone-number');
 
         const fnameVal = fnameTxt.val();
         const lnameVal = lnameTxt.val();
@@ -33,11 +46,14 @@ $(document).ready(function() {
         const passwordApproveVal = passwordApproveTxt.val();
         const PhoneNumberVal = PhoneNumberTxt.val();
 
+
         const fnameError = $('#fnameError');
         const lnameError = $('#lnameError');
         const passwordError = $('#passwordError');
         const approvePasswordError = $('#approvePasswordError');
         const phoneNumberError = $('#PhoneNumberError');
+        const Error = $('#error');
+
 
         checkIfEmpty(fnameVal, fnameError);
         checkIfEmpty(lnameVal, lnameError);
@@ -65,6 +81,8 @@ $(document).ready(function() {
             },
             error: function(error) {
                 console.error("Error saving data:", error);
+                Error.html('יש לך טעות באחד מפרטיך אנא תקן כדי להתחבר');
+                Error.show();
             }
         });
 
@@ -130,6 +148,7 @@ $(document).ready(function() {
                 }),
                 success: function(response) {
                     console.log("Data saved successfully:", response);
+                    $('#exampleModal').modal('show');
                 },
                 error: function(error) {
                     console.error("Error saving data:", error);
