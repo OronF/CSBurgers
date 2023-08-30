@@ -7,22 +7,20 @@ header {
 body {
     font-family: 'Lato', sans-serif;
     font-family: 'Noto Sans Hebrew', sans-serif;
+    /* margin: 0; */
     direction:rtl;
 }
 
   .btn-back {
     font-size: 1.5vw;
     position: fixed;
-    right: 2vw;
+    right: 3vw;
     top: 1vw;
     color:white;
     text-decoration: none;
     font-family: 'Lato', sans-serif;
     font-family: 'Noto Sans Hebrew', sans-serif;
     transition: all 0.4s;
-    background-color: rgb(154, 13, 13);
-    padding-right: 2vw;
-    padding-left: 2vw;
 }
 
 .title {
@@ -42,9 +40,6 @@ body {
 
 .card-title{
     color: rgb(154, 13, 13);
-    font-size: 1.8vw;
-    padding-right: 1.3vw;
-
 }
 
 .card-body
@@ -54,103 +49,34 @@ body {
     font-size: 1.5vw;
 }
 
-.info
-{
-    margin-right: 1vw;
-}
-
-
 #client-info
 {
-    margin-top: 2vw;
-    margin-right: 24vw;
+    position: fixed;
+    top: 9vw;
+    right: 25vw;
     border-radius: 1.8vw;
-    
-}
-
-.order-list
-{
-    margin-top: 1.2vw;
 }
 
 #client-orders
 {
-    margin-top: 2vw;
-    margin-right: 24vw;
+    position: fixed;
+    top: 9vw;
+    right:50vw;
     border-radius: 1.8vw;
 }
 
-li{
-    list-style: none;
-    font-size: 1.3vw;
-}
-
-.details
-{
-    font-size: 1.3vw;
-    color:grey;
-}
-i{
-    font-style: normal;   
-
-    font-size:1.1vw;
-    border:none;
-    border-width: 0.113vw;
-}
-
-.delete-btn
-{
-    background-color: rgb(101, 91, 91);  
-    color:white;
-    outline:none;
-    border: none;
-    padding-bottom: 0.5vw;
-    padding-left: 1vw;
-    padding-right:1vw;
-    transition: all 0.2s;
-}
-
-.delete-btn:hover{
-    background-color: rgb(158, 15, 15);    
-
-}
-
-.update-btn:hover
-{
-    background-color: rgb(8, 98, 8);    
-
-}
-
-.update-btn
-{
-    background-color: green;    
-    color:white;
-    outline:none;
-    border: none;
-    padding-bottom: 0.5vw;
-    padding-left: 1vw;
-    padding-right:1vw;
-    transition: all 0.2s;
-}
-
-.buttons
-{
-    margin-bottom: 1vw;
-    margin-right:1vw;
-}
-
-.search,.edit, input
+.search
 {
     font-family: 'Lato', sans-serif;
     font-family: 'Noto Sans Hebrew', sans-serif;
     border: 0.1vw solid rgb(228, 227, 227);
     transition: border-color 0.3s ease;
     outline: none;
-    border-radius: 0.3vw;
-    padding-right: 1vw;
-    margin-top: 1vw;
+    margin-bottom: 1.3vw;
 }
-.search:focus, .edit:focus
+
+
+.search:focus
 {
     border-color: rgb(110, 103, 103);
 
@@ -158,19 +84,4 @@ i{
 
 .hide {
     display: none;
-}
-
-.selections {
-    margin-top:1.2vw;
-    display: flex;
-    align-items: center;
-    gap: 1vw;
-}
-
-.errors
-{
-    font-family: 'Lato', sans-serif;
-    font-family: 'Noto Sans Hebrew', sans-serif;
-    color:red;
-    font-size: 1.3vw;
 }

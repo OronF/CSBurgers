@@ -8,8 +8,6 @@
     text-align: center;
     color: rgb(154, 13, 13);
     margin-top: 4vh;
-    font-family: 'Lato', sans-serif;
-    font-family: 'Noto Sans Hebrew', sans-serif;
 }
 
 .btn-back {
@@ -32,15 +30,11 @@
 .titleGraph1 {
     text-align: center;
     margin-top: 4vh;
-    font-family: 'Lato', sans-serif;
-    font-family: 'Noto Sans Hebrew', sans-serif;
 }
 
 .titleGraph2 {
     text-align: center;
     margin-top: 4vh;
-    font-family: 'Lato', sans-serif;
-    font-family: 'Noto Sans Hebrew', sans-serif;
 }
 
 .div-chart {

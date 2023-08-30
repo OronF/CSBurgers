@@ -5,7 +5,7 @@
 }
 
 /* responsible for the animation when the client puts his mouse over each button*/
-.btn-about:hover, .btn-accessibility:hover, .btn-contact:hover, .btn-guest:hover ,.btn-menu:hover, .btn-ToOrder:hover, .btn-logout:hover
+.btn-about:hover, .btn-accessibility:hover, .btn-contact:hover, .btn-guest:hover ,.btn-menu:hover, .btn-ToOrder:hover
 {
     transform: scale(1.3);
 }
