@@ -62,3 +62,19 @@
 .link:hover{
     color:rgb(154, 13, 13);
 }
+
+#approveBtn{
+    color:  rgb(154, 13, 13);
+    border:none;
+    border-width: 0.113vw;
+    background: transparent;
+    font-size: x-large;
+    transition: all 0.4s;
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;
+}
+
+#approveBtn:hover 
+{
+    transform: scale(1.1);
+}
