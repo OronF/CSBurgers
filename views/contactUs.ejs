@@ -48,18 +48,21 @@
                       <div class="row">
                         <div class="col-md-6 mb-4">
                             <div class="form-outline">
-                              <input type="text" placeholder="שם משפחה" id="form3Example1m" class="form-control inp form-control-lg">
+                              <input type="text" placeholder="שם משפחה" id="lname" class="form-control inp form-control-lg" required maxlength="30">
+                              <div class="error" id="lnameError"></div>
                             </div>
                           </div>
                           
                           <div class="col-md-6 mb-4">
                             <div class="form-outline">
-                              <input type="text" placeholder="שם פרטי" id="form3Example1n" class="form-control inp form-control-lg">
+                              <input type="text" placeholder="שם פרטי" id="fname" class="form-control inp form-control-lg" required maxlength="30">
+                              <div class="error" id="fnameError"></div>
                             </div>
                           </div>
             
                         <div class="form-outline mb-4">
                             <input type="tel" id="phone-number" onkeydown="phoneNumberFormatter()" placeholder="מספר טלפון" class="form-control inp form-control-lg">
+                            <div class="error" id="phoneNumberError"></div>
                         </div>
 
                       
@@ -67,14 +70,16 @@
                       <div class="form-outline mb-4" dir="rtl">
                         <select id="framework" class="form-select inp form-select-lg">
                         </select>
+                        <div class="error" id="branchError"></div>
                     
                         <div class="form-group mb-4 mt-4">
-                            <textarea class="message form-control "  id="form3Example1m"  rows="2" placeholder="הודעה" required></textarea>
+                            <textarea class="message form-control "  id="message"  rows="2" placeholder="הודעה" required ></textarea>
+                            <div class="error" id="messageError"></div>
                           </div>
 
                           <div class="d-flex justify-content-center">
                             <button type="button" id="approve-btn"
-                              class="approve btn btn-lg gradient-custom-4" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">  לשליחה<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
+                              class="approve btn btn-lg gradient-custom-4" type="button" >  לשליחה<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
                                 <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/>
                               </svg></button>
                           </div>
@@ -173,24 +178,136 @@
 <script src="/socket.io/socket.io.js"></script>
   <script>
     $(document).ready(function() {
-      var socket = io();
 
+      const approveBtn = $('#approve-btn');
+
+      let flagSendMessage = 1;
+
+      approveBtn.on('click', async function() {
+        const fnameTxt = $('#fname');
+        const lnameTxt = $('#lname');
+        const phoneNumberTxt = $('#phone-number');
+        const branchTxt = $('#framework');
+        const messageTxt = $('#message');
+
+        const fnameError = $('#fnameError');
+        const lnameError = $('#lnameError');
+        const phoneNumberError = $('#phoneNumberError');
+        const branchError = $('#branchError');
+        const messageError = $('#messageError');
+
+        const fnameVal = fnameTxt.val();
+        const lnameVal = lnameTxt.val();
+        const phoneNumberVal = phoneNumberTxt.val();
+        const branchVal = branchTxt.val();
+        const messageVal = messageTxt.val();
+
+        if(checkIfEmpty(fnameVal, fnameError)){
+            flagSendMessage = 0;
+        }
+        if(checkIfEmpty(lnameVal, lnameError)){
+            flagSendMessage = 0;
+        }
+        if(checkIfEmpty(phoneNumberVal, phoneNumberError)){
+            flagSendMessage = 0;
+        }
+
+        if(nameValidation(fnameVal, fnameError)){
+            flagSendMessage = 0;
+        }
+        if(nameValidation(lnameVal, lnameError)){
+            flagSendMessage = 0;
+        }
+
+        if (fnameVal.length > 10) {
+            fnameError.html( "הזנת שם פרטי ארוך מדי");
+            flagSendMessage = 0;
+        } 
+        
+        if (lnameVal.length > 10){
+            lnameError.html("הזנת שם משפחה ארוך מדי");
+            flagSendMessage = 0;
+        }
+
+        if (!checkIfPhoneNumberIsValid(phoneNumberVal)){
+            phoneNumberError.html("הזנת מספר טלפון לא חוקי");
+            flagSendMessage = 0;
+        }
+
+        var  frameWorkValue = document.getElementById('framework').value;
+        if (frameWorkValue == 0) {
+            branchError.html("חובה לבחור סניף אליו מיועדת הפנייה");
+            flagSendMessage = 0;
+          }
+
+          if (messageVal === "") {
+            messageError.html("אנא מלא את ההודעה");
+            flagSendMessage = 0;
+          }
+      });
+      var socket = io();
+      
       const approvebtn = document.getElementById('approve-btn');
 
       approvebtn.addEventListener('click', sendMessage);
 
       function sendMessage() {
-        const firstName = document.getElementById('form3Example1m').value;
-        const lastName = document.getElementById('form3Example1n').value;
+        
+        const firstName = document.getElementById('fname').value;
+        const lastName = document.getElementById('lname').value;
         const phoneNumber = document.getElementById('phone-number').value;
         const message = document.getElementsByClassName('message')[0].value;
         const manager = $('#framework').find(':selected').attr('data-manager-id');
 
         const fullMessage = `Name: ${firstName} ${lastName}\nPhone: ${phoneNumber}\nMessage: ${message}`;
-        
-        socket.emit('message', { message: fullMessage, manager: manager });
+        if(flagSendMessage == 1){
+          socket.emit('message', { message: fullMessage, manager: manager });
+          $('#exampleModal').modal('show');
+        }
       }
     });
+    function checkIfPhoneNumberIsValid(inp)
+    {
+        if (inp.length !== 14) {
+            return false;
+        } else {
+            for (let i = 0; i< inp.length; i++) {
+                if (inp[i] < '0' && inp[i] > '9' && inp[i] != " " && inp[i] != "-" && inp[i] != "(" && inp[i] != ")") { 
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    function nameValidation(name, error)
+    {
+        if(name.length < 2)
+        {
+            error.html("על השדה להכיל לפחות 2 תווים בעברית");
+        }
+        
+        for (let i = 0; i < name.length; i++) {
+            const charCode = name.charCodeAt(i);
+            
+            // Check if the character is a valid Hebrew letter
+            if (charCode < 1488 || charCode > 1514) {
+                error.html("על השדה להכיל תווים בעברית בלבד");
+                if(name.length<2){
+                    error.html("על השדה להכיל תווים בעברית בלבד ולפחות 2 תווים")
+                }
+            }
+        }
+    }
+
+    function checkIfEmpty(inp, Error)
+    {
+        if(inp === "")
+        {
+            Error.html("שדה ריק אינו חוקי");
+            return true;
+        }
+    }
   </script>
 
 </html>

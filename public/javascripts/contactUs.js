@@ -1,28 +1,8 @@
-function nameValidation(name, error)
-{
-    if(name.length < 2)
-    {
-        error.html("על השדה להכיל לפחות 2 תווים בעברית");
-    }
-    
-    for (let i = 0; i < name.length; i++) {
-        const charCode = name.charCodeAt(i);
-        
-        // Check if the character is a valid Hebrew letter
-        if (charCode < 1488 || charCode > 1514) {
-            error.html("על השדה להכיל תווים בעברית בלבד");
-            if(name.length<2)
-            error.html("על השדה להכיל תווים בעברית בלבד ולפחות 2 תווים")
-
-        }
-    }
-}
-
 $(document).ready(function() {
 
     const framework = $('#framework');
 
-    framework.append(`<option disabled selected class="text-blue-600/100">שם הסניף</option>`);
+    framework.append(`<option value = "0" disabled selected class="text-blue-600/100">שם הסניף</option>`);
 
     let index = 1;
 
@@ -57,43 +37,12 @@ $(document).ready(function() {
         }
     });
 
-    approve.on('click', async function() {
-        const fnameTxt = $('#fname');
-        const lnameTxt = $('#lname');
-        const phoneNumberTxt = $('#phone-number');
-        const branchTxt = $('#framework');
-        const messageTxt = $('#message');
-
-        const fnameError = $('#fnameError');
-        const lnameError = $('#lnameError');
-        const phoneNumberError = $('#phoneNumberError');
-        const branchError = $('#branchError');
-        const messageError = $('#messageError');
-
-        const fnameVal = fnameTxt.val();
-        const lnameVal = lnameTxt.val();
-        const phoneNumberVal = phoneNumberTxt.val();
-        const branchVal = branchTxt.val();
-        const messageVal = messageTxt.val();
-
-        nameValidation(fnameVal, fnameError);
-        nameValidation(lnameVal, lnameError);
-
-        if (!checkIfPhoneNumberIsValid(phoneNumberVal)){
-            phoneNumberError.html("הזנת מספר טלפון לא חוקי");
-        }
-
-        if (branchVal === "") {
-            branchError.html("חובה לבחור סניף אליו מיועדת הפנייה");
-          }
-
-          if (messageVal === "") {
-            messageError.html("אנא מלא את ההודעה");
-          }
+    approveBtn.on('click', async function() {
+    
     });
 });
 
-/************************************** phone number formator **************************************/
+/***** phone number formator *****/
 const phoneNumberField = document.getElementById("phone-number");
 
 
@@ -154,5 +103,5 @@ function formatPhoneNumber(value)
         3,
         6,
         )}-${phoneNumber.slice(6,9)
-        }`;
+        }`;
 }

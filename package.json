@@ -22,7 +22,7 @@
     "jquery": "^3.7.0",
     "jsonwebtoken": "^9.0.1",
     "mongodb": "^5.8.1",
-    "mongoose": "^7.4.5",
+    "mongoose": "^7.5.0",
     "morgan": "~1.9.1",
     "node-modules": "^1.0.1",
     "node-oauth": "^0.3.0",
