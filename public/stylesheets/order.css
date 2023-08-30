@@ -133,9 +133,16 @@ body {
 #order
 {
     position: fixed;
-    top: 2.5vw;
-    left: 2vw;
+
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
     width: 30%;
+    height: 80%;
+    overflow-y: scroll;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    padding: 1rem;
 }
 
 .CardLink
