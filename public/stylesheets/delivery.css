@@ -115,3 +115,10 @@
     direction: rtl;
     margin-bottom: 0.5vw;
 }
+
+.errors
+{
+    color:rgb(216, 12, 12);
+    font-size: 1vw;
+    text-align: right;
+}

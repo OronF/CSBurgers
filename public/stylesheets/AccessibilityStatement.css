@@ -13,6 +13,9 @@ body {
     font-family: 'Noto Sans Hebrew', sans-serif;
     text-align: center;
     color: rgb(79, 79, 79);
+    column-width: 30rem;
+    column-gap: 1em;
+    column-rule: 1px solid #ccc;
   }
   
   .mini-title {
