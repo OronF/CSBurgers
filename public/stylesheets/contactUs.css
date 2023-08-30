@@ -56,3 +56,10 @@
     text-align: center;
     margin-top: 2vw;
 }
+
+.error
+{
+    color:rgb(216, 12, 12);
+    font-size: 1vw;
+    text-align: right;
+}

@@ -36,8 +36,6 @@ function nameValidation(name, error)
 
         }
     }
-
-    
 }
 
 var flagCreatUser = 1;
