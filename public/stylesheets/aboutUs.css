@@ -1,3 +1,12 @@
+@font-face {
+    font-family: 'dana_yad_alefalefalefnormal';
+    src: url('/fonts/danayadalefalefalef-normal-webfont.woff2') format('woff2'),
+         url('/fonts/danayadalefalefalef-normal-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
 body {
     direction:rtl;
 }
@@ -49,8 +58,6 @@ video {
 }
 
 .aboutUs-info {
-    font-family: 'Lato', sans-serif;
-    font-family: 'Noto Sans Hebrew', sans-serif;
-    
+    font-family: 'dana_yad_alefalefalefnormal';
 }
 
