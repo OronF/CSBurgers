@@ -10,7 +10,6 @@ $(document).ready(async function() {
     const matches = decodedValue.match(/"([^"]+)"/);
     const extractedContent = matches ? matches[1] : null;
 
-
     let order;
 
     await $.ajax({
@@ -23,6 +22,24 @@ $(document).ready(async function() {
             console.log(error);
         }
     });
+
+    let Branch;
+    let branchCheck = 1;
+
+    await $.ajax({
+        url: `/api/branch/${order.branch}`,
+        method: "GET",
+        success: function(data) {
+            Branch = data;
+        }, 
+        error: function(error) {
+            console.error(error);
+        }
+    });
+
+    if (Branch.address == order.location) {
+        branchCheck = 2;
+    }
 
     const dishesList = $('.dishes-list');
     const mealsList = $('.meals-list');
@@ -253,9 +270,15 @@ $(document).ready(async function() {
                 dishesproductsList.append(newElementDish);
             });
 
-            orderPrice.html(`מחיר הזמנה: ${order.totalprice - 15}₪`);
-            totalPrice.html(`מחיר כללי: ${order.totalprice}₪`);
-            TotalPricePayPage.html(`סה"כ לתשלום: ${order.totalprice}₪`);
+            if (branchCheck === 2) {
+                orderPrice.html(`מחיר הזמנה: ${order.totalprice - 5}₪`);
+                totalPrice.html(`מחיר כללי: ${order.totalprice}₪`);
+                TotalPricePayPage.html(`סה"כ לתשלום: ${order.totalprice}₪`);
+            } else {
+                orderPrice.html(`מחיר הזמנה: ${order.totalprice - 15}₪`);
+                totalPrice.html(`מחיר כללי: ${order.totalprice}₪`);
+                TotalPricePayPage.html(`סה"כ לתשלום: ${order.totalprice}₪`);
+            }
         });
 
         list.append(newElement);
@@ -466,9 +489,15 @@ $(document).ready(async function() {
                 mealsproductsList.append(newElementMeal);
             });
 
-            orderPrice.html(`מחיר הזמנה: ${order.totalprice - 15}₪`);
-            totalPrice.html(`מחיר כללי: ${order.totalprice}₪`);
-            TotalPricePayPage.html(`סה"כ לתשלום: ${order.totalprice}₪`);
+            if (branchCheck === 2) {
+                orderPrice.html(`מחיר הזמנה: ${order.totalprice - 5}₪`);
+                totalPrice.html(`מחיר כללי: ${order.totalprice}₪`);
+                TotalPricePayPage.html(`סה"כ לתשלום: ${order.totalprice}₪`);
+            } else {
+                orderPrice.html(`מחיר הזמנה: ${order.totalprice - 15}₪`);
+                totalPrice.html(`מחיר כללי: ${order.totalprice}₪`);
+                TotalPricePayPage.html(`סה"כ לתשלום: ${order.totalprice}₪`);
+            }
         });
         mealsList.append(newElement);
     }
@@ -733,9 +762,16 @@ $(document).ready(async function() {
                 mealsproductsList.append(newElement);
             });
         }
-        orderPrice.html(`מחיר הזמנה: ${order.totalprice - 15}₪`);
-        totalPrice.html(`מחיר כללי: ${order.totalprice}₪`);
-        TotalPricePayPage.html(`סה"כ לתשלום: ${order.totalprice}₪`);
+
+        if (branchCheck === 2) {
+            orderPrice.html(`מחיר הזמנה: ${order.totalprice - 5}₪`);
+            totalPrice.html(`מחיר כללי: ${order.totalprice}₪`);
+            TotalPricePayPage.html(`סה"כ לתשלום: ${order.totalprice}₪`);
+        } else {
+            orderPrice.html(`מחיר הזמנה: ${order.totalprice - 15}₪`);
+            totalPrice.html(`מחיר כללי: ${order.totalprice}₪`);
+            TotalPricePayPage.html(`סה"כ לתשלום: ${order.totalprice}₪`);
+        }
     } 
 
     refreshMeals();
@@ -872,9 +908,16 @@ $(document).ready(async function() {
                 dishesproductsList.append(newElement);
             });
         }
-        orderPrice.html(`מחיר הזמנה: ${order.totalprice - 15}₪`);
-        totalPrice.html(`מחיר כללי: ${order.totalprice}₪`);
-        TotalPricePayPage.html(`סה"כ לתשלום: ${order.totalprice}₪`);
+
+        if (branchCheck === 2) {
+            orderPrice.html(`מחיר הזמנה: ${order.totalprice - 5}₪`);
+            totalPrice.html(`מחיר כללי: ${order.totalprice}₪`);
+            TotalPricePayPage.html(`סה"כ לתשלום: ${order.totalprice}₪`);
+        } else {
+            orderPrice.html(`מחיר הזמנה: ${order.totalprice - 15}₪`);
+            totalPrice.html(`מחיר כללי: ${order.totalprice}₪`);
+            TotalPricePayPage.html(`סה"כ לתשלום: ${order.totalprice}₪`);
+        }
     }
 
     refreshDish();
@@ -1074,5 +1117,18 @@ $(document).ready(async function() {
         window.location.href = "/";
     });
     
+    $('.CardLink').on('click', function() {
+        if (order.dishes.length === 0 && order.meals.length === 0) {
+            alert('לא ניתן להזמין הזמנה ריקה');
+        } else {
+            $('#PayingSelectModal').modal('show');
+        }
+    });
+
+    if (branchCheck === 2) {
+        $('#delivery-price').html('מחיר עמלה: 5₪');
+        $('#time').html('זמן הכנה: כשעה');
+    }  
+
     delivery.html(`משלוח ל: ${order.location}`);
 });

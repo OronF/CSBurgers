@@ -179,7 +179,7 @@ $(document).ready(async function() {
                     orderNumber: Math.floor(Math.random() * 1000000),
                     orderDate: Date.now,
                     location: `${branch.address}`,
-                    totalprice: 15,
+                    totalprice: 5,
                     meals: [],
                     dishes: [],
                     branch: branchID,
