@@ -95,9 +95,13 @@ $(document).ready(async function() {
 
                 $(`#card-${id}`).append(`<div class="inputs-${id}">
                     <div class="update-dish-errors">
+                    <span class="details">שם המוצר</span>
                     <input value="${Dish.name}" class="form-control" id="name-${id}">
+                    <span class="details">מחיר</span>
                     <input value="${Dish.price}" class="form-control" id="price-${id}">
+                    <span class="details">תיאור</span>
                     <input value="${Dish.description}" class="form-control" id="description-${id}">
+                    <span class="details">תמונה</span>
                     <input value="${Dish.picture}" class="form-control" id="new-picture-${id}">
                 </div>`);
                 
