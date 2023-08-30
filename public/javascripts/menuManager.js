@@ -419,7 +419,7 @@ $(document).ready(async function() {
                 const name = $(`#name-${id}`).val();
 
                 if (name) {
-                    if (name.length > 14) {
+                    if (name.length > 12) {
                         updatecategoryerrors.html('שם הקטגוריה ארוך מידי');
                         updatecategoryerrors.show();
                         return;
