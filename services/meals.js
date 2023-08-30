@@ -11,7 +11,8 @@ const createMeal = async (newMeal) => {
         dishes: newMeal.dishes,
         categoryId: newMeal.categoryId,
         picture: newMeal.picture,
-        description: newMeal.description
+        description: newMeal.description,
+        kosher: newMeal.kosher
     });
 
     if (newMeal.webServiceId) {
@@ -50,6 +51,7 @@ const updateMeal = async (newMeal) => {
     meal.categoryId = newMeal.categoryId;
     meal.picture = newMeal.picture;
     meal.description = newMeal.description;
+    meal.kosher = newMeal.kosher;
 
     if (newMeal.webServiceId) {
         meal.webServiceId = newMeal.webServiceId;
@@ -63,11 +65,148 @@ const getByCategory = async (categoryId) => {
     return await Meal.find({categoryId});
 }
 
+const isKosher = async (categoryId, meals) =>
+{
+    if (!categoryId) {
+        return meals.filter((meal) => {
+            return meal.kosher;
+        });
+    } 
+
+    return meals.filter((meal) => {
+        return meal.kosher && meal.categoryId == categoryId;
+    });
+}
+
+const maxPrice = async (meals, priceInp, categoryId) =>
+{
+    const parsedPrice = parseInt(priceInp);
+    console.log(categoryId);
+
+    if (!categoryId) {
+        return meals.filter((meal) => {
+            return meal.price <= parsedPrice;
+        });
+    }
+
+    return meals.filter((meal) => {
+        return meal.price <= parsedPrice && meal.categoryId == categoryId;
+    });
+}
+
+const HighLowSort = async (kosherCheck, price, categoryId) =>
+{
+    if (kosherCheck === 2 && !price && !categoryId) {
+        return await Meal.find({}).sort({
+            price: -1
+        });
+    }
+
+    else if (kosherCheck === 3 && !price && !categoryId) {
+        return await Meal.find({kosher: true}).sort({
+            price: -1
+        });
+    } 
+    
+    else if (kosherCheck === 2 && price && !categoryId) {
+        return await Meal.find({price: { $lte: price }}).sort({
+            price: -1
+        });
+    }
+
+    else if (kosherCheck === 2 && !price && categoryId) {
+        return await Meal.find({categoryId}).sort({
+            price: -1
+        });
+    }
+
+    else if (kosherCheck === 3 && price && !categoryId) {
+        return await Meal.find({kosher: true, price: { $lte: price }}).sort({
+            price: -1
+        });
+    }
+
+    
+    else if (kosherCheck === 3 && !price && categoryId) {
+        return await Meal.find({kosher: true, categoryId}).sort({
+            price: -1
+        });
+    }
+
+    else if (kosherCheck === 2 && price && categoryId) {
+        return await Meal.find({price: { $lte: price }, categoryId}).sort({
+            price: -1
+        });
+    }
+
+    else if (kosherCheck === 3 && price && categoryId) {
+        return await Meal.find({kosher: true, price: { $lte: price }, categoryId}).sort({
+            price: -1
+        });
+    }
+}
+
+const LowHighSort = async (kosherCheck, price, categoryId) =>
+{
+    if (kosherCheck === 2 && !price && !categoryId) {
+        return await Meal.find({}).sort({
+            price: 1
+        });
+    }
+
+    else if (kosherCheck === 3 && !price && !categoryId) {
+        return await Meal.find({kosher: true}).sort({
+            price: 1
+        });
+    } 
+    
+    else if (kosherCheck === 2 && price && !categoryId) {
+        return await Meal.find({price: { $lte: price }}).sort({
+            price: 1
+        });
+    }
+
+    else if (kosherCheck === 2 && !price && categoryId) {
+        return await Meal.find({categoryId}).sort({
+            price: 1
+        });
+    }
+
+    else if (kosherCheck === 3 && price && !categoryId) {
+        return await Meal.find({kosher: true, price: { $lte: price }}).sort({
+            price: 1
+        });
+    }
+
+    
+    else if (kosherCheck === 3 && !price && categoryId) {
+        return await Meal.find({kosher: true, categoryId}).sort({
+            price: 1
+        });
+    }
+
+    else if (kosherCheck === 2 && price && categoryId) {
+        return await Meal.find({price: { $lte: price }, categoryId}).sort({
+            price: 1
+        });
+    }
+
+    else if (kosherCheck === 3 && price && categoryId) {
+        return await Meal.find({kosher: true, price: { $lte: price }, categoryId}).sort({
+            price: 1
+        });
+    }
+}
+
 module.exports = {
     getAll,
     create: createMeal,
     delete: deleteMeal,
     update: updateMeal,
     search: searchMeal,
-    getByCategory
+    getByCategory,
+    isKosher,
+    maxPrice,
+    LowHighSort,
+    HighLowSort
 }

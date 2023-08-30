@@ -1,0 +1,35 @@
+
+
+.title404
+{
+    margin-right: 20vw;
+    margin-top: 3vw;
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;
+    direction: rtl;
+    color:rgb(154, 13, 13);
+    font-size: 5vw;
+}
+
+.message
+{
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;
+    direction: rtl;
+    margin-right: 20vw;
+
+}
+
+.link
+{
+    border:none;
+    border-width: 0.113vw;
+    background: transparent;
+    color:rgb(154, 13, 13);
+}
+
+.img
+{
+    width:20vw;
+    margin-left:25vw;
+}

@@ -3,7 +3,7 @@ function checkIfPhoneNumberIsValid(inp)
     for(let i = 0; i<inp.length; i++)
     {
         if(isNaN(inp[i]))
-        return false;
+            return false;
     }
     
     return true;
@@ -40,11 +40,23 @@ function nameValidation(name, error)
     
 }
 
+var flagCreatUser = 1;
+
+const approve = $('#approveBtn');
+
+window.addEventListener("keyup", e => {
+    e.preventDefault();
+    if (e.key === "Enter") {
+        approve.click();
+    }
+  });
+
+
 $(document).ready(function() {
 
     const approve = $('#approveBtn');
 
-    approve.on('click', function() {
+    approve.on('click', async function() {
         const fnameTxt = $('#fname');
         const lnameTxt = $('#lname');
         const phoneNumberTxt = $('#phone-number');
@@ -69,57 +81,84 @@ $(document).ready(function() {
         nameValidation(fnameVal, fnameError);
         nameValidation(lnameVal, lnameError);
 
-        if(!termsCheckBox.prop('checked'))
+        if(!termsCheckBox.prop('checked')){
             termsError.html("חובה להסכים לתנאי השימוש")
+            flagCreatUser = 0;
+        }
 
             if (fnameVal.length > 10) {
                 fnameError.html( "הזנת שם פרטי ארוך מדי");
+                flagCreatUser = 0;
             } 
             
             if (lnameVal.length > 10){
                 lnameError.html("הזנת שם משפחה ארוך מדי");
+                flagCreatUser = 0;
             } 
             
             if (!checkIfPhoneNumberIsValid(phoneNumberVal)){
                 phoneNumberError.html("הזנת מספר טלפון לא חוקי");
+                flagCreatUser = 0;
             }
 
 
             if(passwordVal.length < 8)
             {
                 passwordError.html("על הסיסמה להכיל לפחות 8 תווים");
+                flagCreatUser = 0;
             }
 
-            if(passwordApproveVal !== passwordVal)
-            approvePasswordError.html("שדה אישור הסיסמה אינו זהה לסיסמה")
+            if(passwordApproveVal !== passwordVal){
+                approvePasswordError.html("שדה אישור הסיסמה אינו זהה לסיסמה")
+                flagCreatUser = 0;
+            }
 
-
-
-            $.ajax({
-                url:"/api/user",
-                method: "POST",
-                dataType: "json",
-                contentType: 'application/json',
-                data: JSON.stringify({
-                    fname: fnameVal,
-                    lname: lnameVal,
-                    orders: [],
-                    phoneNumber: phoneNumberVal,
-                    password: passwordVal,
-                    approvePassword: passwordApproveVal,
-                    is_Manager: false
-                }),
-                success: function(response) {
-                    console.log("Data saved successfully:", response);
-
-                    // Read the 'signUpCookie' value
-                    const phoneNumberCookie = getCookie('signUpCookie');
-                    console.log('Phone number from cookie:', phoneNumberCookie);
+            await $.ajax({
+                url: "/api/user",
+                method: "GET",
+                success: function(data)
+                {
+                    data.forEach(user => {
+                        phoneNumberFormatter();
+                        console.log("data found");
+                        if(user.phoneNumber === phoneNumberVal){
+                            phoneNumberError.html("מספר טלפון זה כבר בשימוש במשתמש אחר");
+                            flagCreatUser = 0;
+                        }
+                    });
                 },
                 error: function(error) {
-                    console.error("Error saving data:", error);
+                    console.error("Error finding data",error);
                 }
-            });
+            })
+            if(flagCreatUser != 0){
+                await $.ajax({
+                    url:"/api/user",
+                    method: "POST",
+                    dataType: "json",
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        fname: fnameVal,
+                        lname: lnameVal,
+                        orders: [],
+                        phoneNumber: phoneNumberVal,
+                        password: passwordVal,
+                        approvePassword: passwordApproveVal,
+                        is_Manager: false
+                    }),
+                    success: function(response) {
+                        console.log("Data saved successfully:", response);
+    
+                        // Read the 'signUpCookie' value
+                        const phoneNumberCookie = getCookie('signUpCookie');
+                        console.log('Phone number from cookie:', phoneNumberCookie);
+                        $('#exampleModal').modal('show');
+                    },
+                    error: function(error) {
+                        console.error("Error saving data:", error);
+                    }
+                });
+            }
 
             
             function getCookie(name) {

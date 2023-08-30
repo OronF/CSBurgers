@@ -49,7 +49,7 @@ $(document).ready(async function() {
         element.removeClass('hide').addClass('nohide');
     }
 
-    const appendDishesLi = (dish) => {
+    const appendDishesLi = (dish, list) => {
         const newElement = $(`<li id="${dish._id} class="nohide" data-dish-categoryId="${dish.categoryId}">
             <div class="card">
             <div class="row">
@@ -149,8 +149,108 @@ $(document).ready(async function() {
                         console.error(error);
                     }
                 });
+                
+                const newElementDish = $(`<li>
+                <span class="dish-name">${name}</span>
+                <span class="dish-count">${dishes.count}</span>
+                <div class="dishes-btn">
+                    <i class="bi bi-plus-circle-fill" id="iconToClick-${dishes._id}"></i>
+                    <i class="bi bi-dash-circle-fill" id="iconToRemove-${dishes._id}"></i>
+                </div>
+                </li>`);
 
-                dishesproductsList.append(`<li><span>${name}</span><span>${dishes.count}</span></li>`);
+                newElementDish.find(`#iconToClick-${dishes._id}`).on('click', async function() {
+                    let Dish;
+
+                    await $.ajax({
+                        url: `/api/dish/${dishes._id}`,
+                        method: "GET",
+                        success: function(data) {
+                            Dish = data;
+                        },
+                        error: function(error) {
+                            console.error(error);
+                        }
+                    });
+
+                    order.dishes.push(Dish._id);
+
+                        await $.ajax({
+                            url: `/api/order/${orderID}`,
+                            method: "PUT",
+                            dataType: "json",
+                            contentType: 'application/json',
+                            data: JSON.stringify({
+                            orderNumber: order.orderNumber,
+                            orderDate: order.orderDate,
+                            location: order.location, 
+                            totalprice: order.totalprice + Dish.price,
+                            meals: order.meals,
+                            dishes: order.dishes,
+                            branch: order.branch,
+                            closed: false,
+                            customerId: order.customerId
+                        }),
+                        success: function(data) {
+                            order = data;
+                            dishesproductsList.empty();
+                            refreshDish();
+                        },
+                        error: function(error) {
+                            console.error("Error saving data:", error);
+                        }
+                    });
+                });
+
+                newElementDish.find(`#iconToRemove-${dishes._id}`).on('click', async function() {
+                    let Dish;
+
+                    await $.ajax({
+                        url: `/api/dish/${dishes._id}`,
+                        method: "GET",
+                        success: function(data) {
+                            Dish = data;
+                        },
+                        error: function(error) {
+                            console.error(error);
+                        }
+                    });
+
+                    for (let i = 0; i < order.dishes.length; i++) {
+                        if(order.dishes[i] === dishes._id) {
+                            order.dishes.splice(i, 1);
+                            break;
+                        }
+                    }
+
+                        await $.ajax({
+                            url: `/api/order/${orderID}`,
+                            method: "PUT",
+                            dataType: "json",
+                            contentType: 'application/json',
+                            data: JSON.stringify({
+                            orderNumber: order.orderNumber,
+                            orderDate: order.orderDate,
+                            location: order.location, 
+                            totalprice: order.totalprice - Dish.price,
+                            meals: order.meals,
+                            dishes: order.dishes,
+                            branch: order.branch,
+                            closed: false,
+                            customerId: order.customerId
+                        }),
+                        success: function(data) {
+                            order = data;
+                            dishesproductsList.empty();
+                            refreshDish();
+                        },
+                        error: function(error) {
+                            console.error("Error saving data:", error);
+                        }
+                    });
+                });
+
+                dishesproductsList.append(newElementDish);
             });
 
             orderPrice.html(`מחיר הזמנה: ${order.totalprice - 15}₪`);
@@ -158,7 +258,7 @@ $(document).ready(async function() {
             TotalPricePayPage.html(`סה"כ לתשלום: ${order.totalprice}₪`);
         });
 
-        dishesList.append(newElement);
+        list.append(newElement);
     }
 
     const appendMealsLi = (meal) => {
@@ -264,7 +364,106 @@ $(document).ready(async function() {
                     }
                 });
 
-                mealsproductsList.append(`<li><span>${name}</span><span>${meals.count}</span></li>`);
+                const newElementMeal = $(`<li>
+                <span class="meal-name">${name}</span>
+                <span class="meal-count">${meals.count}</span>
+                <div class="meals-btn">
+                    <i class="bi bi-plus-circle-fill" id="iconToClick-${meals._id}"></i>
+                    <i class="bi bi-dash-circle-fill" id="iconToRemove-${meals._id}"></i>
+                </div>
+                </li>`);
+
+                newElementMeal.find(`#iconToClick-${meals._id}`).on('click', async function() {
+                    let Meal;
+
+                    await $.ajax({
+                        url: `/api/meal/${meals._id}`,
+                        method: "GET",
+                        success: function(data) {
+                            Meal = data;
+                        },
+                        error: function(error) {
+                            console.error(error);
+                        }
+                    });
+
+                    order.meals.push(Meal._id);
+
+                        await $.ajax({
+                            url: `/api/order/${orderID}`,
+                            method: "PUT",
+                            dataType: "json",
+                            contentType: 'application/json',
+                            data: JSON.stringify({
+                            orderNumber: order.orderNumber,
+                            orderDate: order.orderDate,
+                            location: order.location, 
+                            totalprice: order.totalprice + Meal.price,
+                            meals: order.meals,
+                            dishes: order.dishes,
+                            branch: order.branch,
+                            closed: false,
+                            customerId: order.customerId
+                        }),
+                        success: function(data) {
+                            order = data;
+                            mealsproductsList.empty();
+                            refreshMeals();
+                        },
+                        error: function(error) {
+                            console.error("Error saving data:", error);
+                        }
+                    });
+                });
+
+                newElementMeal.find(`#iconToRemove-${meals._id}`).on('click', async function() {
+                    let Meal;
+
+                    await $.ajax({
+                        url: `/api/meal/${meals._id}`,
+                        method: "GET",
+                        success: function(data) {
+                            Meal = data;
+                        },
+                        error: function(error) {
+                            console.error(error);
+                        }
+                    });
+
+                    for (let i = 0; i < order.meals.length; i++) {
+                        if(order.meals[i] === meals._id) {
+                            order.meals.splice(i, 1);
+                            break;
+                        }
+                    }
+                        await $.ajax({
+                            url: `/api/order/${orderID}`,
+                            method: "PUT",
+                            dataType: "json",
+                            contentType: 'application/json',
+                            data: JSON.stringify({
+                            orderNumber: order.orderNumber,
+                            orderDate: order.orderDate,
+                            location: order.location, 
+                            totalprice: order.totalprice - Meal.price,
+                            meals: order.meals,
+                            dishes: order.dishes,
+                            branch: order.branch,
+                            closed: false,
+                            customerId: order.customerId
+                        }),
+                        success: function(data) {
+                            order = data;
+                            mealsproductsList.empty();
+                            refreshMeals();
+                        },
+                        error: function(error) {
+                            console.error("Error saving data:", error);
+                        }
+                    });
+                });
+                
+                mealsproductsList.append(newElementMeal);
             });
 
             orderPrice.html(`מחיר הזמנה: ${order.totalprice - 15}₪`);
@@ -349,7 +548,7 @@ $(document).ready(async function() {
                 });
     
                 dishes.forEach(dish => {
-                    appendDishesLi(dish);
+                    appendDishesLi(dish, dishesList);
                 });
             }
         });
@@ -374,14 +573,9 @@ $(document).ready(async function() {
         }
     });
 
-    $.ajax({
+    await $.ajax({
         url:"/api/meal",
         method: "GET",
-        dataType: "json",
-        contentType: 'application/json',
-        data: {
-            categoryId: "64d0f4bcfdf8c926feae7c11"
-        },
         success: (data) => {
             renderMeals(data);
         },
@@ -390,78 +584,300 @@ $(document).ready(async function() {
         }
     });
 
+    await $.ajax({
+        url:"/api/dish",
+        method: "GET",
+        success: (data) => {
+            data.forEach(dish => {
+                appendDishesLi(dish, mealsList);
+            });
+        },
+        error: (error) => {
+            console.log(error);
+        }
+    });
+
     let names;
     let name;
+    
+    const refreshMeals = async () =>  {
+        if (mealsproductsList.length > 0) {
+            await $.ajax({
+                url: `/api/order/${orderID}`,
+                method: "GET",
+                dataType: "json",
+                contentType: 'application/json',
+                data: {
+                    group: true,
+                    meals: true
+                },
+                success: function(data) {
+                   names = data;
+                },
+                error: function(error) {
+                    console.error("Error saving data:", error);
+                }
+            });
+        
+            names.forEach(async (meals) => {
+                await $.ajax({
+                    url: `/api/meal/${meals._id}`,
+                    method: "GET",
+                    success: function(data) {
+                        name = data.name;
+                    },
+                    error: function(error) {
+                        console.error(error);
+                    }
+                })
+                const newElement = $(`<li>
+                <span class="meal-name">${name}</span>
+                <span class="meal-count">${meals.count}</span>
+                <div class="meals-btn">
+                    <i class="bi bi-plus-circle-fill" id="iconToClick-${meals._id}"></i>
+                    <i class="bi bi-dash-circle-fill" id="iconToRemove-${meals._id}"></i>
+                </div>
+                </li>`);
+    
+                newElement.find(`#iconToClick-${meals._id}`).on('click', async function() {
+                    let Meal;
 
-    if (dishesproductsList.length > 0) {
-        await $.ajax({
-            url: `/api/order/${orderID}`,
-            method: "GET",
-            dataType: "json",
-            contentType: 'application/json',
-            data: {
-                group: true
-            },
-            success: function(data) {
-               names = data;
-            },
-            error: function(error) {
-                console.error("Error saving data:", error);
-            }
-        });
-    
-        names.forEach(async (dishes) => {
+                    await $.ajax({
+                        url: `/api/meal/${meals._id}`,
+                        method: "GET",
+                        success: function(data) {
+                            Meal = data;
+                        },
+                        error: function(error) {
+                            console.error(error);
+                        }
+                    });
+
+                    order.meals.push(Meal._id);
+
+                        await $.ajax({
+                            url: `/api/order/${orderID}`,
+                            method: "PUT",
+                            dataType: "json",
+                            contentType: 'application/json',
+                            data: JSON.stringify({
+                            orderNumber: order.orderNumber,
+                            orderDate: order.orderDate,
+                            location: order.location, 
+                            totalprice: order.totalprice + Meal.price,
+                            meals: order.meals,
+                            dishes: order.dishes,
+                            branch: order.branch,
+                            closed: false,
+                            customerId: order.customerId
+                        }),
+                        success: function(data) {
+                            order = data;
+                            mealsproductsList.empty();
+                            refreshMeals();
+                        },
+                        error: function(error) {
+                            console.error("Error saving data:", error);
+                        }
+                    });
+                });
+
+                newElement.find(`#iconToRemove-${meals._id}`).on('click', async function() {
+                    console.log(4233);
+                    let Meal;
+
+                    await $.ajax({
+                        url: `/api/meal/${meals._id}`,
+                        method: "GET",
+                        success: function(data) {
+                            Meal = data;
+                        },
+                        error: function(error) {
+                            console.error(error);
+                        }
+                    });
+
+                    for (let i = 0; i < order.meals.length; i++) {
+                        if(order.meals[i] === meals._id) {
+                            order.meals.splice(i, 1);
+                            break;
+                        }
+                    }
+                        await $.ajax({
+                            url: `/api/order/${orderID}`,
+                            method: "PUT",
+                            dataType: "json",
+                            contentType: 'application/json',
+                            data: JSON.stringify({
+                            orderNumber: order.orderNumber,
+                            orderDate: order.orderDate,
+                            location: order.location, 
+                            totalprice: order.totalprice - Meal.price,
+                            meals: order.meals,
+                            dishes: order.dishes,
+                            branch: order.branch,
+                            closed: false,
+                            customerId: order.customerId
+                        }),
+                        success: function(data) {
+                            order = data;
+                            mealsproductsList.empty();
+                            refreshMeals();
+                        },
+                        error: function(error) {
+                            console.error("Error saving data:", error);
+                        }
+                    });
+                });
+
+                mealsproductsList.append(newElement);
+            });
+        }
+        orderPrice.html(`מחיר הזמנה: ${order.totalprice - 15}₪`);
+        totalPrice.html(`מחיר כללי: ${order.totalprice}₪`);
+        TotalPricePayPage.html(`סה"כ לתשלום: ${order.totalprice}₪`);
+    } 
+
+    refreshMeals();
+
+    const refreshDish = async () =>  {
+        if (dishesproductsList.length > 0) {
             await $.ajax({
-                url: `/api/dish/${dishes._id}`,
+                url: `/api/order/${orderID}`,
                 method: "GET",
+                dataType: "json",
+                contentType: 'application/json',
+                data: {
+                    group: true
+                },
                 success: function(data) {
-                    name = data.name;
+                   names = data;
                 },
                 error: function(error) {
-                    console.error(error);
+                    console.error("Error saving data:", error);
                 }
-            })
-            dishesproductsList.append(`<li><span>${name}</span><span>${dishes.count}</span></li>`);
-        });
+            });
+        
+            names.forEach(async (dishes) => {
+                await $.ajax({
+                    url: `/api/dish/${dishes._id}`,
+                    method: "GET",
+                    success: function(data) {
+                        name = data.name;
+                    },
+                    error: function(error) {
+                        console.error(error);
+                    }
+                });
+
+                const newElement = $(`<li>
+                <span class="dish-name">${name}</span>
+                <span class="dish-count">${dishes.count}</span>
+                <div class="dishes-btn">
+                    <i class="bi bi-plus-circle-fill" id="iconToClick-${dishes._id}"></i>
+                    <i class="bi bi-dash-circle-fill" id="iconToRemove-${dishes._id}"></i>
+                </div>
+                </li>`);
+
+                newElement.find(`#iconToClick-${dishes._id}`).on('click', async function() {
+                    let Dish;
+
+                    await $.ajax({
+                        url: `/api/dish/${dishes._id}`,
+                        method: "GET",
+                        success: function(data) {
+                            Dish = data;
+                        },
+                        error: function(error) {
+                            console.error(error);
+                        }
+                    });
+
+                    order.dishes.push(Dish._id);
+
+                        await $.ajax({
+                            url: `/api/order/${orderID}`,
+                            method: "PUT",
+                            dataType: "json",
+                            contentType: 'application/json',
+                            data: JSON.stringify({
+                            orderNumber: order.orderNumber,
+                            orderDate: order.orderDate,
+                            location: order.location, 
+                            totalprice: order.totalprice + Dish.price,
+                            meals: order.meals,
+                            dishes: order.dishes,
+                            branch: order.branch,
+                            closed: false,
+                            customerId: order.customerId
+                        }),
+                        success: function(data) {
+                            order = data;
+                            dishesproductsList.empty();
+                            refreshDish();
+                        },
+                        error: function(error) {
+                            console.error("Error saving data:", error);
+                        }
+                    });
+                });
+
+                newElement.find(`#iconToRemove-${dishes._id}`).on('click', async function() {
+                    let Dish;
+
+                    await $.ajax({
+                        url: `/api/dish/${dishes._id}`,
+                        method: "GET",
+                        success: function(data) {
+                            Dish = data;
+                        },
+                        error: function(error) {
+                            console.error(error);
+                        }
+                    });
+
+                    for (let i = 0; i < order.dishes.length; i++) {
+                        if(order.dishes[i] === dishes._id) {
+                            order.dishes.splice(i, 1);
+                            break;
+                        }
+                    }
+                        await $.ajax({
+                            url: `/api/order/${orderID}`,
+                            method: "PUT",
+                            dataType: "json",
+                            contentType: 'application/json',
+                            data: JSON.stringify({
+                            orderNumber: order.orderNumber,
+                            orderDate: order.orderDate,
+                            location: order.location, 
+                            totalprice: order.totalprice - Dish.price,
+                            meals: order.meals,
+                            dishes: order.dishes,
+                            branch: order.branch,
+                            closed: false,
+                            customerId: order.customerId
+                        }),
+                        success: function(data) {
+                            order = data;
+                            dishesproductsList.empty();
+                            refreshDish();
+                        },
+                        error: function(error) {
+                            console.error("Error saving data:", error);
+                        }
+                    });
+                });
+
+                dishesproductsList.append(newElement);
+            });
+        }
+        orderPrice.html(`מחיר הזמנה: ${order.totalprice - 15}₪`);
+        totalPrice.html(`מחיר כללי: ${order.totalprice}₪`);
+        TotalPricePayPage.html(`סה"כ לתשלום: ${order.totalprice}₪`);
     }
-    
-    if (mealsproductsList.length > 0) {
-        await $.ajax({
-            url: `/api/order/${orderID}`,
-            method: "GET",
-            dataType: "json",
-            contentType: 'application/json',
-            data: {
-                group: true,
-                meals: true
-            },
-            success: function(data) {
-               names = data;
-            },
-            error: function(error) {
-                console.error("Error saving data:", error);
-            }
-        });
-    
-        names.forEach(async (meals) => {
-            await $.ajax({
-                url: `/api/meal/${meals._id}`,
-                method: "GET",
-                success: function(data) {
-                    name = data.name;
-                },
-                error: function(error) {
-                    console.error(error);
-                }
-            })
-            mealsproductsList.append(`<li><span>${name}</span><span>${meals.count}</span></li>`);
-        });
-    }
-    
-    delivery.html(`משלוח ל: ${order.location}`)
-    orderPrice.html(`מחיר הזמנה: ${order.totalprice - 15}₪`);
-    totalPrice.html(`מחיר כללי: ${order.totalprice}₪`);
-    TotalPricePayPage.html(`סה"כ לתשלום: ${order.totalprice}₪`);
+
+    refreshDish();
 
     await $.ajax({
         url: `/api/branch/${order.branch}`,
@@ -488,6 +904,29 @@ $(document).ready(async function() {
     });
 
     Confirmationofpurchase.on('click', async function() {
+                await $.ajax({
+                    url: `/api/user/${user._id}`,
+                    method: "PUT",
+                    dataType: "json",
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        fname: user.fname,
+                        lname: user.lname,
+                        orders: user.orders,
+                        phoneNumber: user.phoneNumber,
+                        password: user.password,
+                        is_Manager: user.is_Manager,
+                        currentOrder: undefined
+                    }),
+                    success: function(data) {
+                        console.log('data is saved', data);
+                    },
+                    error: function(error) {
+                        console.error("Error saving data:", error);
+                    }
+                });
+
+
         await $.ajax({
             url: `/api/order/${orderID}`,
             method: "PUT",
@@ -504,37 +943,136 @@ $(document).ready(async function() {
                 closed: true,
                 customerId: order.customerId
             }),
-            success: function(data) {
+            success: async function(data) {
+                order = data;
                 console.log('data is saved', data);
-            },
-            error: function(error) {
-                console.error("Error saving data:", error);
-            }
-        });
+                user.orders.push(order._id);
 
-        user.orders.push(order._id);
-
-        await $.ajax({
-            url: `/api/user/${user._id}`,
-            method: "PUT",
-            dataType: "json",
-            contentType: 'application/json',
-            data: JSON.stringify({
-                fname: user.fname,
-                lname: user.lname,
-                orders: user.orders,
-                phoneNumber: user.phoneNumber,
-                password: user.password,
-                is_Manager: user.is_Manager,
-                currentOrder: undefined
-            }),
-            success: function(data) {
-                console.log('data is saved', data);
+                await $.ajax({
+                    url: `/api/user/${user._id}`,
+                    method: "PUT",
+                    dataType: "json",
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        fname: user.fname,
+                        lname: user.lname,
+                        orders: user.orders,
+                        phoneNumber: user.phoneNumber,
+                        password: user.password,
+                        is_Manager: user.is_Manager,
+                        currentOrder: user.currentOrder
+                    }),
+                    success: function(data) {
+                        console.log('data is saved', data);
+                    },
+                     error: function(error) {
+                        console.error("Error saving data:", error);
+                    }
+                });
             },
             error: function(error) {
                 console.error("Error saving data:", error);
             }
         });
     });
+    const errors = $('.errors');
+
+    $('#Confirmation-of-purchase1').on('click', async function() {
+        if ($('#creditCardOwnerName').val() && $('#creditCardNumber').val() && $('#creditCardPag').val() && $('#id').val() && $('#creditCardback').val()) {
+
+            if ($('#id').val().length !== 9) {
+                errors.html('תעודת זהות לא חוקית');
+                errors.show();
+                return;
+            }
+
+            if ($('#creditCardNumber').val().length !== 16) {
+                errors.html('מספר כרטיס לא חוקי');
+                errors.show();
+                return;
+            }
+
+            if ($('#creditCardback').val().length !== 4) {
+                errors.html('הזנת כמות לא מתאימה של ספרות');
+                errors.show();
+                return;
+            }
+
+            if ($('#creditCardOwnerName').val().length > 8) {
+                errors.html('שם ארוך מידי');
+                errors.show();
+                return;
+            } else {
+                for (let i = 0; i< $('#creditCardOwnerName').val().length; i++) {
+                    const charCode = $('#creditCardOwnerName').val().charCodeAt(i);
     
+                    if (charCode < 1488 || charCode > 1514) { 
+                        errors.html('שם מכיל תווים לא בעברית');
+                        errors.show();
+                        return;
+                    }
+                }
+            }
+
+            await $.ajax({
+                url: `/api/order/${orderID}`,
+                method: "PUT",
+                dataType: "json",
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    orderNumber: order.orderNumber,
+                    orderDate: order.orderDate,
+                    location: order.location, 
+                    totalprice: order.totalprice,
+                    meals: order.meals,
+                    dishes: order.dishes,
+                    branch: order.branch,
+                    closed: true,
+                    customerId: order.customerId
+                }),
+                success: function(data) {
+                    order = data;
+                    console.log('data is saved', data);
+                },
+                error: function(error) {
+                    console.error("Error saving data:", error);
+                }
+            });
+    
+            user.orders.push(order._id);
+    
+            await $.ajax({
+                url: `/api/user/${user._id}`,
+                method: "PUT",
+                dataType: "json",
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    fname: user.fname,
+                    lname: user.lname,
+                    orders: user.orders,
+                    phoneNumber: user.phoneNumber,
+                    password: user.password,
+                    is_Manager: user.is_Manager,
+                    currentOrder: user.currentOrder
+                }),
+                success: function(data) {
+                    console.log('data is saved', data);
+                    errors.hide();
+                    $('#FinishPayModal').modal('show');
+                },
+                error: function(error) {
+                    console.error("Error saving data:", error);
+                }
+            });
+        } else {
+            errors.html('לא הזנת את כל הפרטים');
+            errors.show();
+        }
+    });
+
+    $('#FinishPayModal').on('hide.bs.modal', function() {
+        window.location.href = "/";
+    });
+    
+    delivery.html(`משלוח ל: ${order.location}`);
 });

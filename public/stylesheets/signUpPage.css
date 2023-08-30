@@ -43,3 +43,22 @@
 {
     direction: rtl;
 }
+
+.pop-title
+{
+    font-size: 2.7vw;
+    color: rgb(154, 13, 13);
+    text-align: center;
+    margin-top: 2vw;
+}
+
+.link
+{
+    color:rgb(0, 0, 0);
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;
+}
+
+.link:hover{
+    color:rgb(154, 13, 13);
+}

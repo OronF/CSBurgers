@@ -125,6 +125,9 @@ body {
     padding-left: 1vw;
     padding-right: 1vw;
     font-size: 1.3vw;
+    
+    border:none;
+    border-color:transparent;
     text-align: left;;
 }
 
@@ -132,12 +135,6 @@ body {
 {
     background-color: rgb(129, 19, 19);
 }
-
-.order-btn
-{
-    outline: color;
-}
-
 .container
 {
     align-items: center;
@@ -147,6 +144,15 @@ body {
 {
     font-size: 1vw;
 }
+
+.order-btn
+{
+    outline:none;
+    border:none;
+    border:none;
+    border-color:transparent;
+}
+
 
 .addingProduct {
     position: fixed;
@@ -180,4 +186,78 @@ body {
     font-family: 'Noto Sans Hebrew', sans-serif;
     transition: all 0.4s;
 
+}
+
+.btn-back:hover
+{
+    transform: scale(1.05);
+}
+
+/* Styling for addingDish */
+.addingDish {
+    text-align: center;
+    margin-top: 20px;
+    font-family: 'CustomFont', Arial, sans-serif;
+}
+
+.add-btn-dish {
+    background-color: #007bff;
+    color: #fff;
+    font-size: 18px;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Styling for addingMeal */
+.addingMeal {
+    text-align: center;
+    margin-top: 20px;
+    font-family: 'CustomFont', Arial, sans-serif;
+}
+
+.add-btn-meal {
+    background-color: #28a745;
+    color: #fff;
+    font-size: 18px;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Styling for addingCategory */
+.addingCategory {
+    text-align: center;
+    margin-top: 20px;
+    font-family: 'CustomFont', Arial, sans-serif;
+}
+
+.add-btn-category {
+    background-color: #dc3545;
+    color: #fff;
+    font-size: 18px;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.addbtns {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: fixed;
+    top:15vw;
+    left:15vw;
 }

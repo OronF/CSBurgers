@@ -38,6 +38,19 @@
         <h1 class="page-title">תפריט המסעדה</h1>
     </header>
 
+    <span class="filters">
+        <input type="checkbox" id="kosher-check" value="" class="form-check-input me-2">
+        <label>מוצרים כשרים בלבד<a href="#!" class="text-body"></a></label>
+        <input type="checkbox" id="maxprice-check" value="" class="form-check-input me-2">
+        <label >מחיר מקסימלי: <input id="priceInp" oninput="restrictInputToNumbers(event)" class="maxPriceInp">₪</label>
+        <input type="checkbox" id="form2Example32" value="" class="form-check-input me-2 sortby-check">
+        <label >מיון לפי: <select id="sort-select">
+            <option value="" disabled selected>בחר מיון...</option>
+            <option>מהמחיר הגבוה לנמוך</option>
+            <option>מהמחיר הנמוך לגבוה</option>
+        </select></label>
+    </span>
+
     <aside class="categories-aside">
 
         <ul class="categories">
@@ -57,13 +70,102 @@
         </ul>
     </section>
     
-    <div class="addingProduct">
-        <div class="add-btn" type="button">
-            <i class="bi bi-plus-circle-fill"></i>
+    <div class="addbtns">
+        <div class="addingDish">
+            <div class="add-btn-dish" type="button" data-bs-toggle="modal" data-bs-target="#newdishModal">
+                הוספת מנה<i class="bi bi-plus-circle-fill"></i>
+            </div>
+        </div>
+    
+        <div class="addingMeal">
+            <div class="add-btn-meal" type="button" data-bs-toggle="modal" data-bs-target="#newmealModal">
+               הוספת ארוחה <i class="bi bi-plus-circle-fill"></i>
+            </div>
+        </div>
+    
+        <div class="addingcategorty">
+            <div class="add-btn-category" type="button" data-bs-toggle="modal" data-bs-target="#newCategoryModal">
+               הוספת קטגוריה <i class="bi bi-plus-circle-fill"></i>
+            </div>
         </div>
     </div>
 
-    <div class="modal fade" id="newCategoryModal" tabindex="-1" aria-labelledby="newCategoryModalLabel" aria-hidden="true">
+    <div class="modal fade" id="newdishModal" tabindex="-1" aria-labelledby="newdishModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <h3>יצירת מנה חדש</h3>
+                    </div>
+                    <div class="modal-body">
+                        <div id="hide">
+                            <div id="info">
+                                <div class="inputs">
+                                    <div class="errors-dish"></div>
+                                    <input placeholder="שם המנה" id="dish-name">
+                                    <input placeholder="מחיר" id="dish-price">
+                                    <input placeholder="תיאור" id="dish-description">
+                                    <input placeholder="קישור לתמונה" id="dish-picture">
+                                </div>
+                                <div class="selections">
+                                    <select id="dish-categories" class="form-select form-select-lg"></select>
+                                </div>
+            
+                            </div>
+                        </div>
+
+                    </div>
+
+                        <div class="row mb-4">
+                            <div class="modal-buttons-dish">
+                                <button class="moveBtn">שמור</button>
+                            </div>
+                        </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="newmealModal" tabindex="-1" aria-labelledby="newmealModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <h3>יצירת ארוחה חדש</h3>
+                    </div>
+                    <div class="modal-body">
+                        <div id="hide">
+                            <div id="info">
+                                <div class="inputs">
+                                    <div class="errors-meal"></div>
+                                    <input placeholder="שם הארוחה" id="meal-name">
+                                    <input placeholder="מחיר" id="meal-price">
+                                    <input placeholder="תיאור" id="meal-description">
+                                    <input placeholder="קישור לתמונה" id="meal-picture">
+                                </div>
+                                <div class="selections">
+                                    <select id="meal-categories" class="form-select form-select-lg"></select>
+                                    <select id="meal-dish" class="form-select form-select-lg"></select>
+                                    <select id="meal-drink" class="form-select form-select-lg"></select>
+                                    <select id="meal-extra" class="form-select form-select-lg"></select>
+                                </div>
+            
+                            </div>
+                        </div>
+
+                    </div>
+
+                        <div class="row mb-4">
+                            <div class="modal-buttons-meal">
+                                <button class="moveBtn-meal">שמור</button>
+                            </div>
+                        </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="newCategoryModal" tabindex="-1" aria-labelledby="newProductModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -76,6 +178,7 @@
                                 <div class="inputs">
                                     <input placeholder="שם הקטגוריה" class="info-input input form-control" id="categoryName">
                                 </div>
+                                <div class="errors-category"></div>
                                 <div class="selection">
                                     <select id="Categorytype" class="form-select form-select-lg">
                                         <option value="0" disabled selected>סוג קטגוריה</option>

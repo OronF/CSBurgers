@@ -11,8 +11,8 @@ const getAllUsers = async (req, res) => {
             return;
         }
         
-        if (req.query.fname && req.query.password) {
-            Users = await UserService.searchForLogIn(req.query.fname, req.query.password);
+        if (req.query.fname && req.query.password && req.query.phoneNumber) {
+            Users = await UserService.searchForLogIn(req.query.fname, req.query.password, req.query.phoneNumber);
 
             if(!Users) {
                 throw new Error('Non existing users');
@@ -22,6 +22,16 @@ const getAllUsers = async (req, res) => {
             const twentyMinutesToMilliseconds = twentyMinutesToSeconds * 1000; 
             res.cookie(Users.is_Manager ? 'admin' : 'user', Users._id, { maxAge: twentyMinutesToMilliseconds});
             console.log(res.cookies);
+
+            res.json(Users);
+            return;
+        }
+        if (req.query.fname && req.query.lname && req.query.phoneNumber) {
+            Users = await UserService.searchForFixingPassward(req.query.fname, req.query.lname, req.query.phoneNumber);
+
+            if(!Users) {
+                throw new Error('Non existing users');
+            }
 
             res.json(Users);
             return;

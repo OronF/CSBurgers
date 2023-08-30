@@ -55,11 +55,11 @@ const updateUser = async (newUser) => {
         user.currentOrder = newUser.currentOrder;
     }
 
-    await user.save()
+    await user.save();
     return user;
 }
 
-const searchForLogIn = async (fname, password) => {
+const searchForLogIn = async (fname, password, phoneNumber) => {
     if (!fname) {
         return null;
     }
@@ -68,7 +68,26 @@ const searchForLogIn = async (fname, password) => {
         return null;
     }
 
-    return await User.findOne({fname, password});
+    if (!phoneNumber) {
+        return null;
+    }
+
+    return await User.findOne({fname, password, phoneNumber});
+}
+const searchForFixingPassward = async (fname, lname, phoneNumber) => {
+    if (!fname) {
+        return null;
+    }
+
+    if (!lname) {
+        return null;
+    }
+
+    if (!phoneNumber) {
+        return null;
+    }
+
+    return await User.findOne({fname, lname, phoneNumber});
 }
 
 const getAllManagers = async (is_Manager) => {
@@ -82,5 +101,6 @@ module.exports = {
     update: updateUser,
     search: searchUser,
     searchForLogIn,
-    getAllManagers
+    getAllManagers,
+    searchForFixingPassward
 }

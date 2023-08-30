@@ -19,7 +19,7 @@ body {
      font-family: 'Lato', sans-serif;
     font-family: 'Noto Sans Hebrew', sans-serif;
     color: rgb(154, 13, 13);
-    padding:0.vw;
+    padding:0;
     font-size: 4.5vw;
     background-color: white;
 }
@@ -119,15 +119,40 @@ body {
 {
     font-size: 1vw;
 }
+
+.filters
+{
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;   
+}
+
+.maxPriceInp
+{
+    width: 4vw;
+    outline:none;
+    height: 3.45vh;
+}
+
+.form-check-input
+{
+    transition: all 0.4s;
+}
+
 .btn-back {
     font-size: 1.5vw;
     position: fixed;
-    right: 3vw;
-    top: 1vw;
+    padding-top: 1vw;
+    padding-left: 2vw;
+    padding-right: 2vw;
     color:rgb(154, 13, 13);
+    background-color: white;
     text-decoration: none;
     font-family: 'Lato', sans-serif;
     font-family: 'Noto Sans Hebrew', sans-serif;
     transition: all 0.4s;
+}
 
+.btn-back:hover
+{
+    transform: scale(1.05);
 }

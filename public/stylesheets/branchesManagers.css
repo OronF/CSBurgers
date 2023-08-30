@@ -33,6 +33,12 @@
     margin: 1.5vw;
 }
 
+#search-area {
+    width: 15%;
+    height: 6%;
+    direction: rtl; 
+}
+
 #searchTxt {
     width: 55vw;
     border-radius: 0.5vw;
@@ -46,6 +52,7 @@
     font-family: 'Noto Sans Hebrew', sans-serif;
     flex-direction: column;
     align-items: center;
+    align-content: center;
 }
 
 .branches-list {
@@ -72,6 +79,13 @@ li {
     justify-content: space-between;
     align-items: center;
     border-radius: 0.8vw;
+}
+
+.search {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    align-items: center;
 }
 
 .location-data {
@@ -137,7 +151,7 @@ li {
 
 #addNewBranch {
     list-style-type: none;
-    width: 50vw;
+    width: 55vw;
     color: white;
     background-color: rgb(19, 113, 12);
     margin: 0.7vw;
@@ -146,7 +160,7 @@ li {
     justify-content: center;
     border-radius: 0.8vw;
     align-items: center;
-
+    margin-left: 1.5vw;
 }
 
 #addIcon {
@@ -155,14 +169,14 @@ li {
 }
 
 #info {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
+    align-items: center;
+    direction: rtl;
 }
 
 .inputs {
     display: flex;
     flex-direction: column;
+
 }
 
 .modal-header {
@@ -171,5 +185,52 @@ li {
 }
 
 .modal-body {
-    height: 20vw;
+    height: 32rem;
 }
+
+
+#search-area
+{
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;
+    text-align: right;
+
+}
+.updateBranchTitle
+{
+    color:rgb(154, 13, 13);
+}
+
+
+.row
+{
+    align-items: center;
+    justify-content: center;
+}
+
+.inp-title
+{
+    text-align: right;
+color:grey;
+        margin-right: 1rem;
+        margin-top:0.5rem;
+        margin-bottom:0.2rem;
+}
+
+.addB
+{
+    justify-content: center;
+}
+
+/* 
+.saveBtn-update{
+    color:  rgb(154, 13, 13);
+    border:none;
+    border-width: 0.113vw;
+    background: transparent;
+    font-size: x-large;
+    transition: all 0.4s;
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;
+} */
+
