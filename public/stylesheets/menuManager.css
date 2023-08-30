@@ -15,13 +15,13 @@ body {
 }
 
 .page-title {
-    text-align: center;
      font-family: 'Lato', sans-serif;
     font-family: 'Noto Sans Hebrew', sans-serif;
     color: rgb(154, 13, 13);
-    padding:0.vw;
+    padding:0;
     font-size: 4.5vw;
     background-color: white;
+    margin-right: 25vw;
 }
 
 .card-body
@@ -52,6 +52,12 @@ body {
 
 .meals-list {
     list-style: none;
+}
+
+
+.categoryBtns{
+    margin-right: 2vw;
+
 }
 
 .li-category {
@@ -91,6 +97,23 @@ body {
 .newCategoryBtn:hover{
     transform: scale(1.15);
     background-color: rgb(29, 180, 19);
+}
+
+input{
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;
+    border: 0.1vw solid rgb(228, 227, 227);
+    transition: border-color 0.3s ease;
+    outline: none;
+    margin-bottom: 1.3vw;
+    border-radius: 0.3vw ;
+    padding-right: 1vw;
+}
+
+input:focus
+{
+    border-color: rgb(110, 103, 103);
+
 }
 
 #addIcon {
@@ -156,12 +179,13 @@ body {
 
 .addingProduct {
     position: fixed;
-    top: 11vw;
-    left: 15vw;
+    top: 9vw;
+    left: 13vw;
 } 
 
+
 .add-btn{
-    font-size: 40px;
+    font-size: 2vw;;
     color: green;
 }
 
@@ -179,18 +203,186 @@ body {
 .btn-back {
     font-size: 1.5vw;
     right: 3vw;
-    top: 1vw;
     color:rgb(154, 13, 13);
     text-decoration: none;
     font-family: 'Lato', sans-serif;
     font-family: 'Noto Sans Hebrew', sans-serif;
+    transition: all 0.4s;
+    padding-top: 2vw;
+
+}
+
+.btn-back:hover
+{
+    font-size: 1.8vw;
+}
+
+/* Styling for addingDish */
+.addingDish {
+    font-family: 'CustomFont', Arial, sans-serif;
+}
+
+.add-btn-dish {
+    color: #fff;
+    
+    font-size: 1.5vw;
+    padding-left: 1.97vw;
+    padding-right: 1vw;
+    padding-top: 0.5vw;
+    padding-bottom: 0.5vw;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+i{
+}
+
+/* Styling for addingMeal */
+.addingMeal, .addingcategorty {
+    margin-top: 1vw;
+    font-family: 'CustomFont', Arial, sans-serif;
+}
+.add-btn-meal {
+    background-color: #28a745;
+    color: #fff;
+    font-size: 1.5vw;
+    padding: 0.7vw;
+    
+    cursor: pointer;
+    display: inline-flex;
+    justify-content: center;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Styling for addingCategory */
+.addingCategory {
+    text-align: center;
+    margin-top: 1vw;;
+    font-family: 'CustomFont', Arial, sans-serif;
+}
+
+.add-btn-category {
+    background-color: #dc3545;
+    color: #fff;    
+    font-size: 1.5vw;
+    padding-left: 1.7vw;
+    padding-right: 1vw;
+    padding-top: 0.5vw;
+    padding-bottom: 0.5vw;
+    transition: all 0.4s;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.add-btn-category:hover, .add-btn-meal:hover, .add-btn-dish:hover
+{
+     background-color: rgb(120, 23, 23);
+}
+
+.additions
+{
+    color: rgb(154, 13, 13);
+    font-size:1.47vw;
+}
+
+#priceInp
+{
+    width: 4vw;
+    outline:none;
+    height: 3.45vh;
+}
+
+
+.add-btn-dish, .add-btn-meal, .add-btn-category{
+
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;  
+    background-color: rgb(154, 13, 13);
     transition: all 0.4s;
 
 }
 
 
 
-.btn-back:hover
+.modal-body
 {
-    transform: scale(1.05);
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;  
+}
+
+.AddTitle
+{
+    color: rgb(154, 13, 13);
+    margin-top: 1vw;
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif; 
+}
+
+.addbtns {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top:5vw;
+    
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;  
+    left:3vw;
+}
+
+.filters
+{
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;  
+
+}
+
+.error
+{
+    color:red;
+    font-size:1.4vw;
+    text-align: center;
+}
+
+.moveBtn, .moveBtn-meal, .closebtn-meal, .saveBtn, .closebtn, .closebtn-meal
+{
+    transition: all 0.4s;
+
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;  
+    background-color: transparent;
+    border: none;
+    font-size: 2vw;
+    color: rgb(154, 13, 13);
+}
+.moveBtn:hover, .closebtn:hover, .moveBtn-meal:hover, .closebtn-meal:hover, .saveBtn:hover
+{
+    font-size: 2.6vw;
+}
+
+.space
+{
+    padding:1vw;
+}
+
+.inputs{
+    gap:1vw;
+    font-size: 1.5vw;
+    
+}
+
+.mini-title
+{
+    color:black;
+    font-size: 1.3vw;
+}
+
+select
+{
+    margin-top: 2vw;
 }

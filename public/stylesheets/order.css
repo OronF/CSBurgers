@@ -15,13 +15,12 @@ body {
 }
 
 .page-title {
-    text-align: center;
      font-family: 'Lato', sans-serif;
     font-family: 'Noto Sans Hebrew', sans-serif;
     color: rgb(154, 13, 13);
-    padding:0.vw;
     font-size: 4.5vw;
     background-color: white;
+    margin-right: 21vw;
 }
 
 .card-body
@@ -122,21 +121,27 @@ body {
 
 .SumOrder
 {
-    border-radius: 5px;
+    border-radius: 0.1vw;
     margin-right: 2vh;
 }
 
 .products {
-    border-radius: 5px;
+    border-radius: 0.1vw;;
     margin-right: 2vh;
 }
 
 #order
 {
     position: fixed;
-    top: 20px;
-    left: 20px;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
     width: 30%;
+    height: 80%;
+    overflow-y: scroll;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    padding: 1rem;
 }
 
 .CardLink
@@ -144,14 +149,21 @@ body {
     text-decoration: none;
     text-decoration-color: white;
     background-color: rgb(154, 13, 13);
-    font-size: 30px;
-    font-weight: bold;
+    font-size: 2.5vw;
     color: white;
     text-align: center;
+    transition:all 0.4s;
+}
+
+.CardLink:hover{
+    background-color: rgb(120, 16, 16);
+
 }
 
 .Sum {
     text-align: center;
+    color: black;
+    font-size: 3vw;
 }
 .modal {
     background: rgba(0, 0, 0, 0.5); 
@@ -179,4 +191,44 @@ body {
     font-family: 'Noto Sans Hebrew', sans-serif;
     transition: all 0.4s;
 
+}
+
+#PayingSelectModalLabel, #CreditModalLabel, #CashModalLabel, #FinishPayModalLabel
+{
+    color:rgb(154, 13, 13);
+    font-size: 2.4vw;
+
+}
+
+#PriceInPayPage{
+    text-align: center;
+    margin-top: 1.3vw;
+    font-size: larger;
+}
+
+#cash, #credit
+{
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;
+    text-align: right;
+    color:white;
+    background-color: rgb(154, 13, 13);
+    border:none;
+    font-size: 1.5vw;
+    transition: all 0.4s;
+    padding-right: 10vw;
+    padding-left: 10vw;
+    padding-top: 0.5vw;
+    padding-bottom: 0.5vw;
+}
+
+#cash:hover, #credit:hover
+{
+    background-color: rgb(120, 16, 16);
+    transform: scale(1.05);
+}
+
+.modal-body
+{
+    text-align: center;
 }
