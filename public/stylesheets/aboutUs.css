@@ -1,3 +1,12 @@
+@font-face {
+    font-family: 'dana_yad_alefalefalefnormal';
+    src: url('/fonts/danayadalefalefalef-normal-webfont.woff2') format('woff2'),
+         url('/fonts/danayadalefalefalef-normal-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
 body {
     direction:rtl;
 }
@@ -41,16 +50,16 @@ video {
 .aboutUs-title {
     color: rgb(154, 13, 13);
     text-align: right;
-    font-family: 'Lato', sans-serif;
-    font-family: 'Noto Sans Hebrew', sans-serif;
+    font-family: 'dana_yad_alefalefalefnormal';
     font-size: 3.3rem;
     padding-top: 1vw;
-    
+     font-weight: bold;
+
 }
 
 .aboutUs-info {
-    font-family: 'Lato', sans-serif;
-    font-family: 'Noto Sans Hebrew', sans-serif;
-    
+    font-family: 'dana_yad_alefalefalefnormal';
+    font-weight: bold;
+    font-size: 1.3vw;
 }
 

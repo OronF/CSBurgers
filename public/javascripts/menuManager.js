@@ -11,6 +11,8 @@ $(document).ready(async function() {
     errorsmeal.hide();
     errorsdish.hide();
 
+    let categorytypeFilter;
+
     const dishesSection = $('#dishesSection');
     const mealsSection = $('#mealsSection');
 
@@ -35,8 +37,8 @@ $(document).ready(async function() {
                 <div class="card-body">
                     <div class="same-level" id="same-level-${dish._id}"> 
                         <div class="buttons">
-                            <button class="updateBtn btn btn-success" data-dish-id="${dish._id}"><i id="button-${dish._id}" class="bi bi-pencil-fill"></i></button>
-                            <button class="deleteBtn btn btn-danger" data-dish-id="${dish._id}"><i class="bi bi-x-lg"></i></button>
+                            <button class="updateBtn btn btn-success" id="btn-update-${dish._id}" data-dish-id="${dish._id}"><i id="button-${dish._id}" class="bi bi-pencil-fill"></i></button>
+                            <button class="deleteBtn btn btn-danger" id="btn-delete-${dish._id}" data-dish-id="${dish._id}"><i class="bi bi-x-lg"></i></button>
                         </div>
 
                         <h5 class="card-title" id="title-${dish._id}">${dish.name}</h5>
@@ -51,7 +53,7 @@ $(document).ready(async function() {
         </div>
         </li>`);
 
-        newElement.find('.deleteBtn').on('click', function() {
+        newElement.find(`#btn-delete-${dish._id}`).on('click', function() {
             const btn = $(this);
             const id = btn.attr('data-dish-id');
 
@@ -67,7 +69,7 @@ $(document).ready(async function() {
             });
         });
 
-        newElement.find('.updateBtn').on('click', async function() {
+        newElement.find(`#btn-update-${dish._id}`).on('click', async function() {
             let Dish;
             const btn = $(this);
             const id = btn.attr('data-dish-id');
@@ -93,9 +95,13 @@ $(document).ready(async function() {
 
                 $(`#card-${id}`).append(`<div class="inputs-${id}">
                     <div class="update-dish-errors">
+                    <span class="details">שם המוצר</span>
                     <input value="${Dish.name}" class="form-control" id="name-${id}">
+                    <span class="details">מחיר</span>
                     <input value="${Dish.price}" class="form-control" id="price-${id}">
+                    <span class="details">תיאור</span>
                     <input value="${Dish.description}" class="form-control" id="description-${id}">
+                    <span class="details">תמונה</span>
                     <input value="${Dish.picture}" class="form-control" id="new-picture-${id}">
                 </div>`);
                 
@@ -118,7 +124,7 @@ $(document).ready(async function() {
                         for (let i = 0; i< name.length; i++) {
                             const charCode = name.charCodeAt(i);
             
-                            if (charCode < 1488 || charCode > 1514) { 
+                            if ((charCode < 1488 || charCode > 1514) && name[i] !== ' ') { 
                                 updatedisherrors.html('שם הארוחה מכיל תווים לא בעברית');
                                 updatedisherrors.show();
                                 return;
@@ -134,22 +140,6 @@ $(document).ready(async function() {
                         for (let i = 0; i < price.length; i++) {
                             if (price[i] < '0' || price[i] > '9') { 
                                 updatedisherrors.html('המחיר מכיל תווים שהם לא מספרים');
-                                updatedisherrors.show();
-                                return;
-                            }
-                        }
-                    }
-        
-                    if (description.length > 125) {
-                        updatedisherrors.html('התיאור ארוך מידי');
-                        updatedisherrors.show();
-                        return;
-                    } else {
-                        for (let i = 0; i< description.length; i++) {
-                            const charCode = description.charCodeAt(i);
-            
-                            if (charCode < 1488 || charCode > 1514) { 
-                                updatedisherrors.html('תיאור הארוחה מכיל תווים לא בעברית');
                                 updatedisherrors.show();
                                 return;
                             }
@@ -211,8 +201,8 @@ $(document).ready(async function() {
 
                     <div class="same-level" id="same-level-${meal._id}"> 
                         <div class="buttons">
-                            <button class="updateBtn btn btn-success" data-meal-id="${meal._id}"><i id="button-${meal._id}" class="bi bi-pencil-fill"></i></button>
-                            <button class="deleteBtn btn btn-danger" data-meal-id="${meal._id}"><i class="bi bi-x-lg"></i></button>
+                            <button class="updateBtn btn btn-success" id="btn-update-${meal._id}" data-meal-id="${meal._id}"><i id="button-${meal._id}" class="bi bi-pencil-fill"></i></button>
+                            <button class="deleteBtn btn btn-danger" id="btn-delete-${meal._id}" data-meal-id="${meal._id}"><i class="bi bi-x-lg"></i></button>
                         </div>
 
                         <h5 class="card-title" id="title-${meal._id}">${meal.name}</h5>
@@ -227,7 +217,7 @@ $(document).ready(async function() {
     </div>
     </li>`);
 
-        newElement.find('.deleteBtn').on('click', function() {
+        newElement.find(`#btn-delete-${meal._id}`).on('click', function() {
             const btn = $(this);
             const id = btn.attr('data-meal-id');
 
@@ -243,7 +233,7 @@ $(document).ready(async function() {
             });
         });
 
-        newElement.find('.updateBtn').on('click', async function() {
+        newElement.find(`#btn-update-${meal._id}`).on('click', async function() {
             let Meal;
             const btn = $(this);
             const id = btn.attr('data-meal-id');
@@ -294,7 +284,7 @@ $(document).ready(async function() {
                         for (let i = 0; i< name.length; i++) {
                             const charCode = name.charCodeAt(i);
             
-                            if (charCode < 1488 || charCode > 1514) { 
+                            if ((charCode < 1488 || charCode > 1514) && name[i] !== ' ') { 
                                 mealupdateerrors.html('שם הארוחה מכיל תווים לא בעברית');
                                 mealupdateerrors.show();
                                 return;
@@ -310,22 +300,6 @@ $(document).ready(async function() {
                         for (let i = 0; i < price.length; i++) {
                             if (price[i] < '0' || price[i] > '9') { 
                                 mealupdateerrors.html('המחיר מכיל תווים שהם לא מספרים');
-                                mealupdateerrors.show();
-                                return;
-                            }
-                        }
-                    }
-        
-                    if (description.length > 125) {
-                        mealupdateerrors.html('התיאור ארוך מידי');
-                        mealupdateerrors.show();
-                        return;
-                    } else {
-                        for (let i = 0; i< description.length; i++) {
-                            const charCode = description.charCodeAt(i);
-            
-                            if (charCode < 1488 || charCode > 1514) { 
-                                mealupdateerrors.html('תיאור הארוחה מכיל תווים לא בעברית');
                                 mealupdateerrors.show();
                                 return;
                             }
@@ -446,15 +420,15 @@ $(document).ready(async function() {
 
                 if (name) {
                     if (name.length > 14) {
-                        updatecategoryerrors.html('שם הרחוב ארוך מידי');
+                        updatecategoryerrors.html('שם הקטגוריה ארוך מידי');
                         updatecategoryerrors.show();
                         return;
                     } else {
                         for (let i = 0; i< name.length; i++) {
                             const charCode = name.charCodeAt(i);
             
-                            if (charCode < 1488 || charCode > 1514) { 
-                                updatecategoryerrors.html('שם הרחוב מכיל תווים לא בעברית');
+                            if ((charCode < 1488 || charCode > 1514) && name[i] !== ' ') { 
+                                updatecategoryerrors.html('שם הקטגוריה מכיל תווים לא בעברית');
                                 updatecategoryerrors.show();
                                 return;
                             }
@@ -499,64 +473,20 @@ $(document).ready(async function() {
             categoryIdForFilter = id;
 
             if (categorytype === "meal") {
+                categorytypeFilter = 'meal';
                 if (mealsSection.hasClass('hide')) {
                     removeHideOnElement(mealsSection);
                     putHideOnElement(dishesSection);
                 }
-
-                mealsList.empty();
-
-                let meals;
-    
-                await $.ajax({
-                    url:"/api/meal",
-                    method: "GET",
-                    dataType: "json",
-                    contentType: 'application/json',
-                    data: {
-                        categoryId: id
-                    },
-                    success: function(data) {
-                        meals = data;
-                    },
-                    error: function(error) {
-                        console.error("Error finding data:", error);
-                    }
-                });
-    
-                meals.forEach(meal => {
-                    appendMealsLi(meal);
-                });
+                filterDishes();
             } else if (categorytype === "dish") {
+                categorytypeFilter = 'dish';
 
                 if (dishesSection.hasClass('hide')) {
                     removeHideOnElement(dishesSection);
                     putHideOnElement(mealsSection);
                 }
-
-                dishesList.empty();
-
-                let dishes;
-    
-                await $.ajax({
-                    url:"/api/dish",
-                    method: "GET",
-                    dataType: "json",
-                    contentType: 'application/json',
-                    data: {
-                        categoryId: id
-                    },
-                    success: function(data) {
-                        dishes = data;
-                    },
-                    error: function(error) {
-                        console.error("Error finding data:", error);
-                    }
-                });
-    
-                dishes.forEach(dish => {
-                    appendDishesLi(dish, dishesList);
-                });
+                filterDishes();
             }
         });
 
@@ -603,16 +533,10 @@ $(document).ready(async function() {
         }
     });
 
-    const newCategoryBtn = $(`<li class="newCategoryBtn" type="button" data-bs-toggle="modal" data-bs-target="#newCategoryModal"><i class="bi bi-plus-circle" id="addIcon"></i></li>`)
-
     const saveBtn = $('.saveBtn');
     const categoryName = $('#categoryName');
     const Categorytype = $('#Categorytype');
     const modalbuttons = $('.modal-buttons')
-
-    newCategoryBtn.on('click', function() {
-        newCategoryBtn.remove();
-    });
 
     saveBtn.on('click', function() {
         const CategorytypeVal = Categorytype.find(':selected').attr('data-Categorytype');
@@ -628,7 +552,7 @@ $(document).ready(async function() {
                 for (let i = 0; i< categoryNameVal.length; i++) {
                     const charCode = categoryNameVal.charCodeAt(i);
     
-                    if (charCode < 1488 || charCode > 1514) { 
+                    if ((charCode < 1488 || charCode > 1514) && categoryNameVal[i] !== ' ') { 
                         errorscategory.html('שם הקטגוריה מכיל תווים לא בעברית');
                         errorscategory.show();
                         return;
@@ -648,11 +572,16 @@ $(document).ready(async function() {
                 success: function(data) {
                     errorscategory.hide()
                     appendCategoryLi(data);
-                    categories.append(newCategoryBtn);
-                    saveBtn.remove();
+
+                    saveBtn.hide();
                     const newElement = $(`<button type="button" class="closebtn" data-bs-dismiss="modal" aria-label="Close"><i class="bi bi-check2"></i></button>`);
                     categoryName.val("");
                     modalbuttons.append(newElement);
+
+                    newElement.on('click', function() {
+                        saveBtn.show();
+                        newElement.remove();
+                    });
                 },
                 error: function(error) {
                     console.error(error);
@@ -664,13 +593,6 @@ $(document).ready(async function() {
             errorscategory.html('לא הזנת את כל הפרטים');
         }
     });
-
-    $('.clodebtn').on('click', function() {
-        modalbuttons.append(saveBtn);
-        newElement.find('.clodebtn').remove();
-    });
-
-    categories.append(newCategoryBtn);
 
     let index = 1;
 
@@ -758,7 +680,7 @@ $(document).ready(async function() {
                 for (let i = 0; i< nameDish.val().length; i++) {
                     const charCode = nameDish.val().charCodeAt(i);
     
-                    if (charCode < 1488 || charCode > 1514) { 
+                    if ((charCode < 1488 || charCode > 1514) && nameDish.val()[i] !== ' ') { 
                         errorsdish.html('שם הארוחה מכיל תווים לא בעברית');
                         errorsdish.show();
                         return;
@@ -774,22 +696,6 @@ $(document).ready(async function() {
                 for (let i = 0; i < priceDish.val().length; i++) {
                     if (priceDish.val()[i] < '0' || priceDish.val()[i] > '9') { 
                         errorsdish.html('המחיר מכיל תווים שהם לא מספרים');
-                        errorsdish.show();
-                        return;
-                    }
-                }
-            }
-
-            if (descriptionDish.val().length > 125) {
-                errorsdish.html('התיאור ארוך מידי');
-                errorsdish.show();
-                return;
-            } else {
-                for (let i = 0; i< descriptionDish.val().length; i++) {
-                    const charCode = descriptionDish.val().charCodeAt(i);
-    
-                    if (charCode < 1488 || charCode > 1514) { 
-                        errorsdish.html('תיאור הארוחה מכיל תווים לא בעברית');
                         errorsdish.show();
                         return;
                     }
@@ -966,7 +872,7 @@ $(document).ready(async function() {
                 for (let i = 0; i< nameMeal.val().length; i++) {
                     const charCode = nameMeal.val().charCodeAt(i);
     
-                    if (charCode < 1488 || charCode > 1514) { 
+                    if ((charCode < 1488 || charCode > 1514) && nameMeal.val()[i] !== ' ') { 
                         errorsmeal.html('שם הארוחה מכיל תווים לא בעברית');
                         errorsmeal.show();
                         return;
@@ -982,22 +888,6 @@ $(document).ready(async function() {
                 for (let i = 0; i < priceMeal.val().length; i++) {
                     if (priceMeal.val()[i] < '0' || priceMeal.val()[i] > '9') { 
                         errorsmeal.html('המחיר מכיל תווים שהם לא מספרים');
-                        errorsmeal.show();
-                        return;
-                    }
-                }
-            }
-
-            if (descriptionMeal.val().length > 125) {
-                errorsmeal.html('התיאור ארוך מידי');
-                errorsmeal.show();
-                return;
-            } else {
-                for (let i = 0; i< descriptionMeal.val().length; i++) {
-                    const charCode = descriptionMeal.val().charCodeAt(i);
-    
-                    if (charCode < 1488 || charCode > 1514) { 
-                        errorsmeal.html('תיאור הארוחה מכיל תווים לא בעברית');
                         errorsmeal.show();
                         return;
                     }
@@ -1069,4 +959,239 @@ $(document).ready(async function() {
             errorsmeal.show();
         }
     });
+
+    const kosherCheck = $("#kosher-check");
+    const maxPriceCheck = $("#maxprice-check");
+    const sortCheck = $(".sortby-check");
+    const priceInp = $("#priceInp");
+    const sortSelect = $("#sort-select");
+    
+    kosherCheck.on('change', filterDishes);
+    maxPriceCheck.on('change', filterDishes);
+    sortCheck.on('change', filterDishes);
+    sortSelect.on('change', checkSelect);
+    priceInp.keyup(checkPriceInp);
+    
+    function checkSelect(){
+        if(sortCheck.is(":checked")) {
+            filterDishes();
+        }
+    }
+    
+    function checkPriceInp()
+    {
+        if(maxPriceCheck.is(":checked")) {
+            filterDishes();
+        }
+    }
+        async function filterDishes()
+        {
+            console.log('categorytypeFilter:' ,categorytypeFilter);
+            if(categorytypeFilter === 'dish' && ((sortCheck.is(':checked') == true && (sortSelect.val() === "מהמחיר הנמוך לגבוה" || sortSelect.val() === "מהמחיר הגבוה לנמוך")) || kosherCheck.is(":checked") == true ||  (maxPriceCheck.is(":checked") == true && priceInp.val() !== ""))){
+                        console.log("in");
+                    console.log(kosherCheck.is("checked"));
+                    $.ajax({
+                    url: "/api/dish",
+                    method: "GET",
+                    dataType: "json",
+                    contentType: 'application/json',
+                    data: {
+                        categoryId: categoryIdForFilter,
+                        kosher: kosherCheck.is(":checked"),
+                        sort: sortSelect.val(),
+                        price: priceInp.val(),
+                        priceB: maxPriceCheck.is(":checked"),
+                        sortB: sortCheck.is(':checked')
+                    },
+                    success: function(dishes)
+                    {
+                        dishesList.empty();
+                        console.log(dishes);
+                        dishes.forEach(dish => {
+                            appendDishesLi(dish, dishesList);
+                        });
+                    },
+                    error: function(error) {
+                        console.error("Error finding data:", error);
+                    }
+                });
+        }
+        else if (categorytypeFilter === 'dish')
+        {
+            $.ajax({
+            url: "/api/dish",
+            method: "GET",
+            dataType: "json",
+            contentType: 'application/json',
+            data: {
+                categoryId: categoryIdForFilter,
+            },
+            success: function(dishes)
+            {
+                dishesList.empty();
+                console.log(dishes);
+                dishes.forEach(dish => {
+                    appendDishesLi(dish, dishesList);
+                });
+            },
+            error: function(error) {
+                console.error("Error finding data:", error);
+            }
+        });
+        } else if(categorytypeFilter === 'meal' && ((sortCheck.is(':checked') == true && (sortSelect.val() === "מהמחיר הנמוך לגבוה" || sortSelect.val() === "מהמחיר הגבוה לנמוך")) || kosherCheck.is(":checked") == true ||  (maxPriceCheck.is(":checked") == true && priceInp.val() !== ""))){
+            console.log("infdhgfhgf");
+        console.log(kosherCheck.is("checked"));
+        $.ajax({
+        url: "/api/meal",
+        method: "GET",
+        dataType: "json",
+        contentType: 'application/json',
+        data: {
+            categoryId: categoryIdForFilter,
+            kosher: kosherCheck.is(":checked"),
+            sort: sortSelect.val(),
+            price: priceInp.val(),
+            priceB: maxPriceCheck.is(":checked"),
+            sortB: sortCheck.is(':checked')
+        },
+        success: function(meals)
+        {
+            mealsList.empty();
+            console.log(meals);
+            meals.forEach(meal => {
+                appendMealsLi(meal);
+            });
+        },
+        error: function(error) {
+            console.error("Error finding data:", error);
+        }
+    });
+    }
+    else if (categorytypeFilter === 'meal')
+    {
+        $.ajax({
+            url: "/api/meal",
+            method: "GET",
+            dataType: "json",
+            contentType: 'application/json',
+            data: {
+                categoryId: categoryIdForFilter,
+            },
+            success: function(meals)
+            {
+            mealsList.empty();
+            console.log(meals);
+                meals.forEach(meal => {
+                appendMealsLi(meal);
+            });
+            },
+            error: function(error) {
+            console.error("Error finding data:", error);
+            }
+            });
+            } else if(((sortCheck.is(':checked') == true && (sortSelect.val() === "מהמחיר הנמוך לגבוה" || sortSelect.val() === "מהמחיר הגבוה לנמוך")) || kosherCheck.is(":checked") == true ||  (maxPriceCheck.is(":checked") == true && priceInp.val() !== ""))){
+                await $.ajax({
+                    url: "/api/meal",
+                    method: "GET",
+                    dataType: "json",
+                    contentType: 'application/json',
+                    data: {
+                        kosher: kosherCheck.is(":checked"),
+                        sort: sortSelect.val(),
+                        price: priceInp.val(),
+                        priceB: maxPriceCheck.is(":checked"),
+                        sortB: sortCheck.is(':checked')
+                    },
+                    success: function(meals)
+                    {
+                        mealsList.empty();
+                        console.log(meals);
+                        meals.forEach(meal => {
+                            appendMealsLi(meal);
+                        });
+                    },
+                    error: function(error) {
+                        console.error("Error finding data:", error);
+                    }
+                });
+    
+                
+                    console.log("in");
+                console.log(kosherCheck.is("checked"));
+                $.ajax({
+                url: "/api/dish",
+                method: "GET",
+                dataType: "json",
+                contentType: 'application/json',
+                data: {
+                    kosher: kosherCheck.is(":checked"),
+                    sort: sortSelect.val(),
+                    price: priceInp.val(),
+                    priceB: maxPriceCheck.is(":checked"),
+                    sortB: sortCheck.is(':checked')
+                },
+                success: function(dishes)
+                {
+                    console.log(dishes);
+                    dishes.forEach(dish => {
+                        appendDishesLi(dish, mealsList);
+                    });
+                },
+                error: function(error) {
+                    console.error("Error finding data:", error);
+                }
+                });
+            } else {
+                await $.ajax({
+                    url: "/api/meal",
+                    method: "GET",
+                    dataType: "json",
+                    contentType: 'application/json',
+                    data: {
+                        categoryId: categoryIdForFilter,
+                    },
+                    success: function(meals)
+                    {
+                    mealsList.empty();
+                    console.log(meals);
+                        meals.forEach(meal => {
+                        appendMealsLi(meal);
+                    });
+                    },
+                    error: function(error) {
+                    console.error("Error finding data:", error);
+                    }
+                }); 
+    
+                $.ajax({
+                    url: "/api/dish",
+                    method: "GET",
+                    dataType: "json",
+                    contentType: 'application/json',
+                    data: {
+                        categoryId: categoryIdForFilter,
+                    },
+                    success: function(dishes)
+                    {
+                        console.log(dishes);
+                        dishes.forEach(dish => {
+                            appendDishesLi(dish, mealsList);
+                        });
+                    },
+                    error: function(error) {
+                        console.error("Error finding data:", error);
+                    }
+                });
+            }
+        } 
 });
+    
+    
+    
+    function restrictInputToNumbers(event) {
+        const input = event.target;
+        const inputValue = input.value;
+        const sanitizedValue = inputValue.replace(/[^\d]/g, ''); // Remove non-digit characters
+        input.value = sanitizedValue;
+    }
+

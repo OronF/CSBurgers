@@ -13,7 +13,7 @@
 
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>CS Burger</title>
+        <title>יצירת קשר</title>
         <link rel="stylesheet" href="/stylesheets/contactUs.css">
         <link rel="stylesheet" href="./stylesheets/HomePage.css">
 
@@ -28,60 +28,79 @@
         <link href="https://fonts.googleapis.com/css2?family=Lato&family=Noto+Sans+Hebrew:wght@500;900&display=swap" rel="stylesheet">
 </head>
     <body>
-      <a href="/" class="btn-back"> לחזרה לעמוד הבית
-        <i class="bi bi-arrow-bar-right"></i></a>
+      <!-- <a href="/" class="btn-back"> לחזרה לעמוד הבית
+        <i class="bi bi-arrow-bar-right"></i></a> -->
+
+        <section >
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-6  text-black">
         
-        <section class="vh-100 bg-image"
-  style="background-image: url('./images/pagesImgs/contactUs.png');">
-  <div class="mask d-flex align-items-center h-100 gradient-custom-3 register-container">
-    <div class="container h-100">
-        <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col-12 col-md-9 col-lg-7 col-xl-6">
-                <div class="card" style="border-radius: 15px;">
-                    <div class="card-body p-5" id="card-info">
-                            <h2 class="sign-up-title text-center">נשמח לעמוד לרשותך לכל שאלה</h2>
-                        <form action="/" class="rtl:mr-3 ">
-                          <div class="row">
-                            <div class="col-md-6 mb-4">
-                                <div class="form-outline">
-                                  <input type="text" placeholder="שם משפחה" id="form3Example1m" class="form-control form-control-lg">
-                                </div>
-                              </div>
-                              
-                              <div class="col-md-6 mb-4">
-                                <div class="form-outline">
-                                  <input type="text" placeholder="שם פרטי" id="form3Example1n" class="form-control form-control-lg">
-                                </div>
-                              </div>
-                
-                            <div class="form-outline mb-4">
-                                <input type="tel" id="phone-number" onkeydown="phoneNumberFormatter()" placeholder="מספר טלפון" class="form-control form-control-lg">
-                            </div>
-
-                          
-                                
-                          <div class="form-outline mb-4" dir="rtl">
-                            <select id="framework" class="form-select form-select-lg">
-                            </select>
-                        
-                            <div class="form-group mb-4 mt-4">
-                                <textarea class="message form-control "  id="form3Example1m"  rows="2" placeholder="הודעה" required></textarea>
-                              </div>
-
-                              <div class="d-flex justify-content-center">
-                                <button type="button" id="approve-btn"
-                                  class="approve btn btn-lg gradient-custom-4" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">אישור</button>
-                              </div>
-                          </div>
-                        </div>
-                        </form>
-                      </div>
+                <div class="px-5 ms-xl-4">
+                  <i class="fas fa-crow fa-2x me-3 pt-5 mt-xl-4" style="color: #709085;"></i>
+                  <h2 class="text-center sign-up-title">אנחנו כאן בשבילכם</h2>
                 </div>
+        
+                <div class="row">
+        
+                  <div class="card-body p-5" id="card-info">
+                    <form action="/" class="rtl:mr-3 ">
+                      <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <div class="form-outline">
+                              <input type="text" placeholder="שם משפחה" id="lname" class="form-control inp form-control-lg" required maxlength="30">
+                              <div class="error" id="lnameError"></div>
+                            </div>
+                          </div>
+                          
+                          <div class="col-md-6 mb-4">
+                            <div class="form-outline">
+                              <input type="text" placeholder="שם פרטי" id="fname" class="form-control inp form-control-lg" required maxlength="30">
+                              <div class="error" id="fnameError"></div>
+                            </div>
+                          </div>
+            
+                        <div class="form-outline mb-4">
+                            <input type="tel" id="phone-number" onkeydown="phoneNumberFormatter()" placeholder="מספר טלפון" class="form-control inp form-control-lg">
+                            <div class="error" id="phoneNumberError"></div>
+                        </div>
+
+                      
+                            
+                      <div class="form-outline mb-4" dir="rtl">
+                        <select id="framework" class="form-select inp form-select-lg">
+                        </select>
+                        <div class="error" id="branchError"></div>
+                    
+                        <div class="form-group mb-4 mt-4">
+                            <textarea class="message form-control "  id="message"  rows="2" placeholder="הודעה" required ></textarea>
+                            <div class="error" id="messageError"></div>
+                          </div>
+
+                          <div class="d-flex justify-content-center">
+                            <button type="button" id="approve-btn"
+                              class="approve btn btn-lg gradient-custom-4" type="button" >  לשליחה<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
+                                <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/>
+                              </svg></button>
+                          </div>
+                      </div>
+                    </div>
+                    </form>
+                  </div>
+        
+                  </form>
+        
+                </div>
+        
+              </div>
+              <div class="col-md-6 px-0 d-none d-md-block">
+                <img src="https://korea.stripes.com/sites/default/files/styles/twitter_280x150/public/article-images/jjs.gif?itok=_hbFILEp"
+                  alt="המבורגר" class="w-100 vh-100" style="object-fit: cover; object-position: left;">
+              </div>
             </div>
-        </div>
-    </div>
-  </div>
-</section>
+          </div>
+        </section>
+      
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -92,13 +111,11 @@
           </div>
           <div class="modal-body"> 
             <div class="details-container">
-              <h1 class="pop-title">תודה! הדעה שלך חשובה לנו</h1>
-              
-              <div class="text-center">
-                  <p class="register-link">
+              <h1 class="pop-title">תודה! דעתך חשובה לנו</h1>
+              <p class="text-center des">:) בימים הקרובים, ניצור עמכם קשר דרך הטלפון</p>
+                  <p class="register-link text-center">
                       <a class="link" href="/">להמשך קנייה באתר</a>
                   </p>
-              </div>
           </div>
         </div>
       </div> 
@@ -110,12 +127,12 @@
   <div class="container py-4 py-md-5 px-4 px-md-3 text-body-secondary" id="container">
       <span>
         <nav class="links-nav">
-          <span class="link mb-2"><a class="footer-links" href="/">לעמוד הבית</a></span>
+          <span class="link mb-2"><a class="footer-links" href="/termsPage">תקנון ותנאי שימוש באתר</a></span>
           <span class="separator">|</span>
           <span class="link mb-2"><a class="footer-links" href="/AccessibilityStatement">הצהרת נגישות</a></span>
           <span class="separator">|</span>
-          <span class="link mb-2"><a class="footer-links" href="/termsPage">תקנון ותנאי שימוש באתר</a></span>
-          
+          <span class="link mb-2"><a class="footer-links" href="/">לעמוד הבית</a></span>
+
         </nav>
 
           <nav class="social-links-nav">
@@ -161,24 +178,136 @@
 <script src="/socket.io/socket.io.js"></script>
   <script>
     $(document).ready(function() {
-      var socket = io();
 
+      const approveBtn = $('#approve-btn');
+
+      let flagSendMessage = 1;
+
+      approveBtn.on('click', async function() {
+        const fnameTxt = $('#fname');
+        const lnameTxt = $('#lname');
+        const phoneNumberTxt = $('#phone-number');
+        const branchTxt = $('#framework');
+        const messageTxt = $('#message');
+
+        const fnameError = $('#fnameError');
+        const lnameError = $('#lnameError');
+        const phoneNumberError = $('#phoneNumberError');
+        const branchError = $('#branchError');
+        const messageError = $('#messageError');
+
+        const fnameVal = fnameTxt.val();
+        const lnameVal = lnameTxt.val();
+        const phoneNumberVal = phoneNumberTxt.val();
+        const branchVal = branchTxt.val();
+        const messageVal = messageTxt.val();
+
+        if(checkIfEmpty(fnameVal, fnameError)){
+            flagSendMessage = 0;
+        }
+        if(checkIfEmpty(lnameVal, lnameError)){
+            flagSendMessage = 0;
+        }
+        if(checkIfEmpty(phoneNumberVal, phoneNumberError)){
+            flagSendMessage = 0;
+        }
+
+        if(nameValidation(fnameVal, fnameError)){
+            flagSendMessage = 0;
+        }
+        if(nameValidation(lnameVal, lnameError)){
+            flagSendMessage = 0;
+        }
+
+        if (fnameVal.length > 10) {
+            fnameError.html( "הזנת שם פרטי ארוך מדי");
+            flagSendMessage = 0;
+        } 
+        
+        if (lnameVal.length > 10){
+            lnameError.html("הזנת שם משפחה ארוך מדי");
+            flagSendMessage = 0;
+        }
+
+        if (!checkIfPhoneNumberIsValid(phoneNumberVal)){
+            phoneNumberError.html("הזנת מספר טלפון לא חוקי");
+            flagSendMessage = 0;
+        }
+
+        var  frameWorkValue = document.getElementById('framework').value;
+        if (frameWorkValue == 0) {
+            branchError.html("חובה לבחור סניף אליו מיועדת הפנייה");
+            flagSendMessage = 0;
+          }
+
+          if (messageVal === "") {
+            messageError.html("אנא מלא את ההודעה");
+            flagSendMessage = 0;
+          }
+      });
+      var socket = io();
+      
       const approvebtn = document.getElementById('approve-btn');
 
       approvebtn.addEventListener('click', sendMessage);
 
       function sendMessage() {
-        const firstName = document.getElementById('form3Example1m').value;
-        const lastName = document.getElementById('form3Example1n').value;
+        
+        const firstName = document.getElementById('fname').value;
+        const lastName = document.getElementById('lname').value;
         const phoneNumber = document.getElementById('phone-number').value;
         const message = document.getElementsByClassName('message')[0].value;
         const manager = $('#framework').find(':selected').attr('data-manager-id');
 
         const fullMessage = `Name: ${firstName} ${lastName}\nPhone: ${phoneNumber}\nMessage: ${message}`;
-        
-        socket.emit('message', { message: fullMessage, manager: manager });
+        if(flagSendMessage == 1){
+          socket.emit('message', { message: fullMessage, manager: manager });
+          $('#exampleModal').modal('show');
+        }
       }
     });
+    function checkIfPhoneNumberIsValid(inp)
+    {
+        if (inp.length !== 14) {
+            return false;
+        } else {
+            for (let i = 0; i< inp.length; i++) {
+                if (inp[i] < '0' && inp[i] > '9' && inp[i] != " " && inp[i] != "-" && inp[i] != "(" && inp[i] != ")") { 
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    function nameValidation(name, error)
+    {
+        if(name.length < 2)
+        {
+            error.html("על השדה להכיל לפחות 2 תווים בעברית");
+        }
+        
+        for (let i = 0; i < name.length; i++) {
+            const charCode = name.charCodeAt(i);
+            
+            // Check if the character is a valid Hebrew letter
+            if (charCode < 1488 || charCode > 1514) {
+                error.html("על השדה להכיל תווים בעברית בלבד");
+                if(name.length<2){
+                    error.html("על השדה להכיל תווים בעברית בלבד ולפחות 2 תווים")
+                }
+            }
+        }
+    }
+
+    function checkIfEmpty(inp, Error)
+    {
+        if(inp === "")
+        {
+            Error.html("שדה ריק אינו חוקי");
+            return true;
+        }
+    }
   </script>
 
 </html>
