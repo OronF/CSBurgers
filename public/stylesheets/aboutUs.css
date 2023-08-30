@@ -53,10 +53,13 @@ video {
     font-family: 'dana_yad_alefalefalefnormal';
     font-size: 3.3rem;
     padding-top: 1vw;
-    
+     font-weight: bold;
+
 }
 
 .aboutUs-info {
     font-family: 'dana_yad_alefalefalefnormal';
+    font-weight: bold;
+    font-size: 1.3vw;
 }
 
