@@ -222,8 +222,7 @@ color:grey;
     justify-content: center;
 }
 
-/* 
-.saveBtn-update{
+.saveBtn{
     color:  rgb(154, 13, 13);
     border:none;
     border-width: 0.113vw;
@@ -232,5 +231,10 @@ color:grey;
     transition: all 0.4s;
     font-family: 'Lato', sans-serif;
     font-family: 'Noto Sans Hebrew', sans-serif;
-} */
+}
+
+.saveBtn:hover 
+{
+    transform: scale(1.1);
+}
 

@@ -45,21 +45,30 @@ $(document).ready(async function() {
 
             const appendManagerPages = function() {
                 const newElement = $(`<div class="managerPages row">
+
                 <div class="graphs">
+                
                     <a class="graphs" href="/manager/graphs">
-                        גרפים<i class="bi bi-graph-up-arrow"></i>
+                           גרפים<i class="g-arrow bi-graph-up-arrow"></i>
                     </a>
                 </div>
+                <span class="underLine">____________________________________________________________________________________________________________________________________________________________________________________</span>
 
                 <div class="ordersAndUserspage">
-                    <a class="ordersAndUsers" href="/manager/cartForManager">משתמשים</a>
+                    <a class="ordersAndUsers" href="/manager/cartForManager"><i class="users-icon bi-people-fill"></i>משתמשים</a>
                 </div>
+                <span class="underLine">____________________________________________________________________________________________________________________________________________________________________________________</span>
+
 
                 <div class="Messages">
 
-                    <a class="Messages" href="/manager/ManagerMessages"><i class="bi bi-chat-left-text"></i>הודעות</a>
+                    <a class="Messages" href="/manager/ManagerMessages"><i class="message-icon bi-chat-left-text"></i>הודעות</a>
                     </div>
+                    
                 </div>
+                <span class="underLine">____________________________________________________________________________________________________________________________________________________________________________________</span>
+
+
                 `);
 
                 cartAndUser.append(newElement);
