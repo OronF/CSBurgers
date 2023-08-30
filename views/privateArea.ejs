@@ -15,11 +15,12 @@
   </script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Private Area</title>
+    <title>האיזור האישי</title>
     <link rel="stylesheet" href="/stylesheets/privateArea.css">
+    <link rel="stylesheet" href="/stylesheets/HomePage.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <!-- icon-->
-    <link rel="icon" href="./images/pagesImgs/burger.png">
+    <link rel="icon" href="/images/pagesImgs/burger.png">
     <!-- bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
@@ -32,48 +33,89 @@
     <a href="/" class="btn-back"> 
         <i class="bi bi-arrow-bar-right"></i> לחזרה לעמוד הבית</a>
 
-    <header class="title"> <img src="/images/pagesImgs/burger.png" alt="Burger Image" class="img">    אזור אישי    <img src="/images/pagesImgs/burger.png" alt="Burger Image" class="img"></header>
-    
+    <header class="title"> <img src="/images/pagesImgs/burger.png" alt="Burger Image" class="img">    האיזור האישי   <img src="/images/pagesImgs/burger.png" alt="Burger Image" class="img"></header>
     <div class="row">
-      <div class="card-body card" id ="client-info" style="width: 18rem;">
-          <h2 class="card-title">פרטי משתמש:</h2>
-        <div class = "info list-group list-group-flush">
-          <div class="errors"></div>
-          <p class="SomeInfo" id = "fname">שם פרטי:</p>
-          <p class="SomeInfo" id = "lname">שם משפחה:</p>
-          <p class="SomeInfo" id = "phoneNumber">מספר טלפון:</p>
+      <div class="col-md-6 mb-4">
+          <div class="form-outline">
+              
+              <div class="card-body card" id ="client-info" style="width: 50vw;">
+                <h2 class="card-title">פרטי משתמש</h2>
+              <div class = "info ">
+                <div class="errors"></div>
+                <p class="SomeInfo" id = "fname">שם פרטי:</p>
+                <p class="SomeInfo" id = "lname">שם משפחה:</p>
+                <p class="SomeInfo" id = "phoneNumber">מספר טלפון:</p>
+              </div>
+              <div class="buttons">
+                <button class="update-btn  "><i id="update-icon" class="bi bi-pencil-fill"> לעריכת הפרטים  </i></button>
+                <button class="delete-btn "><i class="bi bi-x-lg">  למחיקת המשתמש  </i></button>
+              </div>
+
+          </div>
+      </div>
+  
+      <div class="col-md-6 mb-4">
+          <div class="form-outline">
+            <div class="card-body card" id ="client-orders" style="width: 50vw;">
+              <h2 class="card-title ">הזמנות קודמות</h2>
+              <input type="text" class="search " id="searchOrder" placeholder="לחיפוש הזמנה...">
+
+              <div class="selections ">
+
+                <select id="priceSelect" class="form-select form-select-lg">
+                  <option value="0" disabled selected>מחיר</option>
+                  <option value="100">100</option>
+                  <option value="200">200</option>
+                  <option value="300">300</option>
+                  <option value="400">400</option>
+                  <option value="500">500</option>
+                </select>
+                <select id="framework" class="form-select form-select-lg select-branch"></select>
+                <select id="numOfProduct" class="form-select form-select-lg">
+                  <option value="0" disabled selected>מספר מוצרים</option>
+                  <option value="3">3</option>
+                  <option value="5">5</option>
+                  <option value="7">7</option>
+                  <option value="10">10</option>
+                </select>
+              </div>
+              <ul class="order-list"> </ul>
+
         </div>
-        <div class="buttons">
-          <button class="update-btn btn btn-success"><i id="update-icon" class="bi bi-pencil-fill"></i></button>
-          <button class="delete-btn btn btn-danger"><i class="bi bi-x-lg"></i></button>
-        </div>
+      </div>
+
+          </div>
+      </div>
     </div>
 
-      <div class="card-body card" id ="client-orders" style="width: 18rem;">
-          <h2 class="card-title">הזמנות קודמות:</h2>
-          <input type="text" class="search form-control-sm" id="searchOrder" placeholder="לחיפוש הזמנה...">
-          <div class="selections">
-            <select id="priceSelect" class="form-select form-select-lg">
-              <option value="0" disabled selected>מחיר</option>
-              <option value="100">100</option>
-              <option value="200">200</option>
-              <option value="300">300</option>
-              <option value="400">400</option>
-              <option value="500">500</option>
-            </select>
-            <select id="framework" class="form-select form-select-lg select-branch"></select>
-            <select id="numOfProduct" class="form-select form-select-lg">
-              <option value="0" disabled selected>מספר מוצרים</option>
-              <option value="3">3</option>
-              <option value="5">5</option>
-              <option value="7">7</option>
-              <option value="10">10</option>
-            </select>
-          </div>
-        <ul class="order-list"> </ul>
+     
+  <footer class="bd-footer py-4 py-md-5 mt-5 bg-body-tertiary" id="footer">
+    <div class="container py-4 py-md-5 px-4 px-md-3 text-body-secondary" id="container">
+        <span>
+          <nav class="links-nav">
+            <span class="link mb-2"><a class="footer-links" href="/">לעמוד הבית</a></span>
+            <span class="separator">|</span>
+            <span class="link mb-2"><a class="footer-links" href="/AccessibilityStatement">הצהרת נגישות</a></span>
+            <span class="separator">|</span>
+            <span class="link mb-2"><a class="footer-links" href="/termsPage">תקנון ותנאי שימוש באתר</a></span>
+            
+          </nav>
+  
+            <nav class="social-links-nav">
+              <span class="link mb-2"><a class="footer-social-links" href="#"><i class="bi bi-facebook"></i></a></span>
+              <span class="link mb-2"><a class="footer-social-links" href="https://instagram.com/csburgersofficial?igshid=MzRlODBiNWFlZA=="><i class="bi bi-instagram"></i></a></span>
+            </nav>
+        </span>
+      </div>
     </div>
-  </div>
+  </footer>
+
+
 </body>
+
+<script>
+  
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 <script src="/javascripts/privateArea.js"></script>
 </html>
