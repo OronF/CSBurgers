@@ -1,9 +1,13 @@
 function checkIfPhoneNumberIsValid(inp)
 {
-    for(let i = 0; i<inp.length; i++)
-    {
-        if(isNaN(inp[i]))
-            return false;
+    if (inp.length !== 14) {
+        return false;
+    } else {
+        for (let i = 0; i< inp.length; i++) {
+            if (inp[i] < '0' && inp[i] > '9' && inp[i] != " " && inp[i] != "-" && inp[i] != "(" && inp[i] != ")") { 
+                return false;
+            }
+        }
     }
     
     return true;
@@ -38,22 +42,18 @@ function nameValidation(name, error)
     }
 }
 
-var flagCreatUser = 1;
-
-const approve = $('#approveBtn');
-
-window.addEventListener("keyup", e => {
-    e.preventDefault();
-    if (e.key === "Enter") {
-        approve.click();
-    }
-  });
-
-
 $(document).ready(function() {
 
     const approve = $('#approveBtn');
 
+    var flagCreatUser = 1;
+
+    window.addEventListener("keyup", e => {
+        e.preventDefault();
+        if (e.key === "Enter") {
+            approve.click();
+        }
+    });
     approve.on('click', async function() {
         const fnameTxt = $('#fname');
         const lnameTxt = $('#lname');
@@ -79,6 +79,7 @@ $(document).ready(function() {
         nameValidation(fnameVal, fnameError);
         nameValidation(lnameVal, lnameError);
 
+       
         if(!termsCheckBox.prop('checked')){
             termsError.html("חובה להסכים לתנאי השימוש")
             flagCreatUser = 0;
@@ -117,9 +118,8 @@ $(document).ready(function() {
                 success: function(data)
                 {
                     data.forEach(user => {
-                        phoneNumberFormatter();
-                        console.log("data found");
-                        if(user.phoneNumber === phoneNumberVal){
+                        if(user.phoneNumber === phoneNumberVal) {
+                            phoneNumberError.show();
                             phoneNumberError.html("מספר טלפון זה כבר בשימוש במשתמש אחר");
                             flagCreatUser = 0;
                         }
@@ -128,8 +128,9 @@ $(document).ready(function() {
                 error: function(error) {
                     console.error("Error finding data",error);
                 }
-            })
-            if(flagCreatUser != 0){
+            });
+
+            if(flagCreatUser != 0) {
                 await $.ajax({
                     url:"/api/user",
                     method: "POST",
@@ -157,6 +158,9 @@ $(document).ready(function() {
                     }
                 });
             }
+            else{
+                $('#lname, #fname, #phone-number, #password, #approvePassword ,#terms').keydown(function(){$('#lnameError, #fnameError, #phoneNumberError, #passwordError, #approvePasswordError, #termsError').html("")})
+            }
 
             
             function getCookie(name) {
@@ -166,6 +170,10 @@ $(document).ready(function() {
                   return parts.pop().split(";").shift();
                 }
             }
+    });
+
+    $('#exampleModal').on('hide.bs.modal', function() {
+        window.location.href = "/logInPage";
     });
 });
 

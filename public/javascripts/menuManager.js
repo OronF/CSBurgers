@@ -120,7 +120,7 @@ $(document).ready(async function() {
                         for (let i = 0; i< name.length; i++) {
                             const charCode = name.charCodeAt(i);
             
-                            if (charCode < 1488 || charCode > 1514) { 
+                            if ((charCode < 1488 || charCode > 1514) && name[i] !== ' ') { 
                                 updatedisherrors.html('שם הארוחה מכיל תווים לא בעברית');
                                 updatedisherrors.show();
                                 return;
@@ -280,7 +280,7 @@ $(document).ready(async function() {
                         for (let i = 0; i< name.length; i++) {
                             const charCode = name.charCodeAt(i);
             
-                            if (charCode < 1488 || charCode > 1514) { 
+                            if ((charCode < 1488 || charCode > 1514) && name[i] !== ' ') { 
                                 mealupdateerrors.html('שם הארוחה מכיל תווים לא בעברית');
                                 mealupdateerrors.show();
                                 return;
@@ -676,7 +676,7 @@ $(document).ready(async function() {
                 for (let i = 0; i< nameDish.val().length; i++) {
                     const charCode = nameDish.val().charCodeAt(i);
     
-                    if ((charCode < 1488 || charCode > 1514) && nameDish[i] === ' ') { 
+                    if ((charCode < 1488 || charCode > 1514) && nameDish.val()[i] !== ' ') { 
                         errorsdish.html('שם הארוחה מכיל תווים לא בעברית');
                         errorsdish.show();
                         return;
@@ -868,7 +868,7 @@ $(document).ready(async function() {
                 for (let i = 0; i< nameMeal.val().length; i++) {
                     const charCode = nameMeal.val().charCodeAt(i);
     
-                    if ((charCode < 1488 || charCode > 1514) && nameMeal.val() === ' ') { 
+                    if ((charCode < 1488 || charCode > 1514) && nameMeal.val()[i] !== ' ') { 
                         errorsmeal.html('שם הארוחה מכיל תווים לא בעברית');
                         errorsmeal.show();
                         return;
