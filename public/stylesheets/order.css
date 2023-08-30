@@ -5,8 +5,23 @@ body {
     /* background-image: url("https://st2.depositphotos.com/3740491/8238/v/950/depositphotos_82386728-stock-illustration-seamless-pattern-with-sketched-burger.jpg"); */
 }
 
+.modal-title{
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;  
+}
+
+.modal-body
+{
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;  
+}
+
 .hide {
     display: none;
+}
+
+li{
+    list-style-type: none;
 }
 
 .card-text
@@ -119,9 +134,13 @@ body {
     font-size: 1vw;
 }
 
+#cash
+{
+    text-align: center;
+}
+
 .SumOrder
 {
-    border-radius: 0.1vw;
     margin-right: 2vh;
 }
 
@@ -200,9 +219,25 @@ body {
 
 }
 
+.modal-footer{
+    
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;
+color:rgb(154, 13, 13);
+}
+
+.Confirmation-of-purchase1
+{
+    
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;
+}
+
 #PriceInPayPage{
     text-align: center;
     margin-top: 1.3vw;
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans Hebrew', sans-serif;
     font-size: larger;
 }
 
@@ -210,7 +245,7 @@ body {
 {
     font-family: 'Lato', sans-serif;
     font-family: 'Noto Sans Hebrew', sans-serif;
-    text-align: right;
+    text-align: center;
     color:white;
     background-color: rgb(154, 13, 13);
     border:none;
