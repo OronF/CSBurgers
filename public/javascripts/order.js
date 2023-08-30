@@ -1022,7 +1022,7 @@ $(document).ready(async function() {
     const errors = $('.errors');
 
     $('#Confirmation-of-purchase1').on('click', async function() {
-        if ($('#creditCardOwnerName').val() && $('#creditCardNumber').val() && $('#creditCardPag').val() && $('#id').val() && $('#creditCardback').val()) {
+        if ($('#creditCardOwnerName').val() && $('#creditCardNumber').val() && $('#id').val() && $('#creditCardback').val()) {
 
             if ($('#id').val().length !== 9) {
                 errors.html('תעודת זהות לא חוקית');
@@ -1058,6 +1058,7 @@ $(document).ready(async function() {
                 }
             }
 
+            window.canvasApp && window.canvasApp();
             await $.ajax({
                 url: `/api/order/${orderID}`,
                 method: "PUT",

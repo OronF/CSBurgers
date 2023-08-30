@@ -22,7 +22,7 @@ function canvasApp() {
   context = theCanvas.getContext('2d');
   img = document.getElementById("BurgerPicture");
 
-  let speed = 3;
+  let speed = 2;
 
   function gameLoop() {
       if(Height > 490)

@@ -83,99 +83,6 @@
                     <p class="SumOrder" id="order-price">מחיר הזמנה:</p>
                     <p class="SumOrder" id="total-price">מחיר כללי:</p>
                 </div>
-                <div class="modal fade" id="PayingSelectModal" aria-hidden="true" aria-labelledby="PayingSelectModalLabel" tabindex="-1">
-                    <div class="modal-dialog modal-dialog-centered">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="PayingSelectModalLabel" style = "text-align: center;">נא לבחור אמצעי תשלום</h5>
-                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div id = "PriceInPayPage">
-                            סה"כ לתשלום: 
-                        </div>
-                        <div class="modal-body" id = "pay-select">
-                            <div class="form-outline mb-4 ">
-                                <button class="form-control pay btn-primary" data-bs-target="#CashModal" data-bs-toggle="modal" data-bs-dismiss="modal" id = "cash">מזומן</button>
-                              </div>
-                              
-                        <div class="form-outline mb-4">
-                          <button class="form-control pay btn-primary" data-bs-target="#CreditModal" data-bs-toggle="modal" data-bs-dismiss="modal" id = "credit">אשראי</button>
-                        </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="modal fade" id="CreditModal" aria-hidden="true" aria-labelledby="CreditModalLabel" tabindex="-1">
-                    <div class="modal-dialog modal-dialog-centered">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="CreditModalLabel" style = "text-align: center;">תשלום באשראי</h5>
-                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                          <div class="form-outline mb-4">
-                            <input placeholder="שם בעל הכרטיס" class="form-control" id="creditCardOwnerName" />
-                            <div class="error" id="NameCreditCardOwnerError"></div>
-                          </div>
-                          <div class="form-outline mb-4">
-                            <input placeholder="מספר כרטיס  " class="form-control" id="creditCardOwnerName" />
-                            <div class="error" id="CreditCardNumberError"></div>
-                          </div>
-                          <div class="form-outline mb-4">
-                            <input placeholder="  תוקף כרטיס" class="form-control" id="creditCardOwnerName" />
-                            <div class="error" id="validityCreditCardError"></div>
-                          </div>
-                          <div class="form-outline mb-4">
-                            <input placeholder="תעודת זהות  " class="form-control" id="creditCardOwnerName" />
-                            <div class="error" id="IDError"></div>
-                          </div>
-                          <div class="form-outline mb-4">
-                            <input placeholder="שלוש ספרות בגב הכרטיס  " class="form-control" id="creditCardOwnerName" />
-                            <div class="error" id="ThreeNumberBackOfTheCardError"></div>
-                          </div>
-                        </div>
-                        <div class="modal-footer">
-                          <button class="btn btn-primary" data-bs-target="#PayingSelectModal" data-bs-toggle="modal" data-bs-dismiss="modal">בחזרה לבחירת אמצעי תשלום</button>
-                          <button class="btn btn-primary" data-bs-target="#FinishPayModal" data-bs-toggle="modal" data-bs-dismiss="modal">אישור הקנייה</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <!--//////////////////////////////////////////////////////////////////////-->
-                  <div class="modal fade" id="CashModal" aria-hidden="true" aria-labelledby="CashModalLabel" tabindex="-1">
-                    <div class="modal-dialog modal-dialog-centered">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="CashModalLabel" style="text-align:center; display:block;" >תשלום במזומן</h5>
-                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-footer">
-                          <button class="btn btn-primary" data-bs-target="#PayingSelectModal" data-bs-toggle="modal" data-bs-dismiss="modal">בחזרה לבחירת אמצעי תשלום</button>
-                          <button class="btn btn-primary" data-bs-target="#FinishPayModal" id="Confirmation-of-purchase" data-bs-toggle="modal" data-bs-dismiss="modal">אישור הקנייה</button>
-                        </div>
-                        <span>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  <!--/////////////////////////////////////////////////////////////////////////-->
-                  <div class="modal fade" id="FinishPayModal" aria-hidden="true" aria-labelledby="FinishPayModalLabel" tabindex="-1">
-                    <div class="modal-dialog modal-dialog-centered">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="FinishPayModalLabel">הקנייה אושרה </h5>
-                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                          תודה על הקנייה, המשלוח בדרך אליכם
-                          <img id="BurgerPicture" width = '0' height = '0' src="http://localhost:3000/images/pagesImgs/burger.png">
-                          <canvas id="Canvas" width="490" height="490">
-                          </canvas>
-                        </div>
-                        <a class="btn btn-primary" href="/" class="btn-back">לחזרה לעמוד הבית</a>
-                      </div>
-                    </div>
-                  </div>
                   <a class="CardLink btn-primary" role="button">לתשלום</a>
                     <!--<a class="CardLink" id = "CardLink" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">לתשלום</a>-->
                 <!--<a type = "button" href="#" class = "CardLink" id = "CardLink">לתשלום</a>-->
@@ -215,6 +122,93 @@
                   </div>
             </div>-->
            </div>
+           <div class="modal fade" id="PayingSelectModal" aria-hidden="true" aria-labelledby="PayingSelectModalLabel" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="PayingSelectModalLabel" style = "text-align: center;">נא לבחור אמצעי תשלום</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div id = "PriceInPayPage">
+                    סה"כ לתשלום: 
+                </div>
+                <div class="modal-body" id = "pay-select">
+                    <div class="form-outline mb-4 ">
+                        <button class="form-control pay btn-primary" data-bs-target="#CashModal" data-bs-toggle="modal" data-bs-dismiss="modal" id = "cash">מזומן</button>
+                      </div>
+                      
+                <div class="form-outline mb-4">
+                  <button class="form-control pay btn-primary" data-bs-target="#CreditModal" data-bs-toggle="modal" data-bs-dismiss="modal" id = "credit">אשראי</button>
+                </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal fade" id="CreditModal" aria-hidden="true" aria-labelledby="CreditModalLabel" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="CreditModalLabel" style = "text-align: center;">תשלום באשראי</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <div class="errors"></div>
+                  <div class="form-outline mb-4">
+                    <input placeholder="שם בעל הכרטיס" class="form-control" id="creditCardOwnerName" />
+                  </div>
+                  <div class="form-outline mb-4">
+                    <input placeholder="מספר כרטיס  " class="form-control" id="creditCardNumber" type="number"/>
+                  </div>
+                  <div class="form-outline mb-4">
+                    <input placeholder="תעודת זהות  " class="form-control" id="id" type="number"/>
+                  </div>
+                  <div class="form-outline mb-4">
+                    <input placeholder="ארבע ספרות בגב הכרטיס  " class="form-control" id="creditCardback" type="number" />
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button class="btn btn-primary" data-bs-target="#PayingSelectModal" data-bs-toggle="modal" data-bs-dismiss="modal">בחזרה לבחירת אמצעי תשלום</button>
+                  <button class="btn btn-primary" id="Confirmation-of-purchase1">אישור הקנייה</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--//////////////////////////////////////////////////////////////////////-->
+          <div class="modal fade" id="CashModal" aria-hidden="true" aria-labelledby="CashModalLabel" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="CashModalLabel" style="text-align:center; display:block;" >תשלום במזומן</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-footer">
+                  <button class="btn btn-primary" data-bs-target="#PayingSelectModal" data-bs-toggle="modal" data-bs-dismiss="modal">בחזרה לבחירת אמצעי תשלום</button>
+                  <button class="btn btn-primary" data-bs-target="#FinishPayModal" id="Confirmation-of-purchase" data-bs-toggle="modal" data-bs-dismiss="modal">אישור הקנייה</button>
+                </div>
+                <span>
+                </span>
+              </div>
+            </div>
+          </div>
+          <!--/////////////////////////////////////////////////////////////////////////-->
+          <div class="modal fade" id="FinishPayModal" aria-hidden="true" aria-labelledby="FinishPayModalLabel" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="FinishPayModalLabel">הקנייה אושרה </h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  תודה על הקנייה, המשלוח בדרך אליכם
+                  <img id="BurgerPicture" width = '0' height = '0' src="http://localhost:3000/images/pagesImgs/burger.png">
+                  <canvas id="Canvas" width="490" height="490">
+                  </canvas>
+                </div>
+                <a class="btn btn-primary" href="/" class="btn-back">לחזרה לעמוד הבית</a>
+              </div>
+            </div>
+          </div>
+
            <footer class="bd-footer py-4 py-md-5 mt-5 bg-body-tertiary" id="footer">
             <div class="container py-4 py-md-5 px-4 px-md-3 text-body-secondary" id="container">
                 <span>
