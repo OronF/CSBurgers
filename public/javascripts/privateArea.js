@@ -42,21 +42,34 @@ $(document).ready(async function() {
         </div>
         </li>`);
 
+        const formatOrderDate = (originalDate) => {
+            const date = new Date(originalDate);
+            const year = date.getFullYear();
+            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+            const day = date.getDate().toString().padStart(2, '0');
+            
+            return `${year}-${month}-${day}`;
+        };
+
+        
+
         newElement.find('.orderInfoButton').on('click', async function() {
             const btn = $(this);
             const id = btn.attr('data-order-id');
             const icon = $(`#iconToClick-${id}`);
             const li = $(`#${id}`);
 
-            const appendOrdersDataLi = async (data) => { 
+            const appendOrdersDataLi = async (data) => {
+                const formattedDate = formatOrderDate(data.orderDate);
+            
                 const newElement = $(`<div class="order-data-section" id="order-data-${id}">
                     <div class="order-data">
                         <div class="data">שם הלקוח: ${userData.fname} ${userData.lname}</div>
-                        <div class="data">תאריך: ${data.orderDate}</div>
+                        <div class="data">תאריך: ${formattedDate}</div>
                         <div class="data">כתובת: ${data.location}</div>
                         <div class="data">מחיר: ${data.totalprice}</div>
                         <div class="data-orders-dishes">
-                            פרטים: 
+                            פרטים:
                             <ul class="data-orders-dishes-list"></ul>
                         </div>
                     </div>
@@ -201,16 +214,19 @@ $(document).ready(async function() {
 
     updatebtn.on('click', async function() {
         if ($(`#update-icon`).hasClass('bi bi-pencil-fill')) {
-            $(`#update-icon`).removeClass('bi bi-pencil-fill').addClass('bi bi-check-lg');
+            $(`#update-icon`).removeClass('bi bi-pencil-fill').addClass('bi bi-check-lg').html("לשמירה");
 
             $(`#fname`).remove();
             $(`#lname`).remove();
             $(`#phoneNumber`).remove();
 
-            $(`.info`).append(`<div class="inputs">
-                <input value="${userData.fname}" class="form-control" id="fname-${extractedContent}">
-                <input value="${userData.lname}" class="form-control" id="lname-${extractedContent}">
-                <input value="${userData.phoneNumber}" class="form-control" id="phoneNumber-${extractedContent}">
+            $(`.info`).append(`<div class="inputs row">
+            <span class="details">שם פרטי</span>
+                <input value="${userData.fname}" class=" edit" id="fname-${extractedContent}">
+                <span class="details">שם משפחה</span>
+                <input value="${userData.lname}" class=" edit" id="lname-${extractedContent}">
+                <span class="details">מספר טלפון</span>
+                <input value="${userData.phoneNumber}" class="edit" onkeydown="phoneNumberFormatter()" id="phoneNumber-${extractedContent}">
             </div>`);  
         } else {
             const fname = $(`#fname-${extractedContent}`).val();
@@ -408,4 +424,5 @@ $(document).ready(async function() {
             });
         }
     }
+    
 });
