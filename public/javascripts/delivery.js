@@ -230,7 +230,7 @@ $(document).ready(async function() {
     });
 
     if (extractedContent) {
-        if (user.orders.length > 0 && user.currentOrder) {
+        if (user.currentOrder) {
             await $.ajax({
                 url: `/api/order/${user.currentOrder}`,
                 method: "GET",

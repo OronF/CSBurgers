@@ -252,6 +252,11 @@ $(document).ready(function() {
     $.ajax({
         url:"/api/order",
         method: "GET",
+        dataType: "json",
+        contentType: 'application/json',
+        data: {
+            closed: true
+        },
         success: (data) => {
             renderOrders(data);
         },

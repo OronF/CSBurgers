@@ -37,8 +37,8 @@ $(document).ready(async function() {
                 <div class="card-body">
                     <div class="same-level" id="same-level-${dish._id}"> 
                         <div class="buttons">
-                            <button class="updateBtn btn btn-success" data-dish-id="${dish._id}"><i id="button-${dish._id}" class="bi bi-pencil-fill"></i></button>
-                            <button class="deleteBtn btn btn-danger" data-dish-id="${dish._id}"><i class="bi bi-x-lg"></i></button>
+                            <button class="updateBtn btn btn-success" id="btn-update-${dish._id}" data-dish-id="${dish._id}"><i id="button-${dish._id}" class="bi bi-pencil-fill"></i></button>
+                            <button class="deleteBtn btn btn-danger" id="btn-delete-${dish._id}" data-dish-id="${dish._id}"><i class="bi bi-x-lg"></i></button>
                         </div>
 
                         <h5 class="card-title" id="title-${dish._id}">${dish.name}</h5>
@@ -53,7 +53,7 @@ $(document).ready(async function() {
         </div>
         </li>`);
 
-        newElement.find('.deleteBtn').on('click', function() {
+        newElement.find(`#btn-delete-${dish._id}`).on('click', function() {
             const btn = $(this);
             const id = btn.attr('data-dish-id');
 
@@ -69,7 +69,7 @@ $(document).ready(async function() {
             });
         });
 
-        newElement.find('.updateBtn').on('click', async function() {
+        newElement.find(`#btn-update-${dish._id}`).on('click', async function() {
             let Dish;
             const btn = $(this);
             const id = btn.attr('data-dish-id');
@@ -197,8 +197,8 @@ $(document).ready(async function() {
 
                     <div class="same-level" id="same-level-${meal._id}"> 
                         <div class="buttons">
-                            <button class="updateBtn btn btn-success" data-meal-id="${meal._id}"><i id="button-${meal._id}" class="bi bi-pencil-fill"></i></button>
-                            <button class="deleteBtn btn btn-danger" data-meal-id="${meal._id}"><i class="bi bi-x-lg"></i></button>
+                            <button class="updateBtn btn btn-success" id="btn-update-${meal._id}" data-meal-id="${meal._id}"><i id="button-${meal._id}" class="bi bi-pencil-fill"></i></button>
+                            <button class="deleteBtn btn btn-danger" id="btn-delete-${meal._id}" data-meal-id="${meal._id}"><i class="bi bi-x-lg"></i></button>
                         </div>
 
                         <h5 class="card-title" id="title-${meal._id}">${meal.name}</h5>
@@ -213,7 +213,7 @@ $(document).ready(async function() {
     </div>
     </li>`);
 
-        newElement.find('.deleteBtn').on('click', function() {
+        newElement.find(`#btn-delete-${meal._id}`).on('click', function() {
             const btn = $(this);
             const id = btn.attr('data-meal-id');
 
@@ -229,7 +229,7 @@ $(document).ready(async function() {
             });
         });
 
-        newElement.find('.updateBtn').on('click', async function() {
+        newElement.find(`#btn-update-${meal._id}`).on('click', async function() {
             let Meal;
             const btn = $(this);
             const id = btn.attr('data-meal-id');

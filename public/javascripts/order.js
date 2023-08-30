@@ -947,6 +947,7 @@ $(document).ready(async function() {
     });
 
     Confirmationofpurchase.on('click', async function() {
+        window.canvasApp && window.canvasApp();
                 await $.ajax({
                     url: `/api/user/${user._id}`,
                     method: "PUT",

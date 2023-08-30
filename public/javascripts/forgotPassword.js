@@ -185,6 +185,8 @@ $(document).ready(function() {
                     console.error("Error saving data:", error);
                 }
             });
+        } else {
+            flagChangePassword = 1;
         }
     });
 });
