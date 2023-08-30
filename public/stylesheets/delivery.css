@@ -29,6 +29,13 @@
 
 }
 
+.errors
+{
+    color: rgb(216, 12, 12);
+    font-size: 1vw;
+    text-align: right;
+}
+
 .modal-title
 {
     font-family: 'Lato', sans-serif;
