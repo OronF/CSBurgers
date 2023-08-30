@@ -55,7 +55,7 @@ const updateUser = async (newUser) => {
         user.currentOrder = newUser.currentOrder;
     }
 
-    await user.save()
+    await user.save();
     return user;
 }
 

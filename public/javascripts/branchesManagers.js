@@ -171,76 +171,76 @@ $(document).ready(function() {
             saveBtn.on('click', async function() {
                 if (branchName.val() && address.val() && Activity.val() && x.val() && y.val()) {
                     if (branchName.val().length > 14) {
-                        errorsUp.html('שם הסניף ארוך מידי');
-                        errorsUp.show();
+                        errorsCr.html('שם הסניף ארוך מידי');
+                        errorsCr.show();
                         return;
                     } else {
                         for (let i = 0; i< branchName.val().length; i++) {
                             const charCode = branchName.val().charCodeAt(i);
             
-                            if (charCode < 1488 || charCode > 1514) { 
-                                errorsUp.html('שם הסניף מכיל תווים לא בעברית');
-                                errorsUp.show();
+                            if ((charCode < 1488 || charCode > 1514) && branchName.val()[i] !== ' ' && branchName.val()[i] !== '-') { 
+                                errorsCr.html('שם הסניף מכיל תווים לא בעברית');
+                                errorsCr.show();
                                 return;
                             }
                         }
                     }
-
-                    if (address.val().length > 14) {
-                        errorsUp.html('שם הכתובת ארוך מידי');
-                        errorsUp.show();
+    
+                    if (address.val().length > 60) {
+                        errorsCr.html('שם הכתובת ארוך מידי');
+                        errorsCr.show();
                         return;
                     } else {
                         for (let i = 0; i< address.val().length; i++) {
                             const charCode = address.val().charCodeAt(i);
             
-                            if (charCode < 1488 || charCode > 1514) { 
-                                errorsUp.html('שם הכתובת מכיל תווים לא בעברית');
-                                errorsUp.show();
+                            if ((charCode < 1488 || charCode > 1514) && address.val()[i] !== ' ' && address.val()[i] !== ',' && (address.val()[i] < '0' || address.val()[i] > '9')) { 
+                                errorsCr.html('שם הכתובת מכיל תווים לא חוקיים');
+                                errorsCr.show();
                                 return;
                             }
                         }
                     }
-
-                    if (Activity.val().length > 14) {
-                        errorsUp.html('שעות הפעילות ארוך מידי');
-                        errorsUp.show();
+    
+                    if (Activity.val().length > 100) {
+                        errorsCr.html('שעות הפעילות ארוך מידי');
+                        errorsCr.show();
                         return;
                     } else {
                         for (let i = 0; i< Activity.val().length; i++) {
                             const charCode = Activity.val().charCodeAt(i);
             
-                            if (charCode < 1488 || charCode > 1514) { 
-                                errorsUp.html('שעות הפעילות מכיל תווים לא בעברית');
-                                errorsUp.show();
+                            if ((charCode < 1488 || charCode > 1514) && Activity.val()[i] !== ' ' && Activity.val()[i] !== ':' && Activity.val()[i] !== '-' && Activity.val()[i] !== "'" && (Activity.val()[i] < '0' || Activity.val()[i] > '9')) { 
+                                errorsCr.html('שעות הפעילות מכיל תווים לא חוקיים');
+                                errorsCr.show();
                                 return;
                             }
                         }
                     }
-
+    
                     if (y.val().length > 10) {
-                        errorsUp.html('הקורדינטה ארוכה מידי');
-                        errorsUp.show();
+                        errorsCr.html('הקורדינטה ארוכה מידי');
+                        errorsCr.show();
                         return;
                     } else {
                         for (let i = 0; i < y.val().length; i++) {
-                            if (y.val()[i] < '0' || y.val()[i] > '9' || y.val()[i] !== ' ') { 
-                                errorsUp.html('הקורדינטה מכילה תווים שהם לא ספרות');
-                                errorsUp.show();
+                            if ((y.val()[i] < '0' || y.val()[i] > '9') && y.val()[i] !== '.') { 
+                                errorsCr.html('הקורדינטה מכילה תווים שהם לא ספרות');
+                                errorsCr.show();
                                 return;
                             }
                         }
                     }
-
+    
                     if (x.val().length > 10) {
-                        errorsUp.html('הקורדינטה ארוכה מידי');
-                        errorsUp.show();
+                        errorsCr.html('הקורדינטה ארוכה מידי');
+                        errorsCr.show();
                         return;
                     } else {
                         for (let i = 0; i < x.val().length; i++) {
-                            if (x.val()[i] < '0' || x.val()[i] > '9' || x.val()[i] !== ' ') { 
-                                errorsUp.html('הקורדינטה מכילה תווים שהם לא ספרות');
-                                errorsUp.show();
+                            if ((x.val()[i] < '0' || x.val()[i] > '9') && x.val()[i] !== '.') { 
+                                errorsCr.html('הקורדינטה מכילה תווים שהם לא ספרות');
+                                errorsCr.show();
                                 return;
                             }
                         }
@@ -322,6 +322,10 @@ $(document).ready(function() {
             nohide.removeClass('nohide').addClass('hide');
         });
 
+        $('#newBranchModal').on('hide.bs.modal', function() {
+            $('#nohide').show(); 
+        }); 
+
         let users;
 
         await $.ajax({
@@ -380,7 +384,7 @@ $(document).ready(function() {
                     for (let i = 0; i< branchName.val().length; i++) {
                         const charCode = branchName.val().charCodeAt(i);
         
-                        if (charCode < 1488 || charCode > 1514) { 
+                        if ((charCode < 1488 || charCode > 1514) && branchName.val()[i] !== ' ' && branchName.val()[i] !== '-') { 
                             errorsCr.html('שם הסניף מכיל תווים לא בעברית');
                             errorsCr.show();
                             return;
@@ -388,7 +392,7 @@ $(document).ready(function() {
                     }
                 }
 
-                if (address.val().length > 14) {
+                if (address.val().length > 60) {
                     errorsCr.html('שם הכתובת ארוך מידי');
                     errorsCr.show();
                     return;
@@ -396,15 +400,15 @@ $(document).ready(function() {
                     for (let i = 0; i< address.val().length; i++) {
                         const charCode = address.val().charCodeAt(i);
         
-                        if (charCode < 1488 || charCode > 1514) { 
-                            errorsCr.html('שם הכתובת מכיל תווים לא בעברית');
+                        if ((charCode < 1488 || charCode > 1514) && address.val()[i] !== ' ' && address.val()[i] !== ',' && (address.val()[i] < '0' || address.val()[i] > '9')) { 
+                            errorsCr.html('שם הכתובת מכיל תווים לא חוקיים');
                             errorsCr.show();
                             return;
                         }
                     }
                 }
 
-                if (Activity.val().length > 14) {
+                if (Activity.val().length > 100) {
                     errorsCr.html('שעות הפעילות ארוך מידי');
                     errorsCr.show();
                     return;
@@ -412,8 +416,8 @@ $(document).ready(function() {
                     for (let i = 0; i< Activity.val().length; i++) {
                         const charCode = Activity.val().charCodeAt(i);
         
-                        if (charCode < 1488 || charCode > 1514) { 
-                            errorsCr.html('שעות הפעילות מכיל תווים לא בעברית');
+                        if ((charCode < 1488 || charCode > 1514) && Activity.val()[i] !== ' ' && Activity.val()[i] !== ':' && Activity.val()[i] !== '-' && Activity.val()[i] !== "'" && (Activity.val()[i] < '0' || Activity.val()[i] > '9')) { 
+                            errorsCr.html('שעות הפעילות מכיל תווים לא חוקיים');
                             errorsCr.show();
                             return;
                         }
@@ -426,7 +430,7 @@ $(document).ready(function() {
                     return;
                 } else {
                     for (let i = 0; i < y.val().length; i++) {
-                        if (y.val()[i] < '0' || y.val()[i] > '9' || y.val()[i] !== ' ') { 
+                        if ((y.val()[i] < '0' || y.val()[i] > '9') && y.val()[i] !== '.') { 
                             errorsCr.html('הקורדינטה מכילה תווים שהם לא ספרות');
                             errorsCr.show();
                             return;
@@ -440,7 +444,7 @@ $(document).ready(function() {
                     return;
                 } else {
                     for (let i = 0; i < x.val().length; i++) {
-                        if (x.val()[i] < '0' || x.val()[i] > '9' || x.val()[i] !== ' ') { 
+                        if ((x.val()[i] < '0' || x.val()[i] > '9') && x.val()[i] !== '.') { 
                             errorsCr.html('הקורדינטה מכילה תווים שהם לא ספרות');
                             errorsCr.show();
                             return;
@@ -568,4 +572,6 @@ $(document).ready(function() {
             console.log(error);
         }
     });
+
+    
 });

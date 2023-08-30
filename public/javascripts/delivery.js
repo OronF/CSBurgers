@@ -62,7 +62,7 @@ $(document).ready(async function() {
                 for (let i = 0; i< city.length; i++) {
                     const charCode = city.charCodeAt(i);
     
-                    if (charCode < 1488 || charCode > 1514) { 
+                    if ((charCode < 1488 || charCode > 1514) && city[i] !== ' ') { 
                         errors.html('שם העיר מכיל תווים לא בעברית');
                         errors.show();
                         return;
@@ -78,7 +78,7 @@ $(document).ready(async function() {
                 for (let i = 0; i< street.length; i++) {
                     const charCode = street.charCodeAt(i);
     
-                    if (charCode < 1488 || charCode > 1514) { 
+                    if ((charCode < 1488 || charCode > 1514) && street[i] !== ' ') { 
                         errors.html('שם הרחוב מכיל תווים לא בעברית');
                         errors.show();
                         return;
@@ -179,7 +179,7 @@ $(document).ready(async function() {
                     orderNumber: Math.floor(Math.random() * 1000000),
                     orderDate: Date.now,
                     location: `${branch.address}`,
-                    totalprice: 15,
+                    totalprice: 5,
                     meals: [],
                     dishes: [],
                     branch: branchID,

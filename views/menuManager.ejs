@@ -38,6 +38,19 @@
         <h1 class="page-title">תפריט המסעדה</h1>
     </header>
 
+    <span class="filters">
+        <input type="checkbox" id="kosher-check" value="" class="form-check-input me-2">
+        <label>מוצרים כשרים בלבד<a href="#!" class="text-body"></a></label>
+        <input type="checkbox" id="maxprice-check" value="" class="form-check-input me-2">
+        <label >מחיר מקסימלי: <input id="priceInp" oninput="restrictInputToNumbers(event)" class="maxPriceInp">₪</label>
+        <input type="checkbox" id="form2Example32" value="" class="form-check-input me-2 sortby-check">
+        <label >מיון לפי: <select id="sort-select">
+            <option value="" disabled selected>בחר מיון...</option>
+            <option>מהמחיר הגבוה לנמוך</option>
+            <option>מהמחיר הנמוך לגבוה</option>
+        </select></label>
+    </span>
+
     <aside class="categories-aside">
 
         <ul class="categories">
@@ -57,19 +70,27 @@
         </ul>
     </section>
     
-    <div class="addingDish">
-        <div class="add-btn-dish" type="button" data-bs-toggle="modal" data-bs-target="#newdishModal">
-            <i class="bi bi-plus-circle-fill"></i>
+    <div class="addbtns">
+        <div class="addingDish">
+            <div class="add-btn-dish" type="button" data-bs-toggle="modal" data-bs-target="#newdishModal">
+                הוספת מנה<i class="bi bi-plus-circle-fill"></i>
+            </div>
+        </div>
+    
+        <div class="addingMeal">
+            <div class="add-btn-meal" type="button" data-bs-toggle="modal" data-bs-target="#newmealModal">
+               הוספת ארוחה <i class="bi bi-plus-circle-fill"></i>
+            </div>
+        </div>
+    
+        <div class="addingcategorty">
+            <div class="add-btn-category" type="button" data-bs-toggle="modal" data-bs-target="#newCategoryModal">
+               הוספת קטגוריה <i class="bi bi-plus-circle-fill"></i>
+            </div>
         </div>
     </div>
 
-    <div class="addingMeal">
-        <div class="add-btn-meal" type="button" data-bs-toggle="modal" data-bs-target="#newmealModal">
-            <i class="bi bi-plus-circle-fill"></i>
-        </div>
-    </div>
-
-    <div class="modal fade" id="newdishModal" tabindex="-1" aria-labelledby="newCategoryModalLabel" aria-hidden="true">
+    <div class="modal fade" id="newdishModal" tabindex="-1" aria-labelledby="newdishModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">

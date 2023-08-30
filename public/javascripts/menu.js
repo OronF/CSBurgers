@@ -114,8 +114,6 @@ $(document).ready(async function() {
             const categorytype = btn.attr('data-category-categorytype');
             categoryIdForFilter = id;
 
-            filterDishes();
-
             if (categorytype === "meal") {
                 categorytypeFilter = 'meal';
                 console.log('categorytypeFilter1',categorytypeFilter);
@@ -124,30 +122,7 @@ $(document).ready(async function() {
                     removeHideOnElement(mealsSection);
                     putHideOnElement(dishesSection);
                 }
-
-                mealsList.empty();
-
-                let meals;
-    
-                await $.ajax({
-                    url:"/api/meal",
-                    method: "GET",
-                    dataType: "json",
-                    contentType: 'application/json',
-                    data: {
-                        categoryId: id
-                    },
-                    success: function(data) {
-                        meals = data;
-                    },
-                    error: function(error) {
-                        console.error("Error finding data:", error);
-                    }
-                });
-    
-                meals.forEach(meal => {
-                    appendMealsLi(meal);
-                });
+                filterDishes();
             } else if (categorytype === "dish") {
                 categorytypeFilter = 'dish';
 
@@ -155,30 +130,7 @@ $(document).ready(async function() {
                     removeHideOnElement(dishesSection);
                     putHideOnElement(mealsSection);
                 }
-
-                dishesList.empty();
-
-                let dishes;
-    
-                await $.ajax({
-                    url:"/api/dish",
-                    method: "GET",
-                    dataType: "json",
-                    contentType: 'application/json',
-                    data: {
-                        categoryId: id
-                    },
-                    success: function(data) {
-                        dishes = data;
-                    },
-                    error: function(error) {
-                        console.error("Error finding data:", error);
-                    }
-                });
-    
-                dishes.forEach(dish => {
-                    appendDishesLi(dish, dishesList);
-                });
+                filterDishes();
             }
         });
 

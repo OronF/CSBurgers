@@ -43,6 +43,7 @@
         
                 <div class="row">
         
+
                   <div class="card-body p-5" id="card-info">
                     <form action="/" class="rtl:mr-3 ">
                       <div class="row">
@@ -56,6 +57,51 @@
                             <div class="form-outline">
                               <input type="text" placeholder="שם פרטי" id="form3Example1n" class="form-control inp form-control-lg">
                             </div>
+
+        <section class="vh-100 bg-image"
+  style="background-image: url('./images/pagesImgs/contactUs.png');">
+  <div class="mask d-flex align-items-center h-100 gradient-custom-3 register-container">
+    <div class="container h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+                <div class="card" style="border-radius: 15px;">
+                    <div class="card-body p-5" id="card-info">
+                            <h2 class="sign-up-title text-center">נשמח לעמוד לרשותך לכל שאלה</h2>
+                        <form action="/" class="rtl:mr-3 ">
+                          <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <div class="form-outline">
+                                  <input type="text" placeholder="שם משפחה" id="lname" id="form3Example1m" class="form-control form-control-lg">
+                                  <div class="error" id="lnameError"></div>
+                                </div>
+                              </div>
+                              
+                              <div class="col-md-6 mb-4">
+                                <div class="form-outline">
+                                  <input type="text" placeholder="שם פרטי" id="fname" id="form3Example1n" class="form-control form-control-lg">
+                                  <div class="error" id="fnameError"></div>
+                                </div>
+                              </div>
+                
+                            <div class="form-outline mb-4">
+                                <input type="tel" id="phone-number" onkeydown="phoneNumberFormatter()" placeholder="מספר טלפון" class="form-control form-control-lg">
+                                <div class="error" id="phoneNumberError"></div>
+                            </div>
+                                
+                          <div class="form-outline mb-4" dir="rtl">
+                            <select id="framework" class="form-select form-select-lg">
+                            </select>
+                            <div class="error" id="branchError"></div>
+                        
+                            <div class="form-group mb-4 mt-4">
+                                <textarea class="message form-control "  id="form3Example1m"  rows="2" placeholder="הודעה" required></textarea>
+                                <div class="error" id="messageError"></div>
+                              </div>
+
+                              <div class="d-flex justify-content-center">
+                                <button type="button" id="approve-btn"
+                                  class="approve btn btn-lg gradient-custom-4" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">אישור</button>
+                              </div>
                           </div>
             
                         <div class="form-outline mb-4">
